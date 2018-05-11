@@ -14,6 +14,5 @@ public class SceneName : PropertyAttribute
 
 	public SceneName(bool aActiveOnly = true) {
 		mActiveOnly = aActiveOnly;
-		Debug.Log("Input");
 	}
 }
