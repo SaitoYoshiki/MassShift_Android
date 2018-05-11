@@ -7,11 +7,10 @@ using System.Text.RegularExpressions;
 [CustomPropertyDrawer(typeof(SceneName))]
 public class SceneNameDrawer : PropertyDrawer
 {
-	int mPopupIndex = 0;
-	bool mNeedInit = true;
-
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 	{
+		property.serializedObject.Update();
+
 		var lSceneNames = new List<string>();
 
 		//ビルド設定に含まれている、シーン一覧を取得
@@ -29,16 +28,16 @@ public class SceneNameDrawer : PropertyDrawer
 			EditorGUI.LabelField(position, "Sceneが存在しません");
 			return;
 		}
-
-		//もしアトリビュートが作り直されたら（ゲームオブジェクトが選択されなくなると、アトリビュートは破棄される）
-		if(mNeedInit) {
-			//以前選択したシーン名から、現在のインデックスを取得
-			mPopupIndex = GetSceneIndex(property.stringValue, lSceneNames.ToArray());
-			mNeedInit = false;
+		
+		int lPopupIndex = GetSceneIndex(property.stringValue, lSceneNames.ToArray());
+		if (lPopupIndex == -1) {
+			lPopupIndex = 0;    //そのシーン名が存在しなかったら、0にする
 		}
 
-		mPopupIndex = EditorGUI.Popup(position, label.text, mPopupIndex, lSceneNames.ToArray());
-		property.stringValue = lSceneNames[mPopupIndex];
+		lPopupIndex = EditorGUI.Popup(position, label.text, lPopupIndex, lSceneNames.ToArray());
+		property.stringValue = lSceneNames[lPopupIndex];
+
+		property.serializedObject.ApplyModifiedProperties();
 	}
 
 	int GetSceneIndex(string aSceneName, string[] aScenes) {
@@ -49,6 +48,6 @@ public class SceneNameDrawer : PropertyDrawer
 			}
 			lIndex++;
 		}
-		return 0;
+		return -1;
 	}
 }
