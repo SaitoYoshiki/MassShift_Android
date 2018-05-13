@@ -8,26 +8,16 @@ public class PrefabOnlyDrawer : PropertyDrawer {
 
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
-		string lOldLabelText = label.text;
-
-		string lNewLabelText = label.text + " (Prefab Only)";
-		label.text = lNewLabelText;
+		label.text = label.text + " (Prefab Only)";
 
 		EditorGUI.PropertyField(position, property, label);
 
 		if (property.objectReferenceValue != null) {
 
-			var lPrefabType = PrefabUtility.GetPrefabType(property.objectReferenceValue);
-			switch (lPrefabType) {
-				case PrefabType.Prefab:
-				case PrefabType.ModelPrefab:
-				case PrefabType.None:
-					break;
-				default:
-					// Prefab以外がアタッチされた場合アタッチを外す
-					Debug.LogError(lOldLabelText + "にPrefab以外が選択されました", property.serializedObject.targetObject);
-					property.objectReferenceValue = null;
-					break;
+			if(!EditorUtility.IsPrefab(property.objectReferenceValue)) {
+				// Prefab以外がアタッチされた場合アタッチを外す
+				Debug.LogError(label.text + "にPrefab以外が選択されました", property.serializedObject.targetObject);
+				property.objectReferenceValue = null;
 			}
 		}
 	}
