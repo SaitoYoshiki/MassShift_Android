@@ -28,16 +28,20 @@ public class SceneNameDrawer : PropertyDrawer
 			EditorGUI.LabelField(position, "Sceneが存在しません");
 			return;
 		}
-		
-		int lPopupIndex = GetSceneIndex(property.stringValue, lSceneNames.ToArray());
+
+		string lBeforeName = property.stringValue;
+
+		int lPopupIndex = GetSceneIndex(lBeforeName, lSceneNames.ToArray());
 		if (lPopupIndex == -1) {
 			lPopupIndex = 0;    //そのシーン名が存在しなかったら、0にする
 		}
-
+		
 		lPopupIndex = EditorGUI.Popup(position, label.text, lPopupIndex, lSceneNames.ToArray());
-		property.stringValue = lSceneNames[lPopupIndex];
-
-		property.serializedObject.ApplyModifiedProperties();
+		
+		if(lBeforeName != lSceneNames[lPopupIndex]) {
+			property.stringValue = lSceneNames[lPopupIndex];
+			property.serializedObject.ApplyModifiedProperties();
+		}
 	}
 
 	int GetSceneIndex(string aSceneName, string[] aScenes) {
