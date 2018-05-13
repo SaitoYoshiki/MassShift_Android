@@ -37,11 +37,9 @@ public class SceneNameDrawer : PropertyDrawer
 		}
 		
 		lPopupIndex = EditorGUI.Popup(position, label.text, lPopupIndex, lSceneNames.ToArray());
-		
-		if(lBeforeName != lSceneNames[lPopupIndex]) {
-			property.stringValue = lSceneNames[lPopupIndex];
-			property.serializedObject.ApplyModifiedProperties();
-		}
+
+		property.stringValue = lSceneNames[lPopupIndex];
+		property.serializedObject.ApplyModifiedProperties();
 	}
 
 	int GetSceneIndex(string aSceneName, string[] aScenes) {
