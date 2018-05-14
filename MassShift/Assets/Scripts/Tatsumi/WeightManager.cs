@@ -15,8 +15,36 @@ public class WeightManager : MonoBehaviour {
 
 	// 重さレベル
 	[SerializeField] Weight weightLv = WeightDefLv;
-	public Weight WeightLv { get { return weightLv; } set { weightLv = value; } }
+	public Weight WeightLv {
+		get {
+			return weightLv;
+		}
+		set {
+			weightLv = value;
+		}
+	}
 
+	[SerializeField] float[] weightLvGravityForce = new float[3];
+
+	public float NowWeightForce {
+		get {
+			return weightLvGravityForce[(int)WeightLv];
+		}
+	}
+
+	MoveManager moveMng = null;
+	MoveManager MoveMng {
+		get {
+			if (moveMng == null) {
+				moveMng = GetComponent<MoveManager>();
+				if (moveMng == null) {
+					Debug.LogError("MoveManagerが見つかりませんでした。");
+				}
+			}
+			return moveMng;
+		}
+	}
+	
 	// pull元からpush先へ指定数の重さレベルを移し、移す事に成功したレベル数を返す
 	public int PullWeight(WeightManager _from, int _num = 1) {
 		int cnt = 0;
@@ -40,10 +68,15 @@ public class WeightManager : MonoBehaviour {
 		return _to.PullWeight(this, _num);
 	}
 
+	// pull元とpush先を指定しての処理
+	static public int ShiftWeight(WeightManager _from, WeightManager _to, int _num = 1) {
+		return _from.PushWeight(_to, _num);
+	}
+
 	// 重さレベルを一段階変化させる
 	// 成功したらtrueを返す
 	// _checkOnlyがtrueなら成功するかどうかだけを返し、レベルを変更しない
-	bool AddWeightLevel(bool _checkOnly) {
+	public bool AddWeightLevel(bool _checkOnly) {
 		string logMsg = name + ": " + weightLv + " -> ";
 		switch (WeightLv) {
 		case Weight.flying:
@@ -66,7 +99,7 @@ public class WeightManager : MonoBehaviour {
 			return false;
 		}
 	}
-	bool SubWeightLevel(bool _checkOnly) {
+	public bool SubWeightLevel(bool _checkOnly) {
 		switch (WeightLv) {
 		case Weight.flying:
 			// 変更不可
