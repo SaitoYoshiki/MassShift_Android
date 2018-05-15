@@ -26,6 +26,8 @@ public class Water : MonoBehaviour {
 	[SerializeField, EditOnPrefab]
 	GameObject mCollider;
 
+#if UNITY_EDITOR
+
 	private void OnValidate() {
 
 		if (EditorUtility.IsPrefab(gameObject)) return;
@@ -36,4 +38,6 @@ public class Water : MonoBehaviour {
 		mCollider.transform.localScale = new Vector3(mWidth, mHeight, 1.0f);
 		mCollider.transform.localPosition = new Vector3(mWidth / 2.0f, -mHeight / 2.0f, 0.0f);
 	}
+
+#endif
 }
