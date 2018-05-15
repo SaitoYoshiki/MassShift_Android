@@ -47,15 +47,36 @@ public class MoveFloor : MonoBehaviour {
 		mFloorCollider.transform.localScale = new Vector3(mWidth, 1.0f, 1.0f);
 	}
 
-	//ベルトのサイズ変更
-	void ResizeBelt() {
+	//レールのサイズ変更
+	void ResizeRail() {
+		//現在のモデルの削除
+		for (int i = mRailModel.transform.childCount - 1; i >= 0; i--) {
+			EditorUtility.DestroyGameObject(mRailModel.transform.GetChild(i).gameObject);
+		}
 
+		//モデルの配置
+
+		//上端
+		GameObject lTop = EditorUtility.InstantiatePrefab(mRailTopPrefab, mRailModel);
+		lTop.transform.localPosition = Vector3.up * (mUpHeight - 0.5f);
+
+		//真ん中
+		for (int i = mUpHeight - 1; i > -mDownHeight; i--) {
+			GameObject lMiddle = EditorUtility.InstantiatePrefab(mRailMiddlePrefab, mRailModel);
+			lMiddle.transform.localPosition = Vector3.up * i;
+		}
+
+		//下端
+		GameObject lBottom = EditorUtility.InstantiatePrefab(mRailBottomPrefab, mRailModel);
+		lBottom.transform.localPosition = Vector3.down * (mDownHeight - 0.5f);
 	}
 
+	[ContextMenu("Resize")]
 	void Resize() {
 		if (this == null) return;
 		if (EditorUtility.IsPrefab(gameObject)) return;
 		ResizeFloor();
+		ResizeRail();
 	}
 
 	private void OnValidate() {
@@ -66,6 +87,12 @@ public class MoveFloor : MonoBehaviour {
 
 	[SerializeField, Tooltip("床の幅")]
 	int mWidth;
+
+	[SerializeField, Tooltip("上方向の高さ")]
+	int mUpHeight;
+
+	[SerializeField, Tooltip("下方向の高さ")]
+	int mDownHeight;
 
 
 	[SerializeField, EditOnPrefab, Tooltip("床のコライダー"), Space(16)]
@@ -83,4 +110,16 @@ public class MoveFloor : MonoBehaviour {
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("床の右端のモデル")]
 	GameObject mFloorRightPrefab;
 
+
+	[SerializeField, EditOnPrefab, Tooltip("レールの全てのモデルの親"), Space(16)]
+	GameObject mRailModel;
+
+	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("レールの上端のモデル")]
+	GameObject mRailTopPrefab;
+
+	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("レールの真ん中モデル")]
+	GameObject mRailMiddlePrefab;
+
+	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("レールの下端のモデル")]
+	GameObject mRailBottomPrefab;
 }
