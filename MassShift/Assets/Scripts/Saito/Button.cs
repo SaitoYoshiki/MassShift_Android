@@ -39,13 +39,18 @@ public class Button : MonoBehaviour {
 
 	private void OnValidate()
 	{
-		switch (mDirection)
-		{
+		if (this == null) return;
+		if (EditorUtility.IsPrefab(gameObject)) return;
+
+		switch (mDirection) {
 			case CDirection.cUp:
 				transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 				break;
 			case CDirection.cDown:
 				transform.rotation = Quaternion.Euler(0.0f, 0.0f, 180.0f);
+				break;
+			case CDirection.cNone:
+				Debug.LogError("Button Direction Is None", this);
 				break;
 		}
 	}
@@ -58,6 +63,7 @@ public class Button : MonoBehaviour {
 	float mReleaseTakeTime;
 
 	enum CDirection {
+		cNone,
 		cUp,
 		cDown,
 	}
