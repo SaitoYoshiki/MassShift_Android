@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class PileWeight : MonoBehaviour {
 	// 四辺に存在する当たり判定
-	[SerializeField] GameObject[] fourSideCol = new GameObject[4];
+	FourSideCollider fourSideCol = null;
+	FourSideCollider FourSideCol {
+		get {
+			if (fourSideCol == null) {
+				fourSideCol = GetComponent<FourSideCollider>();
+				if (fourSideCol == null) {
+					Debug.LogError("FourSideColliderが見つかりませんでした。");
+				}
+			}
+			return fourSideCol;
+		}
+	}
 
 	// Use this for initialization
 	//	void Start () {}
@@ -12,15 +23,15 @@ public class PileWeight : MonoBehaviour {
 	// Update is called once per frame
 	//	void Update () {}
 
-	public List<GameObject> GetPileBoxList(Vector3 _vec) {
-		List<GameObject> ret = new List<GameObject>();
+	public List<Transform> GetPileBoxList(Vector3 _vec) {
+		List<Transform> ret = new List<Transform>();
 		AddPileBoxList(ret, _vec);
 		return ret;
 	}
 
-	void AddPileBoxList(List<GameObject> _boxList, Vector3 _vec) {
-		List<GameObject> forward = new List<GameObject>();  // 対象コライダー
-		List<GameObject> back = new List<GameObject>();     // 除外コライダー
+	void AddPileBoxList(List<Transform> _boxList, Vector3 _vec) {
+		List<Transform> forward = new List<Transform>();  // 対象コライダー
+		List<Transform> back = new List<Transform>();     // 除外コライダー
 
 		// 判定用マスク
 		int mask = LayerMask.GetMask(new string[] { "Player", "Box" });
@@ -36,17 +47,17 @@ public class PileWeight : MonoBehaviour {
 		}
 
 		// 対象オブジェクトのコライダーのリストをオブジェクトのリストに変換
-		List<GameObject> hitObjList = new List<GameObject>();
+		List<Transform> hitObjList = new List<Transform>();
 		while (hitColList.Count > 0) {
-			hitObjList.Add(hitColList[0].gameObject);
+			hitObjList.Add(hitColList[0].transform);
 			hitColList.RemoveAt(0);
 		}
 
 		// 重複を排除
-		RemoveDuplicateGameObject(hitObjList);
+		RemoveDuplicateObject(hitObjList);
 
 		// 自身を排除
-		hitObjList.Remove(gameObject);
+		hitObjList.Remove(transform);
 
 		// 指定方向の反対側の四辺コライダーに接触している対象オブジェクトのコライダーをリスト化	
 		List<Collider> outColList = new List<Collider>();
@@ -55,17 +66,17 @@ public class PileWeight : MonoBehaviour {
 		}
 
 		// 除外オブジェクトのコライダーのリストをオブジェクトのリストに変換
-		List<GameObject> outObjList = new List<GameObject>();
+		List<Transform> outObjList = new List<Transform>();
 		while (outColList.Count > 0) {
-			outObjList.Add(outColList[0].gameObject);
+			outObjList.Add(outColList[0].transform);
 			outColList.RemoveAt(0);
 		}
 
 		// 重複を排除
-		RemoveDuplicateGameObject(outObjList);
+		RemoveDuplicateObject(outObjList);
 
 		// 自身を排除
-		outObjList.Remove(gameObject);
+		outObjList.Remove(transform);
 
 		// 指定方向から遠いコライダ－に接触している対象オブジェクトをリストから排除
 		for (int outObjIdx = 0; outObjIdx < outObjList.Count; outObjIdx++) {
@@ -81,7 +92,7 @@ public class PileWeight : MonoBehaviour {
 		_boxList.AddRange(hitObjList);
 
 		// リストの重複を排除
-		RemoveDuplicateGameObject(_boxList);
+		RemoveDuplicateObject(_boxList);
 
 		// 新たな対象オブジェクトそれぞれで再帰呼び出し
 		for (int hitObjIdx = 0; hitObjIdx < hitObjList.Count; hitObjIdx++) {
@@ -94,13 +105,7 @@ public class PileWeight : MonoBehaviour {
 	}
 
 	// 四辺コライダーが指定方向に存在するか判定して振り分ける
-	void DotFourSideCollider(Vector3 _vec, List<GameObject> _forward, List<GameObject> _back) {
-		// 四辺コライダーが設定されていない場合
-		if (fourSideCol.Length == 0) {
-			Debug.LogError("四辺コライダー配列の要素が存在していません。");
-			return;
-		}
-
+	void DotFourSideCollider(Vector3 _vec, List<Transform> _forward, List<Transform> _back) {
 		// 正規化
 		_vec = _vec.normalized;
 
@@ -109,17 +114,17 @@ public class PileWeight : MonoBehaviour {
 		_back.Clear();
 
 		// 全ての四辺コライダーについて指定の方向に存在するか判定して振り分ける
-		for (int idx = 0; idx < fourSideCol.Length; idx++) {
-			Vector3 vec = fourSideCol[idx].transform.position - transform.position;
+		for (int idx = 0; idx < fourSideCol.colList.Count; idx++) {
+			Vector3 vec = fourSideCol.colList[idx].transform.position - transform.position;
 			if (Vector3.Dot(vec, _vec) > 0.0f) {
-				_forward.Add(fourSideCol[idx]);
+				_forward.Add(fourSideCol.colList[idx]);
 			} else {
-				_back.Add(fourSideCol[idx]);
+				_back.Add(fourSideCol.colList[idx]);
 			}
 		}
 	}
 
-	int RemoveDuplicateGameObject(List<GameObject> _list) {
+	int RemoveDuplicateObject(List<Transform> _list) {
 		int cnt = 0;
 		// 対象リストから重複を排除
 		for (int targetIdx = 0; targetIdx < _list.Count; targetIdx++) {
