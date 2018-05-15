@@ -8,9 +8,11 @@ using UnityEditor;
 
 public class EditorUtility {
 
-	public static bool IsPrefab(Object aObject) {
 
 #if UNITY_EDITOR
+
+	public static bool IsPrefab(Object aObject) {
+
 		var prefabType = PrefabUtility.GetPrefabType(aObject);
 		switch (prefabType)
 		{
@@ -20,8 +22,17 @@ public class EditorUtility {
 			default:
 				return false;
 		}
-#endif
-		return false;
-
 	}
+
+	public static GameObject InstantiatePrefab(GameObject aPrefab, GameObject aParent) {
+		GameObject go = GameObject.Instantiate(aPrefab, aParent.transform);
+		GameObject g = UnityEditor.PrefabUtility.ConnectGameObjectToPrefab(go, aPrefab);
+		UnityEditor.Undo.RegisterCreatedObjectUndo(g, "InstantiatePrefab");
+		return g;
+	}
+	public static void DestroyGameObject(GameObject aGameObject) {
+		UnityEditor.Undo.DestroyObjectImmediate(aGameObject);
+	}
+
+#endif
 }
