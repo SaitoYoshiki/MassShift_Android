@@ -223,14 +223,14 @@ public class Goal : MonoBehaviour {
 
 		//現在のモデルの削除
 		for (int i = mLampModel.transform.childCount - 1; i >= 0; i--) {
-			DestroyGameObject(mLampModel.transform.GetChild(i).gameObject);
+			EditorUtility.DestroyGameObject(mLampModel.transform.GetChild(i).gameObject);
 		}
 
 		//モデルの配置
 
 		//ランプ
 		for (int i = 0; i < mButtonList.Count; i++) {
-			GameObject lLamp = InstantiatePrefab(mLampPrefab, mLampModel);
+			GameObject lLamp = EditorUtility.InstantiatePrefab(mLampPrefab, mLampModel);
 			lLamp.transform.localPosition = mLampPosition.transform.localPosition + Vector3.down * mLampInterval * i;
 		}
 
@@ -238,31 +238,22 @@ public class Goal : MonoBehaviour {
 		Vector3 lBase = mLampPosition.transform.localPosition;
 
 		//上端
-		GameObject lTop = InstantiatePrefab(mLampTopPrefab, mLampModel);
+		GameObject lTop = EditorUtility.InstantiatePrefab(mLampTopPrefab, mLampModel);
 		lTop.transform.localPosition = lBase;
 
 		//真ん中
 		for (int i = 0; i < mButtonList.Count - 1; i++)
 		{
 			lBase += Vector3.down * mLampInterval;
-			GameObject lMid = InstantiatePrefab(mLampMidPrefab, mLampModel);
+			GameObject lMid = EditorUtility.InstantiatePrefab(mLampMidPrefab, mLampModel);
 			lMid.transform.localPosition = lBase - Vector3.down * mLampInterval * 0.5f;
 		}
 
 		//下端
-		GameObject lBottom = InstantiatePrefab(mLampBottomPrefab, mLampModel);
+		GameObject lBottom = EditorUtility.InstantiatePrefab(mLampBottomPrefab, mLampModel);
 		lBottom.transform.localPosition = lBase;
 	}
 
-	GameObject InstantiatePrefab(GameObject aPrefab, GameObject aParent) {
-		GameObject go = Instantiate(aPrefab, aParent.transform);
-		GameObject g = UnityEditor.PrefabUtility.ConnectGameObjectToPrefab(go, aPrefab);
-		UnityEditor.Undo.RegisterCreatedObjectUndo(g, "InstantiatePrefab");
-		return g;
-	}
-	void DestroyGameObject(GameObject aGameObject) {
-		UnityEditor.Undo.DestroyObjectImmediate(aGameObject);
-	}
 
 	private void OnValidate() {
 		UnityEditor.EditorApplication.delayCall += Resize;
