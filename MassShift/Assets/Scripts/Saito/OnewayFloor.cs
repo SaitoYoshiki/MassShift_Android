@@ -15,10 +15,44 @@ public class OnewayFloor : MonoBehaviour {
 	}
 
 
+	enum CDirection {
+		cNone,	//無効値
+		cUp,	//上方向にすり抜けられる
+		cDown	//下方向にすり抜けられる
+	}
+	[SerializeField, Tooltip("すり抜けられる方向")]
+	CDirection mDirection;
+
+	//その方向にすり抜けられるか
+	public bool IsThrough(Vector3 aVec) {
+		return IsThrough(mDirection, aVec);
+	}
+
+	static bool IsThrough(CDirection aDirection, Vector3 aVec) {
+		return Vector3.Dot(GetDirectionVector(aDirection), aVec) > 0.0f;
+	}
+
+	static Vector3 GetDirectionVector(CDirection aDirection) {
+		switch(aDirection) {
+			case CDirection.cUp:
+				return Vector3.up;
+			case CDirection.cDown:
+				return Vector3.down;
+		}
+		return Vector3.zero;
+	}
+
+
 #if UNITY_EDITOR
 
 	//床のサイズ変更
 	void ResizeFloor() {
+
+		//初期値から変わっていないのでエラー
+		if(mDirection == CDirection.cNone) {
+			Debug.LogError("DirectionがNoneです", this);
+			return;
+		}
 
 		//現在のモデルの削除
 		for (int i = mFloorModel.transform.childCount - 1; i >= 0; i--) {
@@ -54,8 +88,7 @@ public class OnewayFloor : MonoBehaviour {
 		ResizeFloor();
 	}
 
-	private void OnValidate()
-	{
+	private void OnValidate() {
 		UnityEditor.EditorApplication.delayCall += Resize;
 	}
 
