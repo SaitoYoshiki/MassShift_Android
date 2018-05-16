@@ -6,7 +6,8 @@ public class MoveFloor : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		//現在の重さの位置へ移動する
+		mFloor.transform.localPosition = GetTargetLocalPosition(mWeight);
 	}
 	
 	// Update is called once per frame
@@ -22,7 +23,7 @@ public class MoveFloor : MonoBehaviour {
 		cMoving,	//移動
 		cTurn,	//方向転換
 	}
-	CState _mState;  //現在の状態
+	CState _mState = CState.cStay;  //現在の状態
 	CState mState {
 		get { return _mState; }
 		set {
@@ -244,6 +245,9 @@ public class MoveFloor : MonoBehaviour {
 		if (EditorUtility.IsPrefab(gameObject)) return;
 		ResizeFloor();
 		ResizeRail();
+
+		//現在の重さの位置へ移動する
+		mFloor.transform.localPosition = GetTargetLocalPosition(mWeight);
 	}
 
 	private void OnValidate() {
