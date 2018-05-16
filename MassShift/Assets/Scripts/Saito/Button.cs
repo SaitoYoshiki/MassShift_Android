@@ -7,6 +7,7 @@ public class Button : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mLedgeStartPosition = mLedge.transform.position;
+		ChangeLightColor(mButtonOffColor);
 	}
 	
 	// Update is called once per frame
@@ -14,7 +15,8 @@ public class Button : MonoBehaviour {
 
 		UpdatePushRate();
 		MoveLedge();
-		
+
+		UpdateLight();
 	}
 
 	//押されている割合を更新する
@@ -34,6 +36,27 @@ public class Button : MonoBehaviour {
 	void MoveLedge() {
 
 		mLedge.transform.position = mLedgeStartPosition + (mLedgeMoveEnd.transform.position - mLedgeMoveStart.transform.position) * mPushRate;
+	}
+
+	//ライトを点灯させる
+	void UpdateLight() {
+
+		//点灯した瞬間
+		if(mBeforeButtonOn == false && IsButtonOn == true) {
+			ChangeLightColor(mButtonOnColor);
+		}
+
+		//消えた瞬間
+		if (mBeforeButtonOn == true && IsButtonOn == false) {
+			ChangeLightColor(mButtonOffColor);
+		}
+
+		mBeforeButtonOn = IsButtonOn;
+	}
+
+	//ライトの色を変える
+	void ChangeLightColor(Color aColor) {
+		Utility.ChangeMaterialColor(mLightModel, mLightMaterial, "_EmissionColor", aColor);
 	}
 
 
@@ -90,11 +113,26 @@ public class Button : MonoBehaviour {
 	public bool IsButtonOn {
 		get { return mPushRate >= 1.0f; }
 	}
+	bool mBeforeButtonOn = false;
 
 	Vector3 mLedgeStartPosition;    //Ledgeの開始位置
 
 	[SerializeField, Tooltip("Ledge"), EditOnPrefab]
 	GameObject mLedge;
+
+	[SerializeField, Tooltip("光らせるモデル")]
+	GameObject mLightModel;
+
+	[SerializeField, ColorUsage(false, true, 0f, 8f, 0.125f, 3f), Tooltip("光らせるマテリアル"), EditOnPrefab]
+	Material mLightMaterial;
+
+	[SerializeField, ColorUsage(false, true, 0f, 8f, 0.125f, 3f), Tooltip("ボタンがオンの時の色")]
+	Color mButtonOnColor;
+
+	[SerializeField, ColorUsage(false, true, 0f, 8f, 0.125f, 3f), Tooltip("ボタンがオフの時の色")]
+	Color mButtonOffColor;
+
+
 
 	[SerializeField, Tooltip("Ledgeの移動開始位置"), EditOnPrefab]
 	GameObject mLedgeMoveStart;
