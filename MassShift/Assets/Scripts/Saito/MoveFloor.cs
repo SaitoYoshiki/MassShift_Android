@@ -11,8 +11,164 @@ public class MoveFloor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		UpdateState();
 	}
+
+
+	enum CState {
+		cStay,	//はまっている
+		cToMoving,	//はまりから移動
+		cFromMoving,	//移動からはまる
+		cMoving,	//移動
+		cTurn,	//方向転換
+	}
+	CState _mState;  //現在の状態
+	CState mState {
+		get { return _mState; }
+		set {
+			mBeforeState = _mState;
+			_mState = value;
+			mNeedInitState = true;
+		}
+	}
+
+	CState mBeforeState;  //以前の状態
+
+	float mStateTime = 0.0f;
+
+	bool mNeedInitState = true;	//状態が変化するとtrueになる
+
+	void UpdateState() {
+
+		if(mNeedInitState) {
+			mStateTime = 0.0f;
+		}
+
+		switch (mState) {
+			case CState.cStay:
+				UpdateStay();
+				break;
+			case CState.cToMoving:
+				UpdateToMoving();
+				break;
+			case CState.cFromMoving:
+				UpdateFromMoving();
+				break;
+			case CState.cTurn:
+				UpdateTurn();
+				break;
+			case CState.cMoving:
+				UpdateMoving();
+				break;
+		}
+
+		mStateTime += Time.deltaTime;
+	}
+
+	void UpdateStay() {
+		//初期化
+		if(mNeedInitState == true) {
+			mNeedInitState = false;
+		}
+		//処理
+
+		Vector3 lTargetLocalPosition = GetTargetLocalPosition(mWeight);
+		if(mFloor.transform.localPosition != lTargetLocalPosition) {
+			mState = CState.cToMoving;
+		}
+	}
+
+	void UpdateToMoving() {
+		//初期化
+		if (mNeedInitState == true) {
+			mNeedInitState = false;
+		}
+
+		//処理
+		if(mStateTime >= mStayTime) {
+			mState = CState.cMoving;
+		}
+	}
+
+	void UpdateFromMoving() {
+		//初期化
+		if (mNeedInitState == true) {
+			mNeedInitState = false;
+		}
+
+		//処理
+		if (mStateTime >= mStayTime) {
+			mState = CState.cStay;
+		}
+	}
+
+	void UpdateMoving() {
+		//初期化
+		if (mNeedInitState == true) {
+			mNeedInitState = false;
+			mMoveDirection = GetTargetLocalPosition(mWeight) - mFloor.transform.localPosition;
+		}
+
+		//
+		//処理
+		//
+
+		Vector3 lTargetLocalPosition = GetTargetLocalPosition(mWeight);
+
+
+		//方向転換のチェック
+		Vector3 lMoveDirection = lTargetLocalPosition - mFloor.transform.localPosition;
+		if (Vector3.Dot(lMoveDirection, mMoveDirection) <= 0.0f) {
+			mState = CState.cTurn;
+			Debug.Log("Turn");
+			return;
+		}
+		mMoveDirection = lMoveDirection;
+
+
+		//移動
+		mFloor.transform.localPosition = MovePosition(mFloor.transform.localPosition, lTargetLocalPosition, mMoveSpeed * Time.deltaTime);
+		if(mFloor.transform.localPosition == lTargetLocalPosition) {
+			mState = CState.cFromMoving;
+			return;
+		}
+	}
+
+	void UpdateTurn() {
+		//初期化
+		if (mNeedInitState == true) {
+			mNeedInitState = false;
+		}
+
+		//処理
+		if (mStateTime >= mTurnTime) {
+			mState = CState.cMoving;
+		}
+	}
+
+	Vector3 mMoveDirection;
+
+	Vector3 GetTargetLocalPosition(WeightManager.Weight aWeight) {
+		switch (aWeight) {
+			case WeightManager.Weight.flying:
+				return Vector3.up * mUpHeight;
+			case WeightManager.Weight.light:
+				return Vector3.zero;
+			case WeightManager.Weight.heavy:
+				return Vector3.down * mDownHeight;
+		}
+		Debug.LogError("ErrorWeight", this);
+		return Vector3.zero;
+	}
+
+	Vector3 MovePosition(Vector3 aFrom, Vector3 aTo, float aDistance) {
+		Vector3 lDir = aTo - aFrom;
+		if (lDir.magnitude < aDistance) return aTo;
+		return aFrom + lDir.normalized * aDistance;
+	}
+
+	[SerializeField, Tooltip("重さ")]
+	WeightManager.Weight mWeight;
 
 
 #if UNITY_EDITOR
@@ -62,7 +218,13 @@ public class MoveFloor : MonoBehaviour {
 
 		//真ん中
 		for (int i = mUpHeight - 1; i > -mDownHeight; i--) {
-			GameObject lMiddle = EditorUtility.InstantiatePrefab(mRailMiddlePrefab, mRailModel);
+			GameObject lMiddle;
+			if (i == 0) {
+				lMiddle = EditorUtility.InstantiatePrefab(mRailOnLightPrefab, mRailModel);
+			}
+			else {
+				lMiddle = EditorUtility.InstantiatePrefab(mRailMiddlePrefab, mRailModel);
+			}
 			lMiddle.transform.localPosition = Vector3.up * i;
 		}
 
@@ -95,7 +257,19 @@ public class MoveFloor : MonoBehaviour {
 	int mDownHeight;
 
 
-	[SerializeField, EditOnPrefab, Tooltip("床のコライダー"), Space(16)]
+	[SerializeField, EditOnPrefab, Tooltip("床が1秒間に動く距離"), Space(16)]
+	float mMoveSpeed = 1.0f;
+
+	[SerializeField, EditOnPrefab, Tooltip("止まっている状態から、動き始めるまでの時間")]
+	float mStayTime = 1.0f;
+
+	[SerializeField, EditOnPrefab, Tooltip("逆に動くときの、方向転換で止まる時間")]
+	float mTurnTime = 1.0f;
+
+	[SerializeField, EditOnPrefab, Tooltip("床"), Space(16)]
+	GameObject mFloor;
+
+	[SerializeField, EditOnPrefab, Tooltip("床のコライダー")]
 	GameObject mFloorCollider;
 
 	[SerializeField, EditOnPrefab, Tooltip("床の全てのモデルの親")]
@@ -119,6 +293,9 @@ public class MoveFloor : MonoBehaviour {
 
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("レールの真ん中モデル")]
 	GameObject mRailMiddlePrefab;
+
+	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("レールの重さ1の時のモデル")]
+	GameObject mRailOnLightPrefab;
 
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("レールの下端のモデル")]
 	GameObject mRailBottomPrefab;
