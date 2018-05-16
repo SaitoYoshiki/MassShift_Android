@@ -117,16 +117,21 @@ public class MoveFloor : MonoBehaviour {
 
 
 		//方向転換のチェック
+		//
+
 		Vector3 lMoveDirection = lTargetLocalPosition - mFloor.transform.localPosition;
-		if (Vector3.Dot(lMoveDirection, mMoveDirection) <= 0.0f) {
+
+		//進行方向が逆向きなら
+		if (Vector3.Dot(lMoveDirection, mMoveDirection) < 0.0f) {
 			mState = CState.cTurn;
-			Debug.Log("Turn");
 			return;
 		}
 		mMoveDirection = lMoveDirection;
 
 
 		//移動
+		//
+
 		mFloor.transform.localPosition = MovePosition(mFloor.transform.localPosition, lTargetLocalPosition, mMoveSpeed * Time.deltaTime);
 		if(mFloor.transform.localPosition == lTargetLocalPosition) {
 			mState = CState.cFromMoving;
@@ -167,8 +172,8 @@ public class MoveFloor : MonoBehaviour {
 		return aFrom + lDir.normalized * aDistance;
 	}
 
-	[SerializeField, Tooltip("重さ")]
-	WeightManager.Weight mWeight;
+	[Tooltip("重さ（仮）")]
+	public WeightManager.Weight mWeight;
 
 
 #if UNITY_EDITOR
