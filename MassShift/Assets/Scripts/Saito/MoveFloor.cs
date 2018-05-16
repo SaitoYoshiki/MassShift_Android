@@ -83,10 +83,14 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
+			mMoveDirection = GetTargetLocalPosition(mWeight) - mFloor.transform.localPosition;
 		}
 
 		//処理
-		if(mStateTime >= mStayTime) {
+
+		mFloorModel.transform.localPosition = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp);
+
+		if (mStateTime >= mStayTime) {
 			mState = CState.cMoving;
 		}
 	}
@@ -98,6 +102,9 @@ public class MoveFloor : MonoBehaviour {
 		}
 
 		//処理
+
+		mFloorModel.transform.localPosition = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp);
+
 		if (mStateTime >= mStayTime) {
 			mState = CState.cStay;
 		}
@@ -147,6 +154,9 @@ public class MoveFloor : MonoBehaviour {
 		}
 
 		//処理
+
+		mFloorModel.transform.localPosition = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp * 0.5f);
+
 		if (mStateTime >= mTurnTime) {
 			mState = CState.cMoving;
 		}
@@ -173,8 +183,20 @@ public class MoveFloor : MonoBehaviour {
 		return aFrom + lDir.normalized * aDistance;
 	}
 
+	Vector3 GetFloorPositionAnimation(float aNowTime, float aEndTime, int aHz, float aAmp) {
+		if (aNowTime >= aEndTime) return Vector3.zero;
+		float lRad = (aNowTime % (1.0f / aHz) ) * (aHz) * 2 * Mathf.PI;
+		return Vector3.up * Mathf.Sin(lRad) * aAmp;
+	}
+
 	[Tooltip("重さ（仮）")]
 	public WeightManager.Weight mWeight;
+
+	[SerializeField, Tooltip("振動数")]
+	int mHz = 10;
+
+	[SerializeField, Tooltip("強さ")]
+	float mAmp = 0.01f;
 
 
 #if UNITY_EDITOR
