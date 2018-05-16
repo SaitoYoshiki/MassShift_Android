@@ -231,11 +231,11 @@ public class Goal : MonoBehaviour {
 		//ランプ
 		for (int i = 0; i < mButtonList.Count; i++) {
 			GameObject lLamp = EditorUtility.InstantiatePrefab(mLampPrefab, mLampModel);
-			lLamp.transform.localPosition = mLampPosition.transform.localPosition + Vector3.down * mLampInterval * i;
+			lLamp.transform.localPosition = mLampBasePosition + Vector3.down * mLampInterval * i;
 		}
 
 		//土台
-		Vector3 lBase = mLampPosition.transform.localPosition;
+		Vector3 lBase = mLampBasePosition;
 
 		//上端
 		GameObject lTop = EditorUtility.InstantiatePrefab(mLampTopPrefab, mLampModel);
@@ -307,7 +307,7 @@ public class Goal : MonoBehaviour {
 	GameObject mGoalTrigger;
 
 	[SerializeField, EditOnPrefab, Tooltip("ランプを配置する基準となる")]
-	GameObject mLampPosition;
+	Vector3 mLampBasePosition;
 
 	[SerializeField, EditOnPrefab, Tooltip("ランプ全てのモデルの親")]
 	GameObject mLampModel;
