@@ -88,7 +88,8 @@ public class MoveFloor : MonoBehaviour {
 
 		//処理
 
-		mFloorModel.transform.localPosition = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp);
+		Vector3 lVibration = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp);
+		VibrationFloor(lVibration);
 
 		if (mStateTime >= mStayTime) {
 			mState = CState.cMoving;
@@ -103,7 +104,8 @@ public class MoveFloor : MonoBehaviour {
 
 		//処理
 
-		mFloorModel.transform.localPosition = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp);
+		Vector3 lVibration = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp);
+		VibrationFloor(lVibration);
 
 		if (mStateTime >= mStayTime) {
 			mState = CState.cStay;
@@ -140,7 +142,9 @@ public class MoveFloor : MonoBehaviour {
 		//移動
 		//
 
-		mFloor.transform.localPosition = MovePosition(mFloor.transform.localPosition, lTargetLocalPosition, mMoveSpeed * Time.deltaTime);
+		Vector3 lLocalPosition = MovePosition(mFloor.transform.localPosition, lTargetLocalPosition, mMoveSpeed * Time.deltaTime);
+		MoveMoveFloor(lLocalPosition);
+
 		if(mFloor.transform.localPosition == lTargetLocalPosition) {
 			mState = CState.cFromMoving;
 			return;
@@ -155,7 +159,8 @@ public class MoveFloor : MonoBehaviour {
 
 		//処理
 
-		mFloorModel.transform.localPosition = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp * 0.5f);
+		Vector3 lVibration = GetFloorPositionAnimation(mStateTime, mStayTime, mHz, mAmp * 0.25f);
+		VibrationFloor(lVibration);
 
 		if (mStateTime >= mTurnTime) {
 			mState = CState.cMoving;
@@ -181,6 +186,12 @@ public class MoveFloor : MonoBehaviour {
 		Vector3 lDir = aTo - aFrom;
 		if (lDir.magnitude < aDistance) return aTo;
 		return aFrom + lDir.normalized * aDistance;
+	}
+	void MoveMoveFloor(Vector3 aToLocalPosition) {
+		mFloor.transform.localPosition = aToLocalPosition;
+	}
+	void VibrationFloor(Vector3 aToLocalPosition) {
+		mFloorModel.transform.localPosition = aToLocalPosition;
 	}
 
 	Vector3 GetFloorPositionAnimation(float aNowTime, float aEndTime, int aHz, float aAmp) {
