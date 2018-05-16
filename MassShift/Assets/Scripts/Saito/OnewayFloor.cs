@@ -42,8 +42,6 @@ public class OnewayFloor : MonoBehaviour {
 		cUp,	//上方向にすり抜けられる
 		cDown	//下方向にすり抜けられる
 	}
-	[SerializeField, Tooltip("すり抜けられる方向")]
-	CDirection mDirection;
 
 	//その方向にすり抜けられるか
 	public bool IsThrough(Vector3 aVec, GameObject aGameObject) {
@@ -123,6 +121,10 @@ public class OnewayFloor : MonoBehaviour {
 	}
 
 #endif
+
+
+	[SerializeField, Tooltip("すり抜けられる方向")]
+	CDirection mDirection;
 
 	[SerializeField, Tooltip("床の幅")]
 	int mWidth;
