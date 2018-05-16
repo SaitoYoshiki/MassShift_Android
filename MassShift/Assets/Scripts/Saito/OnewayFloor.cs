@@ -106,7 +106,16 @@ public class OnewayFloor : MonoBehaviour {
 
 
 		//コライダーの大きさ変更
-		mFloorCollider.transform.localScale = new Vector3(mWidth, 1.0f, 1.0f);
+		mFloorCollider.transform.localScale = new Vector3(mWidth, mFloorCollider.transform.localScale.y, mFloorCollider.transform.localScale.z);
+
+		switch(mDirection) {
+			case CDirection.cUp:
+				transform.rotation = Quaternion.identity;
+				break;
+			case CDirection.cDown:
+				transform.rotation = Quaternion.Euler(0.0f, 0.0f, 180.0f);
+				break;
+		}
 	}
 
 	[ContextMenu("Resize")]
