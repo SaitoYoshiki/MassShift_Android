@@ -6,13 +6,35 @@ public class OnewayFloor : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		UpdateInObject();
 	}
+
+
+	void UpdateInObject() {
+		mInObjectList = GetInObject();
+	}
+
+	List<GameObject> GetInObject() {
+
+		var l = new List<GameObject>();
+
+		LayerMask lMask = LayerMask.GetMask(new string[] { "Player", "Box" });
+		var rc = Physics.OverlapBox(mFloorCollider.transform.position, mFloorCollider.transform.lossyScale / 2.0f, mFloorCollider.transform.rotation, lMask);
+
+		foreach (var r in rc) {
+			l.Add(r.gameObject);
+		}
+
+		return l;
+	}
+
+	[SerializeField, Disable]
+	List<GameObject> mInObjectList = new List<GameObject>();	//めり込んでいるオブジェクト
 
 
 	enum CDirection {
@@ -24,6 +46,14 @@ public class OnewayFloor : MonoBehaviour {
 	CDirection mDirection;
 
 	//その方向にすり抜けられるか
+	public bool IsThrough(Vector3 aVec, GameObject aGameObject) {
+		//そのオブジェクトがすり抜け床にめり込んでいたら、自由に動ける
+		if (mInObjectList.Contains(aGameObject)) {
+			return true;
+		}
+		return IsThrough(mDirection, aVec);
+	}
+
 	public bool IsThrough(Vector3 aVec) {
 		return IsThrough(mDirection, aVec);
 	}
