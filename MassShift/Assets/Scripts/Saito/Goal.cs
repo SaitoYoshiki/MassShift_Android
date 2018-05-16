@@ -64,25 +64,23 @@ public class Goal : MonoBehaviour {
 	//ランプを点灯させる
 	void TurnLamp() {
 
-		string lMatName = mLampMaterialName + " (Instance)";
-
 		for (int i = 0; i < ButtonOnCount(); i++) {
-			ChangeMaterialColor(mLampList[i], lMatName, "_EmissionColor", mLampOnEmission);
+			ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOnEmission);
 		}
 
 		for (int i = ButtonOnCount(); i < mButtonList.Count; i++) {
-			ChangeMaterialColor(mLampList[i], lMatName, "_EmissionColor", mLampOffEmission);
+			ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOffEmission);
 		}
 	}
 
-	void ChangeMaterialColor(GameObject aGameObject, string aMaterialName, string aPropertyName, Color aColor) {
+	void ChangeMaterialColor(GameObject aGameObject, Material aMaterial, string aPropertyName, Color aColor) {
 
 		Renderer[] renderers = aGameObject.GetComponentsInChildren<Renderer>();
 		foreach(var r in renderers) {
 			Material[] materials = r.materials;
 			bool lIsChange = false;
 			foreach(var m in materials) {
-				if(m.name == aMaterialName) {
+				if(m.name == aMaterial.name + " (Instance)") {
 					lIsChange = true;
 					m.SetColor(aPropertyName, aColor);
 				}
@@ -312,8 +310,8 @@ public class Goal : MonoBehaviour {
 	[SerializeField, EditOnPrefab, Tooltip("ランプ全てのモデルの親")]
 	GameObject mLampModel;
 
-	[SerializeField, EditOnPrefab, Tooltip("色を変更するライトのマテリアル名")]
-	string mLampMaterialName;
+	[SerializeField, EditOnPrefab, Tooltip("色を変更するライトのマテリアル")]
+	Material mLampMaterial;
 
 	[SerializeField, EditOnPrefab, ColorUsage(false, true, 0f, 8f, 0.125f, 3f), Tooltip("オンの時のライトのエミッション")]
 	Color mLampOnEmission;
