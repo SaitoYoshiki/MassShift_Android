@@ -65,29 +65,11 @@ public class Goal : MonoBehaviour {
 	void TurnLamp() {
 
 		for (int i = 0; i < ButtonOnCount(); i++) {
-			ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOnEmission);
+			Utility.ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOnEmission);
 		}
 
 		for (int i = ButtonOnCount(); i < mButtonList.Count; i++) {
-			ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOffEmission);
-		}
-	}
-
-	void ChangeMaterialColor(GameObject aGameObject, Material aMaterial, string aPropertyName, Color aColor) {
-
-		Renderer[] renderers = aGameObject.GetComponentsInChildren<Renderer>();
-		foreach(var r in renderers) {
-			Material[] materials = r.materials;
-			bool lIsChange = false;
-			foreach(var m in materials) {
-				if(m.name == aMaterial.name + " (Instance)") {
-					lIsChange = true;
-					m.SetColor(aPropertyName, aColor);
-				}
-			}
-			if(lIsChange) {
-				r.materials = materials;
-			}
+			Utility.ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOffEmission);
 		}
 	}
 
