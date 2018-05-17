@@ -208,6 +208,7 @@ public class MoveFloor : MonoBehaviour {
 
 		//現在のモデルの削除
 		for (int i = mFloorModel.transform.childCount - 1; i >= 0; i--) {
+			if (EditorUtility.IsInPrefab(mFloorModel.transform.GetChild(i).gameObject, EditorUtility.GetPrefab(gameObject))) continue;
 			EditorUtility.DestroyGameObject(mFloorModel.transform.GetChild(i).gameObject);
 		}
 
@@ -237,6 +238,7 @@ public class MoveFloor : MonoBehaviour {
 	void ResizeRail() {
 		//現在のモデルの削除
 		for (int i = mRailModel.transform.childCount - 1; i >= 0; i--) {
+			if (EditorUtility.IsInPrefab(mRailModel.transform.GetChild(i).gameObject, EditorUtility.GetPrefab(gameObject))) continue;
 			EditorUtility.DestroyGameObject(mRailModel.transform.GetChild(i).gameObject);
 		}
 

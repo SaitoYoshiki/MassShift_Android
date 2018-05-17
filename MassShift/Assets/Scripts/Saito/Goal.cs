@@ -65,11 +65,11 @@ public class Goal : MonoBehaviour {
 	void TurnLamp() {
 
 		for (int i = 0; i < ButtonOnCount(); i++) {
-			Utility.ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOnEmission);
+			Utility.ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOnEmission * mLampOnEmissionPower);
 		}
 
 		for (int i = ButtonOnCount(); i < mButtonList.Count; i++) {
-			Utility.ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOffEmission);
+			Utility.ChangeMaterialColor(mLampList[i], mLampMaterial, "_EmissionColor", mLampOffEmission * mLampOffEmissionPower);
 		}
 	}
 
@@ -195,6 +195,8 @@ public class Goal : MonoBehaviour {
 	}
 
 #if UNITY_EDITOR
+
+	[ContextMenu("Resize")]
 	public void Resize() {
 
 		if (this == null) return;
@@ -203,6 +205,7 @@ public class Goal : MonoBehaviour {
 
 		//現在のモデルの削除
 		for (int i = mLampModel.transform.childCount - 1; i >= 0; i--) {
+			if (EditorUtility.IsInPrefab(mLampModel.transform.GetChild(i).gameObject, EditorUtility.GetPrefab(gameObject))) continue;
 			EditorUtility.DestroyGameObject(mLampModel.transform.GetChild(i).gameObject);
 		}
 
@@ -222,8 +225,7 @@ public class Goal : MonoBehaviour {
 		lTop.transform.localPosition = lBase;
 
 		//真ん中
-		for (int i = 0; i < mButtonList.Count - 1; i++)
-		{
+		for (int i = 0; i < mButtonList.Count - 1; i++) {
 			lBase += Vector3.down * mLampInterval;
 			GameObject lMid = EditorUtility.InstantiatePrefab(mLampMidPrefab, mLampModel);
 			lMid.transform.localPosition = lBase - Vector3.down * mLampInterval * 0.5f;
@@ -236,7 +238,7 @@ public class Goal : MonoBehaviour {
 
 
 	private void OnValidate() {
-		UnityEditor.EditorApplication.delayCall += Resize;
+		//UnityEditor.EditorApplication.delayCall += Resize;
 	}
 
 #endif
@@ -295,9 +297,15 @@ public class Goal : MonoBehaviour {
 	[SerializeField, EditOnPrefab, Tooltip("色を変更するライトのマテリアル")]
 	Material mLampMaterial;
 
-	[SerializeField, EditOnPrefab, ColorUsage(false, true, 0f, 8f, 0.125f, 3f), Tooltip("オンの時のライトのエミッション")]
+	[SerializeField, EditOnPrefab, Tooltip("オンの時のライトのエミッション")]
 	Color mLampOnEmission;
 
-	[SerializeField, EditOnPrefab, ColorUsage(false, true, 0f, 8f, 0.125f, 3f), Tooltip("オフの時のライトのエミッション")]
+	[SerializeField, EditOnPrefab, Tooltip("オンの時のライトのエミッションの強さ")]
+	float mLampOnEmissionPower = 1.0f;
+
+	[SerializeField, EditOnPrefab, Tooltip("オフの時のライトのエミッション")]
 	Color mLampOffEmission;
+
+	[SerializeField, EditOnPrefab, Tooltip("オフの時のライトのエミッションの強さ")]
+	float mLampOffEmissionPower = 1.0f;
 }

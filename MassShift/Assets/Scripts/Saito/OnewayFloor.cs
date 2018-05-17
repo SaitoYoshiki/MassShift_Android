@@ -84,6 +84,7 @@ public class OnewayFloor : MonoBehaviour {
 
 		//現在のモデルの削除
 		for (int i = mFloorModel.transform.childCount - 1; i >= 0; i--) {
+			if (EditorUtility.IsInPrefab(mFloorModel.transform.GetChild(i).gameObject, EditorUtility.GetPrefab(gameObject))) continue;
 			EditorUtility.DestroyGameObject(mFloorModel.transform.GetChild(i).gameObject);
 		}
 
@@ -118,11 +119,31 @@ public class OnewayFloor : MonoBehaviour {
 		}
 	}
 
+	void ChangeMaterial() {
+
+		mLightMaterialDown.SetColor("_EmissionColor", mLightColorDown * mLightColorPowerDown);
+		mLightMaterialUp.SetColor("_EmissionColor", mLightColorUp * mLightColorPowerUp);
+
+		if (mDirection == CDirection.cUp) {
+			EditorUtility.ChangeMaterial(mFloorModel, mLightMaterialUp, mLightMaterialDown);
+		}
+		else {
+			EditorUtility.ChangeMaterial(mFloorModel, mLightMaterialDown, mLightMaterialUp);
+		}
+
+		UnityEditor.EditorUtility.SetDirty(mLightMaterialDown);
+		UnityEditor.EditorUtility.SetDirty(mLightMaterialUp);
+
+
+	}
+
 	[ContextMenu("Resize")]
 	void Resize() {
 		if (this == null) return;
 		if (EditorUtility.IsPrefab(gameObject)) return;
+		if (UnityEditor.EditorApplication.isPlaying) return;
 		ResizeFloor();
+		ChangeMaterial();
 	}
 
 	private void OnValidate() {
@@ -153,4 +174,22 @@ public class OnewayFloor : MonoBehaviour {
 
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("床の右端のモデル")]
 	GameObject mFloorRightPrefab;
+
+	[SerializeField, EditOnPrefab, Tooltip("上向きの時のマテリアル")]
+	Material mLightMaterialUp;
+
+	[SerializeField, EditOnPrefab, Tooltip("下向きの時のマテリアル")]
+	Material mLightMaterialDown;
+
+	[SerializeField, Tooltip("上向きの時の色")]
+	Color mLightColorUp;
+
+	[SerializeField, Tooltip("上向きの時の色の明るさ")]
+	float mLightColorPowerUp = 1.0f;
+
+	[SerializeField, Tooltip("下向きの時の色")]
+	Color mLightColorDown;
+
+	[SerializeField, Tooltip("下向きの時の色の明るさ")]
+	float mLightColorPowerDown = 1.0f;
 }
