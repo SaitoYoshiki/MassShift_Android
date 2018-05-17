@@ -23,7 +23,7 @@ public class TargetCursor : MonoBehaviour {
 		Vector3 prevObjPos = transform.position;
 
 		// マウス以外での移動
-		targetCursor.position += new Vector3(Input.GetAxis("SubHorizontal") * keyCtrlSensitivityH, Input.GetAxis("SubVertical") * keyCtrlSensitivityV, 0.0f);
+		targetCursor.position += new Vector3(Input.GetAxis("SubHorizontal") * keyCtrlSensitivityH, -Input.GetAxis("SubVertical") * keyCtrlSensitivityV, 0.0f);
 
 		// 位置が変化している場合
 		if (prevObjPos != targetCursor.position) {
