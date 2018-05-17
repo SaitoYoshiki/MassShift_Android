@@ -188,9 +188,11 @@ public class MoveFloor : MonoBehaviour {
 		return aFrom + lDir.normalized * aDistance;
 	}
 	void MoveMoveFloor(Vector3 aToLocalPosition) {
+		RotateGear(mFloor.transform.localPosition, aToLocalPosition);
 		mFloor.transform.localPosition = aToLocalPosition;
 	}
 	void VibrationFloor(Vector3 aToLocalPosition) {
+		RotateGear(mFloorModel.transform.localPosition, aToLocalPosition);
 		mFloorModel.transform.localPosition = aToLocalPosition;
 	}
 
@@ -198,6 +200,12 @@ public class MoveFloor : MonoBehaviour {
 		if (aNowTime >= aEndTime) return Vector3.zero;
 		float lRad = (aNowTime % (1.0f / aHz) ) * (aHz) * 2 * Mathf.PI;
 		return Vector3.up * Mathf.Sin(lRad) * aAmp;
+	}
+
+	void RotateGear(Vector3 aFrom, Vector3 aTo) {
+		float lDistance = aTo.y - aFrom.y;
+		mGearLeftModel.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, lDistance * -mGearRotateSpeed);
+		mGearRightModel.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, lDistance * mGearRotateSpeed);
 	}
 
 
@@ -360,4 +368,13 @@ public class MoveFloor : MonoBehaviour {
 
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("レールの下端のモデル")]
 	GameObject mRailBottomPrefab;
+
+	[SerializeField, EditOnPrefab, Tooltip("左の歯車")]
+	GameObject mGearLeftModel;
+
+	[SerializeField, EditOnPrefab, Tooltip("右の歯車")]
+	GameObject mGearRightModel;
+
+	[SerializeField, EditOnPrefab, Tooltip("移動距離に応じた、歯車の回る速度")]
+	float mGearRotateSpeed;
 }
