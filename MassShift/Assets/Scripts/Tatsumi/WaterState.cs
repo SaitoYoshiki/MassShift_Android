@@ -45,14 +45,12 @@ public class WaterState : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] List<float> inWaterSpdMin = new List<float>();
-	[SerializeField] List<float> inWaterSpdMax = new List<float>();
-	[SerializeField] List<float> outWaterSpdMin = new List<float>();
-	[SerializeField] List<float> outWaterSpdMax = new List<float>();
+	[SerializeField] List<float> inWaterMoveMax = new List<float>();	// 各重さレベルの入水時(常時)の最高移動量
+	[SerializeField] List<float> outWaterMoveMax = new List<float>();   // 各重さレベルの出水時(瞬間)の最高移動量
 
 	// Use this for initialization
-//	void Start () {}
-	
+	//	void Start () {}
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		isInWater = false;
@@ -60,8 +58,9 @@ public class WaterState : MonoBehaviour {
 			IsInWater = true;
 		}
 
-		// 水による浮上
+		// 水中の挙動
 		if (IsInWater) {
+			// 水による浮上
 			FloatWater();
 		}
 	}

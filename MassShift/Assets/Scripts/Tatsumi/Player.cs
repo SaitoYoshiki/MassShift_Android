@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
 		Debug.Log("Jump");
 
 		// 左右方向の加速度を削除
-		MoveMng.StopMoveHorizontal();
+		MoveMng.StopMoveHorizontalAll();
 
 		// 上方向へ加速
 //		float jumpGravityForce = (0.5f * Mathf.Pow(jumpTime * 0.5f, 2) + jumpHeight);	// ジャンプ中の重力加速度
