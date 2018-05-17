@@ -23,6 +23,16 @@ public class EditorUtility {
 				return false;
 		}
 	}
+	public static bool IsInPrefab(GameObject aObject, GameObject aPrefab) {
+		var g = PrefabUtility.FindPrefabRoot(aObject);
+		if (g == null) return false;
+		return aPrefab == g;
+	}
+	public static GameObject GetPrefab(GameObject aObject) {
+		var g = PrefabUtility.FindPrefabRoot(aObject);
+		return g as GameObject;
+	}
+
 
 	public static GameObject InstantiatePrefab(GameObject aPrefab, GameObject aParent) {
 		GameObject go = GameObject.Instantiate(aPrefab, aParent.transform);
@@ -33,6 +43,28 @@ public class EditorUtility {
 	public static void DestroyGameObject(GameObject aGameObject) {
 		UnityEditor.Undo.DestroyObjectImmediate(aGameObject);
 	}
+
+	public static void ChangeMaterial(GameObject aGameObject, Material aMaterial, Material aTarget) {
+
+		Renderer[] renderers = aGameObject.GetComponentsInChildren<Renderer>();
+		foreach (var r in renderers)
+		{
+
+			Material[] materials = r.sharedMaterials;
+			bool lIsChange = false;
+			for (int i = 0; i < materials.Length; i++) {
+				if (materials[i] == aTarget || aTarget == null) {
+					lIsChange = true;
+					materials[i] = aMaterial;
+				}
+			}
+			if (lIsChange) {
+				r.sharedMaterials = materials;
+			}
+		}
+	}
+
+
 
 #endif
 }
