@@ -59,6 +59,7 @@ public class Button : MonoBehaviour {
 		Utility.ChangeMaterialColor(mLightModel, mLightMaterial, "_EmissionColor", aColor);
 	}
 
+#if UNITY_EDITOR
 
 	private void OnValidate()
 	{
@@ -77,6 +78,8 @@ public class Button : MonoBehaviour {
 				break;
 		}
 	}
+
+#endif
 
 
 	[SerializeField, Tooltip("押されるのにかかる時間"), EditOnPrefab]
