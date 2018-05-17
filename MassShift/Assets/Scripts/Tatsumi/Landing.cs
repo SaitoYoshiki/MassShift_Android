@@ -5,7 +5,12 @@ using UnityEngine;
 public class Landing : MonoBehaviour {
 	[SerializeField] Transform landingCol = null;    // 接地判定用オブジェクト
 	[SerializeField] bool isLanding = false;
-	[SerializeField] List<Collider> landColList = new List<Collider>();	// 接地しているオブジェクト
+	[SerializeField] List<Collider> landColList = new List<Collider>(); // 接地しているオブジェクト
+
+	[SerializeField] bool upCollide = false;
+	[SerializeField] bool downCollide = false;
+	[SerializeField] bool leftCollide = false;
+	[SerializeField] bool rightCollide = false;
 
 	WeightManager weightMng = null;
 	WeightManager WeightMng {
@@ -49,7 +54,8 @@ public class Landing : MonoBehaviour {
 			// 接地時
 			if (value == true) {
 				// 縦方向の移動を停止
-				MoveMng.StopMoveVirtical();
+				MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
+				MoveMng.StopMoveVirtical(MoveManager.MoveType.gravity);
 
 				// ジャンプによる通常の重力加速度停止を解除
 				MoveMng.GravityCustomTime = 0.0f;
@@ -119,7 +125,7 @@ public class Landing : MonoBehaviour {
 		}
 	}
 
-	// 接触時にその接触が接地方向への接触かを判定
+	// 接触時にその接触が指定方向への接触かを判定
 	public bool CollisionLanding(Vector3 _move) {
 		float dot = Vector3.Dot(landingCol.position.normalized, _move.normalized);
 

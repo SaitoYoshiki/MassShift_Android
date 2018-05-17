@@ -13,14 +13,18 @@ public class Support {
 			return hitInfoList;
 		}
 
-		// 移動量に0があると判定されないので最小単位で増加
-		_move = new Vector3(Mathf.Max(_move.x, 0.1f), Mathf.Max(_move.y, 0.1f), Mathf.Max(_move.z, 0.1f));
+		// 移動量に0があると判定されないので小単位で増加
+		_move = new Vector3(
+			Mathf.Max(Mathf.Abs(_move.x), float.Epsilon) * Mathf.Sign(_move.x),
+			Mathf.Max(Mathf.Abs(_move.y), float.Epsilon) * Mathf.Sign(_move.y),
+			Mathf.Max(Mathf.Abs(_move.z), float.Epsilon) * Mathf.Sign(_move.z));
 
 		// コライダーを特定し衝突を検知
 		System.Type colType = _col.GetType();
 		if (colType == typeof(BoxCollider)) {
 			BoxCollider boxCol = (BoxCollider)_col;
 			hitInfoList.AddRange(Physics.BoxCastAll(boxCol.bounds.center, boxCol.bounds.size * 0.5f, _move.normalized, boxCol.transform.rotation, _move.magnitude, _mask));
+//			Debug.LogError("sap _move:" + _move);
 		} else if (colType == typeof(SphereCollider)) {
 			SphereCollider sphereCol = (SphereCollider)_col;
 			hitInfoList.AddRange(Physics.SphereCastAll(sphereCol.bounds.center, sphereCol.radius, _move.normalized, _move.magnitude, _mask));
