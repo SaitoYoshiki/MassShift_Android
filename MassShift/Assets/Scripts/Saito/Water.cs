@@ -41,6 +41,7 @@ public class Water : MonoBehaviour {
 	private void OnValidate() {
 		if (this == null) return;
 		if (EditorUtility.IsPrefab(gameObject)) return;
+		Resize();
 	}
 
 #endif
