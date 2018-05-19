@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 95037eee72aeadc4b99d565891049e19
-timeCreated: 1526381881
+guid: d0a728c754379a7499967f57ed47b06c
+timeCreated: 1526729574
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,27 +11,30 @@ ModelImporter:
     100006: pPipe6
     100008: pPipe7
     100010: pSphere16
+    100012: pSphere31
+    100014: transform165
+    100016: transform166
     400000: //RootNode
     400002: pCylinder47
     400004: pPipe5
     400006: pPipe6
     400008: pPipe7
     400010: pSphere16
-    2300000: pCylinder47
-    2300002: pPipe5
-    2300004: pPipe6
-    2300006: pPipe7
-    2300008: pSphere16
-    3300000: pCylinder47
-    3300002: pPipe5
-    3300004: pPipe6
-    3300006: pPipe7
-    3300008: pSphere16
+    400012: pSphere31
+    400014: transform165
+    400016: transform166
+    2300000: pPipe5
+    2300002: pPipe6
+    2300004: pPipe7
+    2300006: pSphere31
+    3300000: pPipe5
+    3300002: pPipe6
+    3300004: pPipe7
+    3300006: pSphere31
     4300000: pPipe5
-    4300002: pCylinder47
-    4300004: pSphere16
-    4300006: pPipe6
-    4300008: pPipe7
+    4300002: pPipe6
+    4300004: pPipe7
+    4300006: pSphere31
     9500000: //RootNode
   materials:
     importMaterials: 1
