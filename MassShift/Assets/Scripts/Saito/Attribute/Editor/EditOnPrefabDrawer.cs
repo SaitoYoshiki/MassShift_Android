@@ -16,7 +16,7 @@ public class EditOnPrefabDrawer : PropertyDrawer
 		//もしプレハブなら、編集可能
 		if (EditorUtility.IsPrefab(property.serializedObject.targetObject))
 		{
-			EditorGUI.PropertyField(position, property, label);
+			EditorGUI.PropertyField(position, property, label, true);
 		}
 		//プレハブでなく、インスタンスなら
 		else
@@ -27,7 +27,7 @@ public class EditOnPrefabDrawer : PropertyDrawer
 			using (new EditorGUI.DisabledGroupScope(true))
 			{
 				//編集不可能にして表示する
-				EditorGUI.PropertyField(position, property, label);
+				EditorGUI.PropertyField(position, property, label, true);
 			}
 		}
 	}

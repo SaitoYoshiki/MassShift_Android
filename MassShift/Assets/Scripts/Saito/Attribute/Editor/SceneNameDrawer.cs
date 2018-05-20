@@ -9,6 +9,7 @@ public class SceneNameDrawer : PropertyDrawer
 {
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 	{
+
 		property.serializedObject.Update();
 
 		var lSceneNames = new List<string>();
