@@ -10,8 +10,6 @@ public class SceneNameDrawer : PropertyDrawer
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 	{
 
-		property.serializedObject.Update();
-
 		var lSceneNames = new List<string>();
 
 		//ビルド設定に含まれている、シーン一覧を取得
@@ -40,7 +38,6 @@ public class SceneNameDrawer : PropertyDrawer
 		lPopupIndex = EditorGUI.Popup(position, label.text, lPopupIndex, lSceneNames.ToArray());
 
 		property.stringValue = lSceneNames[lPopupIndex];
-		property.serializedObject.ApplyModifiedProperties();
 	}
 
 	int GetSceneIndex(string aSceneName, string[] aScenes) {
