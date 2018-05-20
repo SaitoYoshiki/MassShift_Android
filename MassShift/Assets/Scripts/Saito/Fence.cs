@@ -67,8 +67,7 @@ public class Fence : MonoBehaviour
 			mi.transform.localPosition = GetModelPosition(i);
 		}
 
-		switch (mDirection)
-		{
+		switch (mDirection) {
 			case CDirection.cUp:
 				transform.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
 				break;
