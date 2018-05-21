@@ -57,6 +57,7 @@ public class StageBackGround : MonoBehaviour {
 				lGameObject.transform.localScale = new Vector3(mModelScale, mModelScale, 1.0f);
 			}
 		}
+
 	}
 
 	[ContextMenu("Resize")]
