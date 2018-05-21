@@ -31,7 +31,7 @@ public class Shooter : MonoBehaviour {
 	}
 
 	void DragAim() {
-		if (fromMng = null) {
+		if (fromMng == null) {
 			// 移し元選択	
 			if (Input.GetAxis("Shot0") > 0.0f) {
 				RaycastHit hitInfo;

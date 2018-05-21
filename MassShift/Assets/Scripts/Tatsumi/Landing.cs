@@ -4,8 +4,52 @@ using UnityEngine;
 
 public class Landing : MonoBehaviour {
 	[SerializeField] Transform landingCol = null;    // 接地判定用オブジェクト
+
 	[SerializeField] bool isLanding = false;
-	[SerializeField] List<Collider> landColList = new List<Collider>(); // 接地しているオブジェクト
+	public bool IsLanding {
+		get {
+			return isLanding;
+		}
+		set {
+			// 値に変化がない
+			if (isLanding == value) return;
+
+			// 値を変更
+			isLanding = value;
+
+			Debug.Log("isLanding " + value + " " + name);
+
+			// 接地時
+			if (value == true) {
+				// 縦方向の移動を停止
+				MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
+				MoveMng.StopMoveVirtical(MoveManager.MoveType.gravity);
+
+				// ジャンプによる通常の重力加速度停止を解除
+				MoveMng.GravityCustomTime = 0.0f;
+			}
+		}
+	}
+
+	[SerializeField] bool isExtrusionLanding;
+	public bool IsExtrusionLanding {
+		get {
+			return isExtrusionLanding;
+		}
+		set {
+			isExtrusionLanding = value;
+
+			// 押し出し接地時
+			if (value == true) {
+				// 縦方向の移動を停止
+				MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
+				MoveMng.StopMoveVirtical(MoveManager.MoveType.gravity);
+			}
+		}
+	}
+
+	[SerializeField] List<Collider> landColList = new List<Collider>();				// 接地しているオブジェクト
+	[SerializeField] List<Collider> landExtrusionColList = new List<Collider>();	// 押し出しによって接地しているオブジェクト
 
 	[SerializeField] bool upCollide = false;
 	[SerializeField] bool downCollide = false;
@@ -38,31 +82,6 @@ public class Landing : MonoBehaviour {
 		}
 	}
 
-	public bool IsLanding {
-		get {
-			return isLanding;
-		}
-		set {
-			// 値に変化がない
-			if (isLanding == value) return;
-
-			// 値を変更
-			isLanding = value;
-
-			Debug.Log("isLanding " + value);
-
-			// 接地時
-			if (value == true) {
-				// 縦方向の移動を停止
-				MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
-				MoveMng.StopMoveVirtical(MoveManager.MoveType.gravity);
-
-				// ジャンプによる通常の重力加速度停止を解除
-				MoveMng.GravityCustomTime = 0.0f;
-			}
-		}
-	}
-
 	MoveManager moveMng = null;
 	MoveManager MoveMng {
 		get {
@@ -86,6 +105,26 @@ public class Landing : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		if ((IsLanding) || (IsExtrusionLanding)) {
+			CheckLandingFalse();
+		}
+	}
+
+	// 接触時にその接触が指定方向への接触かを判定
+	public bool GetIsLanding(Vector3 _move) {
+		if ((_move == Vector3.zero) || (landingCol.localPosition == Vector3.zero)) return false;
+
+		float dot = Vector3.Dot((Vector3.up * WeightMng.WeightForce).normalized, _move.normalized);
+//		Debug.LogError(landingCol.localPosition + " " + _move + " " + (dot < 0.0f));
+
+		// 指定方向の反対方向への接触
+		if (dot < 0.0f) return false;
+
+		// 指定方向への接触
+		return true;
+	}
+
+	void CheckLandingFalse() {
 		landColList.Clear();
 
 		// 接地方向に移動していなければ接地していない
@@ -121,21 +160,48 @@ public class Landing : MonoBehaviour {
 		// 接地しているオブジェクトが存在しなければ離地
 		if (landColList.Count <= 0) {
 			IsLanding = false;
+			IsExtrusionLanding = false;
 			Debug.Log("離地");
 		}
 	}
 
-	// 接触時にその接触が指定方向への接触かを判定
-	public bool CollisionLanding(Vector3 _move) {
-		float dot = Vector3.Dot(landingCol.position.normalized, _move.normalized);
+	void CheckExtrusionLandingFalse() {
+		landExtrusionColList.Clear();
 
-		// 接地方向の反対方向への接触
-		if (dot < 0.0f) return false;
+		// 接地方向の反対方向に移動していなければ接地していない
+		if (WeightMng.WeightLv != WeightManager.Weight.flying) {
+			if (MoveMng.TotalMove.y < 0.0f) {
+				IsExtrusionLanding = false;
+				return;
+			}
+		} else {
+			if (MoveMng.TotalMove.y > 0.0f) {
+				IsExtrusionLanding = false;
+				return;
+			}
+		}
 
-		// 接地処理
-		IsLanding = true;
+		// 非接地側の判定オブジェクトを取得
+		if (MoveMng.GravityForce > 0.0f) {
+			landingCol = FourSideCol.BottomCol;
+		} else {
+			landingCol = FourSideCol.TopCol;
+		}
 
-		// 接地方向への接触
-		return true;
+		// 離地判定
+		landExtrusionColList.AddRange(Physics.OverlapBox(landingCol.position, landingCol.localScale * 0.5f, landingCol.rotation, mask));
+
+		// 自身は反接地対象から除く
+		for (int idx = landExtrusionColList.Count - 1; idx >= 0; idx--) {
+			if (landExtrusionColList[idx].gameObject == gameObject) {
+				landExtrusionColList.RemoveAt(idx);
+			}
+		}
+
+		// 接地・反接地しているオブジェクトが存在しなければ離地
+		if (landExtrusionColList.Count <= 0) {
+			IsExtrusionLanding = false;
+			Debug.Log("Ext離地");
+		}
 	}
 }

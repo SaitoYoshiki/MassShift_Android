@@ -21,14 +21,19 @@ public class WeightManager : MonoBehaviour {
 		}
 		set {
 			weightLv = value;
+
+			// 通常の重力加速度設定に戻す
+			if (MoveMng) {
+				MoveMng.GravityCustomTime = 0.0f;
+			}
 		}
 	}
 
 	[SerializeField] float[] weightLvGravityForce = new float[3];
 
-	public float NowWeightForce {
+	public float WeightForce {
 		get {
-			return weightLvGravityForce[(int)WeightLv];
+			return weightLvGravityForce[(int)PileMaxWeightLv];
 		}
 	}
 
@@ -44,7 +49,44 @@ public class WeightManager : MonoBehaviour {
 			return moveMng;
 		}
 	}
-	
+
+	PileWeight pile = null;
+	PileWeight Pile {
+		get {
+			if (!pile) {
+				pile = GetComponent<PileWeight>();
+				if (!pile) {
+					Debug.LogError("PileWeightが見つかりませんでした。");
+				}
+			}
+			return pile;
+		}
+	}
+
+	// 自身に積み重なっている重さオブジェクトの中で最も重いオブジェクトの重さレベルを返す
+	[SerializeField] Weight pileMaxWeightLv;
+	public Weight PileMaxWeightLv {
+		get {
+			if (pileWeightUpdateTime < Time.time) {
+				pileWeightUpdateTime = Time.time;
+				pileMaxWeightLv = WeightLv;
+				if (Pile && MoveMng) {
+					List<Transform> pileObjs = Pile.GetPileBoxList(Vector3.up * MoveMng.GravityForce);
+					foreach (var pileObj in pileObjs) {
+						WeightManager pileObjWeightMng = pileObj.GetComponent<WeightManager>();
+						if (pileMaxWeightLv < pileObjWeightMng.weightLv) {
+							pileMaxWeightLv = pileObjWeightMng.weightLv;
+						}
+					}
+				}
+			}
+			return pileMaxWeightLv;
+		}
+	}
+
+	float pileWeightUpdateTime = 0.0f;
+	[SerializeField] int pileCount;
+		
 	// pull元からpush先へ指定数の重さレベルを移し、移す事に成功したレベル数を返す
 	public int PullWeight(WeightManager _from, int _num = 1) {
 		int cnt = 0;

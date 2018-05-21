@@ -14,10 +14,19 @@ public class WaterState : MonoBehaviour {
 
 			// 値を変更
 			isInWater = value;
+
+			// 入水時
+			if (isInWater) {
+				SetWaterMaxSpeed(weightLvEnterWaterMoveMax, weightLvStayWaterMoveMax);
+			}
+			// 出水時
+			else {
+				SetWaterMaxSpeed(weightLvExitWaterMoveMax, null);
+			}
 		}
 	}
 
-	[SerializeField] float waterFloatSpd = 1.0f;
+	[SerializeField] List<float> waterFloatSpd = new List<float>();	// 重さ毎の上昇量
 
 	WeightManager weightMng = null;
 	WeightManager WeightMng {
@@ -45,8 +54,10 @@ public class WaterState : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] List<float> inWaterMoveMax = new List<float>();	// 各重さレベルの入水時(常時)の最高移動量
-	[SerializeField] List<float> outWaterMoveMax = new List<float>();   // 各重さレベルの出水時(瞬間)の最高移動量
+	[SerializeField] List<float> weightLvEnterWaterMoveMax = new List<float>(3);	// 各重さレベルの入水時の最高移動量
+	[SerializeField] List<float> weightLvStayWaterMoveMax = new List<float>(3);		// 各重さレベルの入水中の最高移動量
+	[SerializeField] List<float> weightLvExitWaterMoveMax = new List<float>(3);		// 各重さレベルの出水時の最高移動量
+	[SerializeField] float cutOutSpd = 1.0f;										// 水面に浮く重さレベルでの入出水時に完全に移動を停止する基準移動量
 
 	// Use this for initialization
 	//	void Start () {}
@@ -61,13 +72,23 @@ public class WaterState : MonoBehaviour {
 		// 水中の挙動
 		if (IsInWater) {
 			// 水による浮上
-			FloatWater();
+			MoveMng.AddMove(new Vector3(0.0f, waterFloatSpd[(int)WeightMng.WeightLv], 0.0f));
 		}
 	}
 
-	void FloatWater() {
-		if (WeightMng.WeightLv < WeightManager.Weight.heavy) {
-			MoveMng.AddMove(new Vector3(0.0f, waterFloatSpd, 0.0f));
+	void SetWaterMaxSpeed(List<float> _oneTimeWeightLvMaxSpd, List<float> _stayWeightLvMaxSpd) {
+		// 水面に浮かぶ重さレベルでの入出水時に入出水速度が一定以下なら
+//		Debug.LogError("(" + MoveMng.TotalMove.magnitude + " <= " + cutOutSpd + ")");
+		if ((WeightMng.WeightLv == WeightManager.Weight.light) && (MoveMng.TotalMove.magnitude <= cutOutSpd)) {
+			// 停止
+			Debug.Log("WaterState CutOut");
+			MoveMng.OneTimeMaxSpd = 0.0f;
+		} else {
+			// 一度の更新に限り最大速度を制限
+			MoveMng.OneTimeMaxSpd = _oneTimeWeightLvMaxSpd[(int)WeightMng.WeightLv];
 		}
+
+		// 継続的に最大速度を制限
+		MoveMng.CustomWeightLvMaxSpd = _stayWeightLvMaxSpd;
 	}
 }

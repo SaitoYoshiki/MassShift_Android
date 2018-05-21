@@ -40,7 +40,7 @@ public class PileWeight : MonoBehaviour {
 		// 四辺コライダーを指定方向側と反対方向側に振り分け
 		DotFourSideCollider(_vec, forward, back);
 
-		// 指定方向側の四辺コライダーに接触している対象オブジェクトのコライダーをリスト化	
+		// 指定方向側の四辺コライダーに接触している対象オブジェクトのコライダーをリスト化
 		List<Collider> hitColList = new List<Collider>();
 		for (int idx = 0; idx < forward.Count; idx++) {
 			hitColList.AddRange(Physics.OverlapBox(forward[idx].transform.position, forward[idx].transform.localScale * 0.5f, forward[idx].transform.rotation, mask));
@@ -114,12 +114,12 @@ public class PileWeight : MonoBehaviour {
 		_back.Clear();
 
 		// 全ての四辺コライダーについて指定の方向に存在するか判定して振り分ける
-		for (int idx = 0; idx < fourSideCol.colList.Count; idx++) {
-			Vector3 vec = fourSideCol.colList[idx].transform.position - transform.position;
+		foreach (var sideCol in FourSideCol.colList) {
+			Vector3 vec = sideCol.transform.position - transform.position;
 			if (Vector3.Dot(vec, _vec) > 0.0f) {
-				_forward.Add(fourSideCol.colList[idx]);
+				_forward.Add(sideCol);
 			} else {
-				_back.Add(fourSideCol.colList[idx]);
+				_back.Add(sideCol);
 			}
 		}
 	}

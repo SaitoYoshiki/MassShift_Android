@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Support {
+	const float FloatMin = 0.0001f;
+
 	// 指定コライダーが接触するコライダーのリストを返す
 	static public List<RaycastHit> GetColliderHitInfoList(Collider _col, Vector3 _move, int _mask) {
 		List<RaycastHit> hitInfoList = new List<RaycastHit>();
@@ -15,9 +17,9 @@ public class Support {
 
 		// 移動量に0があると判定されないので小単位で増加
 		_move = new Vector3(
-			Mathf.Max(Mathf.Abs(_move.x), float.Epsilon) * Mathf.Sign(_move.x),
-			Mathf.Max(Mathf.Abs(_move.y), float.Epsilon) * Mathf.Sign(_move.y),
-			Mathf.Max(Mathf.Abs(_move.z), float.Epsilon) * Mathf.Sign(_move.z));
+			Mathf.Max(Mathf.Abs(_move.x), FloatMin) * Mathf.Sign(_move.x),
+			Mathf.Max(Mathf.Abs(_move.y), FloatMin) * Mathf.Sign(_move.y),
+			Mathf.Max(Mathf.Abs(_move.z), FloatMin) * Mathf.Sign(_move.z));
 
 		// コライダーを特定し衝突を検知
 		System.Type colType = _col.GetType();

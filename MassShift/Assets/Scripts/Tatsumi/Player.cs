@@ -68,6 +68,8 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	[SerializeField] Transform modelTransform = null;
+
 	// Use this for initialization
 	//	void Start () {}
 
@@ -92,6 +94,9 @@ public class Player : MonoBehaviour {
 
 		// 立ち止まり
 		WalkDown();
+
+		// モデル左右回転
+		RotateModel();
 	}
 
 	void Walk() {
@@ -119,20 +124,38 @@ public class Player : MonoBehaviour {
 		// ジャンプ可能でなければ
 		if (!jumpFlg) return;
 
-		// 接地中でなければ
-		if (!Land.IsLanding) return;
+		// ステージに接地していなければ
+		if (!Land.IsLanding) {
+			PileWeight pile = GetComponent<PileWeight>();
+			// 接地しているオブジェクトにも接地していなければ
+			List<Transform> pileObjs = pile.GetPileBoxList(new Vector3(0.0f, MoveMng.GravityForce, 0.0f));
+			bool stagePile = false;
+			foreach (var pileObj in pileObjs) {
+				Landing pileLand = pileObj.GetComponent<Landing>();
+				if (pileLand && (pileLand.IsLanding || pileLand.IsExtrusionLanding)) {
+					stagePile = true;
+				}
+			}
+			if ((pileObjs.Count == 0) || !stagePile) {
+				// ジャンプ不可
+				return;
+			}
+		}
 
 		// ジャンプ直後であれば
 //		if (jumpLimitTime > Time.time) return;
 
 		Debug.Log("Jump");
 
+		// 前回までの上下方向の加速度を削除
+		MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
+
 		// 左右方向の加速度を削除
 		MoveMng.StopMoveHorizontalAll();
 
 		// 上方向へ加速
 //		float jumpGravityForce = (0.5f * Mathf.Pow(jumpTime * 0.5f, 2) + jumpHeight);	// ジャンプ中の重力加速度
-		float jumpGravityForce = MoveMng.GravityForce;	// ジャンプ中の重力加速度
+		float jumpGravityForce = -10;	// ジャンプ中の重力加速度
 
 		MoveMng.AddMove(new Vector3(0.0f, (-jumpGravityForce * jumpTime * 0.5f), 0.0f));
 		Debug.Log(jumpGravityForce);
@@ -160,5 +183,9 @@ public class Player : MonoBehaviour {
 		// 減速
 		float moveX = (Mathf.Min((walkSpd / walkStopTime), Mathf.Abs(MoveMng.PrevMove.x))) * -Mathf.Sign(MoveMng.PrevMove.x);
 		MoveMng.AddMove(new Vector3(moveX, 0.0f, 0.0f));
+	}
+
+	void RotateModel() {
+
 	}
 }

@@ -62,8 +62,7 @@ public class DebugManager : MonoBehaviour {
 			SetActiveDebugObject();
 		}
 	}
-	[SerializeField]
-	DebugMode mode = DebugMode.drawInfo;
+	[SerializeField] DebugMode mode = DebugMode.drawInfo;
 	DebugMode Mode {
 		get {
 			return mode;
@@ -85,7 +84,16 @@ public class DebugManager : MonoBehaviour {
 	[SerializeField] float textDis = 30.0f;
 	[SerializeField] float textCharSize = 0.3f;
 	[SerializeField] Color textColor = Color.green;
-	[SerializeField, Multiline(10)] string manText = "DebugManual";
+	[SerializeField, Multiline(10)] string manText =
+		"DebugManual\n" +
+		"デバッグモード開始/終了:TAB二連押し" +
+		"オブジェクト選択:右クリック/S" +
+		"選択オブジェクト移動:F" +
+		"選択オブジェクトコピー:C" +
+		"コピーオブジェクト生成:V" +
+		"選択オブジェクト削除:R" +
+		"重さ変更:Q(減)/E(増)" +
+		"タイムスケール変更(長押し可):T(減)/Y(増)";
 
 	Dictionary<DebugCmd, KeyCode> debugKey = new Dictionary<DebugCmd, KeyCode>();   // 各操作のキーコード
 	TextMesh textMesh = null;
@@ -397,7 +405,7 @@ public class DebugManager : MonoBehaviour {
 		}
 
 		// デバッグターゲットの移動
-		if (Input.GetKey(KeyCode.F)) {
+		if (Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.Mouse1)) {
 			DebugTarget.position = debugCursor.position;
 		}
 
