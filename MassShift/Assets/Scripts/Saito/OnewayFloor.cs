@@ -147,7 +147,7 @@ public class OnewayFloor : MonoBehaviour {
 	}
 
 	private void OnValidate() {
-		UnityEditor.EditorApplication.delayCall += Resize;
+		//UnityEditor.EditorApplication.delayCall += Resize;
 	}
 
 #endif

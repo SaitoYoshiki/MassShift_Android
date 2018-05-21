@@ -13,7 +13,7 @@ public class Utility {
 			bool lIsChange = false;
 			foreach (var m in materials) {
 
-				if (m.name == aMaterial.name + " (Instance)") {
+				if (aMaterial == null ||  m.name == aMaterial.name + " (Instance)") {
 					lIsChange = true;
 					m.SetColor(aPropertyName, aColor);
 				}
@@ -22,5 +22,15 @@ public class Utility {
 				r.materials = materials;
 			}
 		}
+	}
+
+	public static bool IsJoystickConnect() {
+
+		foreach (var j in Input.GetJoystickNames()) {
+			if (j != "") {
+				return true;
+			}
+		}
+		return false;
 	}
 }

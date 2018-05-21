@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SceneNameTest : MonoBehaviour {
 
-	[SerializeField, SceneName]
-	string mSceneName;
+	[SceneName, SerializeField]
+	List<string> mSceneName;
+
 
 	// Use this for initialization
 	void Start () {

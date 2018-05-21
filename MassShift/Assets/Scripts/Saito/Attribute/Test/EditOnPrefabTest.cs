@@ -8,7 +8,7 @@ public class EditOnPrefabTest : MonoBehaviour {
 	GameObject mGameObject;
 
 	[SerializeField, PrefabOnly, EditOnPrefab]
-	GameObject mGameObjectPrefab;
+	List<GameObject> mGameObjectPrefab;
 
 	// Use this for initialization
 	void Start () {
