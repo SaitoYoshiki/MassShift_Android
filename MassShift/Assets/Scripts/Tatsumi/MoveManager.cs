@@ -329,6 +329,7 @@ public class MoveManager : MonoBehaviour {
 						nearHitinfo = hitInfo;
 					}
 
+					bool stopFlg = false;	// 移動量を削除するフラグ
 					/**/
 					nearHitinfo = hitInfo;
 					dis = cmpDis + ColMargin;
@@ -344,7 +345,6 @@ public class MoveManager : MonoBehaviour {
 
 					// 押し出せない場合
 					if (!canExtrusion) {
-						///Debug.LogError("押し出せない");
 						// 直前まで移動
 						///Debug.LogError("yMove bef pos:" + _moveCol.transform.position.x + ", " + _moveCol.transform.position.y);
 						//					UnityEditor.EditorApplication.isPaused = true;
@@ -358,15 +358,14 @@ public class MoveManager : MonoBehaviour {
 					// 押し出せる場合
 					else {
 						if (hitMoveMng && moveMng) {
-							// 上下移動量を削除
+							// 押し出し相手の上下移動量を削除
 							hitMoveMng.StopMoveVirtical(MoveType.prevMove);
 							hitMoveMng.StopMoveVirtical(MoveType.gravity);
 
 							// 押し出し相手に自身の移動量をコピー
-							hitMoveMng.AddMove(new Vector3(0.0f, moveMng.PrevMove.y, 0.0f));
+							hitMoveMng.AddMove(new Vector3(0.0f, moveMng.PrevMove.y * 1.1f, 0.0f));
 						}
 
-						///Debug.LogError("押し出せる");
 						// 押し出しを行い、押し出し切れた場合
 						if (Move(new Vector3(0.0f, (_move.y - dis), 0.0f), (BoxCollider)nearHitinfo.collider, _mask)) {
 							// 自身は指定通り移動
@@ -374,15 +373,16 @@ public class MoveManager : MonoBehaviour {
 						}
 						// 押し出しきれない場合
 						else {
-							///Debug.LogError("押し出しきれない");
 							// 自身も直前まで移動
 							Move(new Vector3(0.0f, (_move.y - dis), 0.0f), _moveCol, _mask, true);  // 押し出し不可移動
 
 							// 指定位置まで移動できない
 							ret = false;
+
+							// 移動量を削除
+							stopFlg = true;
 						}
 					}
-					//UnityEditor.EditorApplication.isPaused = true;
 
 					// 着地判定
 					Landing land = _moveCol.GetComponent<Landing>();
@@ -396,7 +396,7 @@ public class MoveManager : MonoBehaviour {
 					}
 
 					// 移動量を削除
-					if (moveMng) {
+					if (stopFlg && moveMng) {
 						moveMng.StopMoveVirtical(MoveType.prevMove);
 						moveMng.StopMoveVirtical(MoveType.gravity);
 						moveMng.GravityCustomFlg = false;

@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-	[SerializeField] bool walkFlg = true;	// 左右移動可能フラグ
-	[SerializeField] bool jumpFlg = true;	// ジャンプ可能フラグ
-	[SerializeField] bool shotFlg = true;	// ショット可能フラグ
-	
-	[SerializeField] float walkSpd = 2.0f;		// 左右移動最高速度
-	[SerializeField] float walkStopTime = 0.2f;	// 左右移動最高速度から停止までの時間(秒)
-	[SerializeField] float jumpDis = 2.0f;		// 最大ジャンプ距離
-	[SerializeField] float jumpHeight = 2.0f;	// 最大ジャンプ高度
-	[SerializeField] float jumpTime = 1.0f;		// 最大ジャンプ滞空時間(秒)
+	[SerializeField] bool walkFlg = true;    // 左右移動可能フラグ
+	[SerializeField] bool jumpFlg = true;    // ジャンプ可能フラグ
+	[SerializeField] bool shotFlg = true;    // ショット可能フラグ
 
-	[SerializeField] float walkStandbyVec = 0.0f;	// 移動しようとしている方向
+	[SerializeField] float walkSpd = 2.0f;       // 左右移動最高速度
+	[SerializeField] float walkStopTime = 0.2f;  // 左右移動最高速度から停止までの時間(秒)
+	[SerializeField] float jumpDis = 2.0f;       // 最大ジャンプ距離
+	[SerializeField] float jumpHeight = 2.0f;    // 最大ジャンプ高度
+	[SerializeField] float jumpTime = 1.0f;      // 最大ジャンプ滞空時間(秒)
+
+	[SerializeField] float walkStandbyVec = 0.0f;    // 移動しようとしている方向
 	[SerializeField] bool jumpStandbyFlg = false;   // ジャンプしようとしているフラグ
-//	float jumpLimitTime = 0.0f;						// 次回ジャンプ可能時間
-	
+								   //	float jumpLimitTime = 0.0f;						// 次回ジャンプ可能時間
+
 	[SerializeField] float remainJumpTime = 0.0f;
 
 	WeightManager weightMng = null;
@@ -58,6 +58,20 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	Lifting lift = null;
+	Lifting Lift {
+		get {
+			if (!lift) {
+				lift = GetComponent<Lifting>();
+				if (!lift) {
+					Debug.LogError("Liftingが見つかりませんでした。");
+				}
+			}
+			return lift;
+		}
+	}
+	bool liftTrg = false;
+
 	WaterState waterStt = null;
 	WaterState WaterStt {
 		get {
@@ -68,7 +82,10 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] Transform modelTransform = null;
+	[SerializeField] Transform rotTransform = null;
+	[SerializeField] Vector3 rotVec = new Vector3(1.0f, 0.0f, 0.0f); // 左右向きと非接地面
+	[SerializeField] float rotSpd = 0.2f;
+	[SerializeField] float turnRotMinSpd = 1.0f;
 
 	// Use this for initialization
 	//	void Start () {}
@@ -83,6 +100,18 @@ public class Player : MonoBehaviour {
 
 		// 残りジャンプ滞空時間
 		remainJumpTime = (!Land.IsLanding ? remainJumpTime + Time.deltaTime : 0.0f);
+
+		// 持ち上げ/下げ
+		if (Land.IsLanding) {
+			if ((Input.GetAxis("Lift") != 0.0f)) {
+				if (!liftTrg) {
+					Lift.Lift();
+				}
+				liftTrg = true;
+			} else {
+				liftTrg = false;
+			}
+		}
 	}
 
 	void FixedUpdate() {
@@ -95,8 +124,8 @@ public class Player : MonoBehaviour {
 		// 立ち止まり
 		WalkDown();
 
-		// モデル左右回転
-		RotateModel();
+		// 左右上下回転
+		Rotate();
 	}
 
 	void Walk() {
@@ -143,7 +172,7 @@ public class Player : MonoBehaviour {
 		}
 
 		// ジャンプ直後であれば
-//		if (jumpLimitTime > Time.time) return;
+		//		if (jumpLimitTime > Time.time) return;
 
 		Debug.Log("Jump");
 
@@ -154,8 +183,8 @@ public class Player : MonoBehaviour {
 		MoveMng.StopMoveHorizontalAll();
 
 		// 上方向へ加速
-//		float jumpGravityForce = (0.5f * Mathf.Pow(jumpTime * 0.5f, 2) + jumpHeight);	// ジャンプ中の重力加速度
-		float jumpGravityForce = -10;	// ジャンプ中の重力加速度
+		//		float jumpGravityForce = (0.5f * Mathf.Pow(jumpTime * 0.5f, 2) + jumpHeight);	// ジャンプ中の重力加速度
+		float jumpGravityForce = -10;   // ジャンプ中の重力加速度
 
 		MoveMng.AddMove(new Vector3(0.0f, (-jumpGravityForce * jumpTime * 0.5f), 0.0f));
 		Debug.Log(jumpGravityForce);
@@ -171,7 +200,7 @@ public class Player : MonoBehaviour {
 		MoveMng.GravityForce = jumpGravityForce;
 
 		// 次回ジャンプ可能時間を設定
-//		jumpLimitTime = Time.time + jumpTime * 0.5f;	// ジャンプしてからジャンプ滞空時間の半分の時間まではジャンプ不可
+		//		jumpLimitTime = Time.time + jumpTime * 0.5f;	// ジャンプしてからジャンプ滞空時間の半分の時間まではジャンプ不可
 	}
 	void WalkDown() {
 		// 接地中でなければ
@@ -185,7 +214,30 @@ public class Player : MonoBehaviour {
 		MoveMng.AddMove(new Vector3(moveX, 0.0f, 0.0f));
 	}
 
-	void RotateModel() {
+	void Rotate() {
+		// 持ち上げモーション中は処理しない
+		if ((Lift.St == Lifting.LiftState.invalid) ||
+			(Lift.St == Lifting.LiftState.standby)) {
+			// 接地中なら
+			if (Land.IsLanding) {
+				// 移動方向によって向きを設定
+				if (MoveMng.PrevMove.x > turnRotMinSpd) {
+					rotVec.x = 1.0f;
+				} else if (MoveMng.PrevMove.x < -turnRotMinSpd) {
+					rotVec.x = -1.0f;
+				}
+			}
 
+			// 接地方向によって向きを設定
+			if (WeightMng.WeightLv == WeightManager.Weight.flying) {
+				rotVec.y = 1.0f;
+			} else if (MoveMng.PrevMove.y > 0.0f) {
+				rotVec.y = 0.0f;
+			}
+
+			// 設定された向きにスラープ
+			Quaternion qt = Quaternion.Euler(rotVec.y * 180.0f, -90.0f + rotVec.x * 90.0f, 0.0f);
+			rotTransform.rotation = Quaternion.Slerp(rotTransform.rotation, qt, rotSpd);
+		}
 	}
 }
