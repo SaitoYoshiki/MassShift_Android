@@ -19,6 +19,10 @@ public class Button : MonoBehaviour {
 		UpdateLight();
 	}
 
+	private void FixedUpdate() {
+		UpdateIsPush();
+	}
+
 	//押されている割合を更新する
 	void UpdatePushRate() {
 
@@ -106,14 +110,23 @@ public class Button : MonoBehaviour {
 	float mPushRate;    //現在押されている割合
 
 	//ボタンの上にオブジェクトが乗って、押されているか
+	bool _IsPush = false;
 	public bool IsPush {
 		get {
 			if (mIsPush_Debug) return true;
-			LayerMask lLayerMask = LayerMask.GetMask(new string[] { "Box", "Player"});
-			Collider[] lHitColliders = Physics.OverlapBox(mWeightCheckCollider.transform.position, mWeightCheckCollider.transform.localScale / 2.0f, mWeightCheckCollider.transform.rotation, lLayerMask);
-			return lHitColliders.Length > 0;
+			return _IsPush;
 		}
 	}
+
+
+	//ボタンの上にオブジェクトが乗っているかの更新
+	//
+	void UpdateIsPush() {
+		LayerMask lLayerMask = LayerMask.GetMask(new string[] { "Box", "Player" });
+		Collider[] lHitColliders = Physics.OverlapBox(mWeightCheckCollider.transform.position, mWeightCheckCollider.transform.localScale / 2.0f, mWeightCheckCollider.transform.rotation, lLayerMask);
+		_IsPush = lHitColliders.Length > 0;
+	}
+
 
 	[SerializeField]
 	bool mIsPush_Debug;
