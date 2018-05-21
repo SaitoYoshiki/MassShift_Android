@@ -189,7 +189,10 @@ public class MoveFloor : MonoBehaviour {
 	}
 	void MoveMoveFloor(Vector3 aToLocalPosition) {
 		RotateGear(mFloor.transform.localPosition, aToLocalPosition);
-		mFloor.transform.localPosition = aToLocalPosition;
+		Vector3 lWorldPosition = mFloor.transform.TransformPoint(aToLocalPosition);
+		//行けるところを計算する
+
+		mFloor.transform.localPosition = mFloor.transform.InverseTransformPoint(lWorldPosition);
 	}
 	void VibrationFloor(Vector3 aToLocalPosition) {
 		RotateGear(mFloorModel.transform.localPosition, aToLocalPosition);
