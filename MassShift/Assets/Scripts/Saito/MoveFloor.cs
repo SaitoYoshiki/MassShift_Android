@@ -240,6 +240,11 @@ public class MoveFloor : MonoBehaviour {
 
 		//コライダーの大きさ変更
 		mFloorCollider.transform.localScale = new Vector3(mWidth, 1.0f, 1.0f);
+
+		Vector3 lSelectAreaSize = mSelectArea.transform.localScale;
+		lSelectAreaSize.x = mWidth + mSelectAreaWidth * 2.0f;
+		lSelectAreaSize.y = 1.0f + mSelectAreaHeight * 2.0f;
+		mSelectArea.transform.localScale = lSelectAreaSize;
 	}
 
 	//レールのサイズ変更
@@ -340,6 +345,15 @@ public class MoveFloor : MonoBehaviour {
 
 	[SerializeField, EditOnPrefab, Tooltip("床のコライダー")]
 	GameObject mFloorCollider;
+
+	[SerializeField, EditOnPrefab, Tooltip("選択範囲のコライダー")]
+	GameObject mSelectArea;
+
+	[SerializeField, EditOnPrefab, Tooltip("選択範囲の横幅を大きくする追加分")]
+	float mSelectAreaWidth;
+
+	[SerializeField, EditOnPrefab, Tooltip("選択範囲の縦幅を大きくする追加分")]
+	float mSelectAreaHeight;
 
 	[SerializeField, EditOnPrefab, Tooltip("床の全てのモデルの親")]
 	GameObject mFloorModel;
