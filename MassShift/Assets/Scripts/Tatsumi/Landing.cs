@@ -51,10 +51,10 @@ public class Landing : MonoBehaviour {
 	[SerializeField] List<Collider> landColList = new List<Collider>();				// 接地しているオブジェクト
 	[SerializeField] List<Collider> landExtrusionColList = new List<Collider>();	// 押し出しによって接地しているオブジェクト
 
-	[SerializeField] bool upCollide = false;
-	[SerializeField] bool downCollide = false;
-	[SerializeField] bool leftCollide = false;
-	[SerializeField] bool rightCollide = false;
+//	[SerializeField] bool upCollide = false;
+//	[SerializeField] bool downCollide = false;
+//	[SerializeField] bool leftCollide = false;
+//	[SerializeField] bool rightCollide = false;
 
 	WeightManager weightMng = null;
 	WeightManager WeightMng {
@@ -161,7 +161,7 @@ public class Landing : MonoBehaviour {
 		if (landColList.Count <= 0) {
 			IsLanding = false;
 			IsExtrusionLanding = false;
-			Debug.Log("離地");
+			Debug.Log("離地 " + Support.ObjectInfoToString(gameObject));
 		}
 	}
 

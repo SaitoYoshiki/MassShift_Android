@@ -117,7 +117,8 @@ public class Lifting : MonoBehaviour {
 		case LiftState.standby:
 			RaycastHit hitInfo;
 			// 持ち上げれるオブジェクトがあれば
-			if (Physics.BoxCast(transform.position, liftUpCol.lossyScale * 0.5f, (liftUpCol.position - transform.position), out hitInfo, liftPoint.rotation, Vector3.Distance(transform.position, liftUpCol.position), LayerMask.GetMask(new string[] { "Box" }))) {
+			if (Physics.BoxCast(transform.position, liftUpCol.lossyScale * 0.5f, (liftUpCol.position - transform.position),
+				out hitInfo, liftPoint.rotation, Vector3.Distance(transform.position, liftUpCol.position), LayerMask.GetMask(new string[] { "Box" }))) {
 				// 持ち上げ開始
 				return LiftUp(hitInfo.collider.gameObject);
 			} else {
@@ -143,7 +144,7 @@ public class Lifting : MonoBehaviour {
 			// 持ち上げ中オブジェクトの設定
 			liftObj = _obj;
 
-			// 持ち上げアニメーションの再生
+			// 持ち上げアニメーションへの遷移
 
 
 			// 状態の変更
@@ -160,7 +161,7 @@ public class Lifting : MonoBehaviour {
 		// 持ち上げ中オブジェクトの判定を有効化
 		liftObj.GetComponent<BoxCollider>().enabled = true;
 
-		// 下ろしアニメーションの再生
+		// 下ろしアニメーションへの遷移
 
 
 		// 状態の変更

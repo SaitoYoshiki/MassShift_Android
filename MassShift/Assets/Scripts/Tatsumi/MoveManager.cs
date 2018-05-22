@@ -52,7 +52,9 @@ public class MoveManager : MonoBehaviour {
 			return customWeightLvMaxSpd;
 		}
 		set {
-			customWeightLvMaxSpd.Clear();
+			if (customWeightLvMaxSpd != null) {
+				customWeightLvMaxSpd.Clear();
+			}
 			customWeightLvMaxSpd = value;
 		}
 	} 
@@ -71,21 +73,20 @@ public class MoveManager : MonoBehaviour {
 			if (oneTimeMaxSpd != null) {
 				return (float)oneTimeMaxSpd;
 			}
-			if ((CustomWeightLvMaxSpd != null) && (CustomWeightLvMaxSpd.Count > 0)) {
+			if (WeightMng && (CustomWeightLvMaxSpd != null) && (CustomWeightLvMaxSpd.Count > 0)) {
 				if (CustomWeightLvMaxSpd.Count <= (int)WeightMng.WeightLv) {
 					Debug.LogError("設定されたCustomWeightLvMaxSpdに" + WeightMng.WeightLv + "[" + (int)WeightMng.WeightLv + "]に対応する値が存在しません。");
 					return float.MaxValue;
 				}
 				return CustomWeightLvMaxSpd[(int)WeightMng.WeightLv];
 			}
-			if ((defaultWeightLvMaxSpd != null) && (defaultWeightLvMaxSpd.Count > 0)) {
+			if (WeightMng && (defaultWeightLvMaxSpd != null) && (defaultWeightLvMaxSpd.Count > 0)) {
 				if (defaultWeightLvMaxSpd.Count <= (int)WeightMng.WeightLv) {
 					Debug.LogError("設定されたDefaultWeightLvMaxSpdに" + WeightMng.WeightLv + "[" + (int)WeightMng.WeightLv + "]に対応する値が存在しません。");
 					return float.MaxValue;
 				}
 				return defaultWeightLvMaxSpd[(int)WeightMng.WeightLv];
 			}
-			Debug.LogError("DefaultWeightLvMaxSpdが設定されていません。");
 			return float.MaxValue;
 		}
 	}
@@ -128,9 +129,9 @@ public class MoveManager : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] bool DisableExtrusionFlg = false;  // 押し出し無効フラグ
+	[SerializeField] bool extrusionIgnore = false;  // 押し出し無効フラグ
 
-	[SerializeField] WeightManager.Weight prevWeight = WeightManager.Weight.light;
+//	[SerializeField] WeightManager.Weight prevWeight = WeightManager.Weight.light;
 	[SerializeField] float prevWeightForce;
 
 	List<MoveInfo> moveList = new List<MoveInfo>();  // 処理待ち状態の力
@@ -152,9 +153,6 @@ public class MoveManager : MonoBehaviour {
 		get {
 			if (pile == null) {
 				pile = GetComponent<PileWeight>();
-				if (pile == null) {
-					Debug.LogError("PileWeightが見つかりませんでした。");
-				}
 			}
 			return pile;
 		}
@@ -185,15 +183,8 @@ public class MoveManager : MonoBehaviour {
 	List<MoveType> stopHorizontalMoveType = new List<MoveType>();
 	List<MoveType> stopVirticalMoveType = new List<MoveType>();
 
-	static GameObject testStaticCube;
-	[SerializeField] GameObject testStaticSetCube;
-
 	// Use this for initialization
 	void Start() {
-		if(testStaticSetCube != null) {
-			testStaticCube = testStaticSetCube;
-		}
-
 		if (useCol == null) {
 			useCol = GetComponent<BoxCollider>();
 		}
@@ -208,8 +199,8 @@ public class MoveManager : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate() {
 		// 重力加速度
-		if (useGravity && !Land.IsLanding) {
-			AddMove(new Vector3(0.0f, GravityForce * Time.deltaTime, 0.0f), MoveType.gravity);
+		if (useGravity/* && !Land.IsLanding*/) {
+			AddMove(new Vector3(0.0f, GravityForce * Time.fixedDeltaTime, 0.0f), MoveType.gravity);
 
 //			float maxGravityForce = GravityForce;
 //			// 積み重なっている重さオブジェクトから最も重いオブジェクトを取得
@@ -262,20 +253,21 @@ public class MoveManager : MonoBehaviour {
 		move = move.normalized * Mathf.Min(move.magnitude, CurMaxSpd);
 		OneTimeMaxSpd = null;
 
-		// 上に積まれている自身より重い重さオブジェクトの方が速ければそれに合わせる
-		foreach (var pileObj in Pile.GetPileBoxList(Vector3.up)) {
-			MoveManager pileObjMoveMng = pileObj.GetComponent<MoveManager>();
-			WeightManager pileObjWeight = pileObj.GetComponent<WeightManager>();
-			if (pileObjMoveMng && pileObjWeight && (pileObjWeight.WeightLv > WeightMng.WeightLv) &&
-				(pileObjMoveMng.PrevMove.y < 0.0f) && (pileObjMoveMng.PrevMove.y < move.y)) {
-				move = new Vector3(move.x, pileObjMoveMng.PrevMove.y, move.z);
+		if (!extrusionIgnore && Pile) {
+			// 上に積まれている自身より重い重さオブジェクトの方が速ければそれに合わせる
+			foreach (var pileObj in Pile.GetPileBoxList(Vector3.up)) {
+				MoveManager pileObjMoveMng = pileObj.GetComponent<MoveManager>();
+				WeightManager pileObjWeight = pileObj.GetComponent<WeightManager>();
+				if (pileObjMoveMng && pileObjWeight && (pileObjWeight.WeightLv > WeightMng.WeightLv) &&
+					(pileObjMoveMng.PrevMove.y < 0.0f) && (pileObjMoveMng.PrevMove.y < move.y)) {
+					move = new Vector3(move.x, pileObjMoveMng.PrevMove.y, move.z);
+				}
 			}
 		}
 
-
 		// 移動
 		Vector3 resMove;    // 実際に移動出来た移動量
-		Move(move * Time.deltaTime, (BoxCollider)useCol, LayerMask.GetMask(new string[] { "Stage", "Player", "Box" }), out resMove);
+		Move(move * Time.fixedDeltaTime, (BoxCollider)useCol, LayerMask.GetMask(new string[] { "Stage", "Player", "Box" }), out resMove);
 
 		// 今回の移動量を保持
 		//prevMove = resMove;
@@ -332,7 +324,7 @@ public class MoveManager : MonoBehaviour {
 					bool stopFlg = false;	// 移動量を削除するフラグ
 					/**/
 					nearHitinfo = hitInfo;
-					dis = cmpDis + ColMargin;
+					dis += ColMargin;
 
 					// 押し出し判定
 					WeightManager moveWeightMng = _moveCol.GetComponent<WeightManager>();
@@ -340,8 +332,8 @@ public class MoveManager : MonoBehaviour {
 					MoveManager hitMoveMng = nearHitinfo.collider.GetComponent<MoveManager>();
 					bool canExtrusion = // 自身が衝突相手を押し出せるか
 						(!_dontExtrusionFlg) && (moveWeightMng) && (hitWeightMng) && (hitMoveMng) &&	// 判定に必要なコンポーネントが揃っている
-						(!hitMoveMng.DisableExtrusionFlg) &&											// 相手が押し出し不可設定ではない
-						((moveWeightMng.WeightLv > hitWeightMng.WeightLv));								// 自身に積み重なっているいずれかのオブジェクトの重さレベルが相手の重さレベルより重い
+						(!hitMoveMng.extrusionIgnore) &&												// 相手が押し出し不可設定ではない
+						((moveWeightMng.WeightLv > hitWeightMng.WeightLv));								// 自身の重さレベルが相手の重さレベルより重い
 
 					// 押し出せない場合
 					if (!canExtrusion) {
@@ -481,19 +473,19 @@ public class MoveManager : MonoBehaviour {
 			// x軸衝突判定
 			if (hitInfos.Length > 0) {
 				///Debug.LogError(_moveCol.name + " x軸衝突");
-				foreach (var hitInfo in hitInfos) {
+				//foreach (var hitInfo in hitInfos) {
 					///Debug.LogError(hitInfo.collider.name);
-				}
+				//}
 				//UnityEditor.EditorApplication.isPaused = true;
 
 				// x軸で最もめり込んでいる衝突を取得
-				RaycastHit nearHitinfo = new RaycastHit();
+//				RaycastHit nearHitinfo = new RaycastHit();
 				float dis = float.MinValue;
 				foreach (var hitInfo in hitInfos) {
 					float cmpDis = (Mathf.Abs(_moveCol.bounds.center.x - hitInfo.collider.bounds.center.x) - (_moveCol.bounds.size.x + hitInfo.collider.bounds.size.x) * 0.5f) * -1;
 					if (cmpDis > dis) {
 						dis = cmpDis;
-						nearHitinfo = hitInfo;
+//						nearHitinfo = hitInfo;
 					}
 				}
 				dis += ColMargin;
@@ -740,22 +732,46 @@ public class MoveManager : MonoBehaviour {
 		return Move( _move, _moveCol, _mask, out dummyResMove, out _hitCol, _dontExtrusionFlg);
 	}
 
-//	public bool Move(Vector3 _move, Collider _col, int _mask, out Vector3 _resMove, out Collider _hitCol) {
-//		return MoveManager.Move(_move, _col, _mask, out _resMove, out _hitCol);
-//	}
-//	public bool Move(Vector3 _move, Collider _col, int _mask) {
-//		Vector3 dummyResMove;
-//		Collider dummyHitCol;
-//		return Move(_move, _col, _mask, out dummyResMove, out dummyHitCol);
-//	}
-//	public bool Move(Vector3 _move, Collider _col, int _mask, out Vector3 _resMove) {
-//		Collider dummyHitCol;
-//		return Move(_move, _col, _mask, out _resMove, out dummyHitCol);
-//	}
-//	public bool Move(Vector3 _move, Collider _col, int _mask, out Collider _hitCol) {
-//		Vector3 dummyResMove;
-//		return Move(_move, _col, _mask, out dummyResMove, out _hitCol);
-//	}
+	static public bool Move(Vector3 _move, GameObject _moveObj, int _mask, out Vector3 _resMove, out Collider _hitCol, bool _dontExtrusionFlg = false) {
+		if (!_moveObj) {
+			if (!_moveObj) {
+				Debug.LogError("_moveObjが見つかりませんでした。");
+			}
+		}
+
+		return Move(_move, _moveObj.GetComponent<BoxCollider>(), _mask, out _resMove, out _hitCol, _dontExtrusionFlg);
+	}
+	static public bool Move(Vector3 _move, GameObject _moveObj, int _mask, bool _dontExtrusionFlg = false) {
+		Vector3 dummyResMove;
+		Collider dummyHitCol;
+		return Move(_move, _moveObj, _mask, out dummyResMove, out dummyHitCol, _dontExtrusionFlg);
+	}
+	static public bool Move(Vector3 _move, GameObject _moveObj, int _mask, out Vector3 _resMove, bool _dontExtrusionFlg = false) {
+		Collider dummyHitCol;
+		return Move(_move, _moveObj, _mask, out _resMove, out dummyHitCol, _dontExtrusionFlg);
+	}
+	static public bool Move(Vector3 _move, GameObject _moveObj, int _mask, out Collider _hitCol, bool _dontExtrusionFlg = false) {
+		Vector3 dummyResMove;
+		return Move(_move, _moveObj, _mask, out dummyResMove, out _hitCol, _dontExtrusionFlg);
+	}
+
+
+	//	public bool Move(Vector3 _move, Collider _col, int _mask, out Vector3 _resMove, out Collider _hitCol) {
+	//		return MoveManager.Move(_move, _col, _mask, out _resMove, out _hitCol);
+	//	}
+	//	public bool Move(Vector3 _move, Collider _col, int _mask) {
+	//		Vector3 dummyResMove;
+	//		Collider dummyHitCol;
+	//		return Move(_move, _col, _mask, out dummyResMove, out dummyHitCol);
+	//	}
+	//	public bool Move(Vector3 _move, Collider _col, int _mask, out Vector3 _resMove) {
+	//		Collider dummyHitCol;
+	//		return Move(_move, _col, _mask, out _resMove, out dummyHitCol);
+	//	}
+	//	public bool Move(Vector3 _move, Collider _col, int _mask, out Collider _hitCol) {
+	//		Vector3 dummyResMove;
+	//		return Move(_move, _col, _mask, out dummyResMove, out _hitCol);
+	//	}
 
 	// 移動量ではなく移動先位置を基準に移動する
 	static public bool MoveTo(Vector3 _pos, BoxCollider _moveCol, int _mask, out Vector3 _resMove, out Collider _hitCol, bool _dontExtrusionFlg = false) {
@@ -775,22 +791,39 @@ public class MoveManager : MonoBehaviour {
 		return MoveTo(_pos, _moveCol, _mask, out dummyResMove, out _hitCol, _dontExtrusionFlg);
 	}
 
-//	bool MoveTo(Vector3 _pos, Collider _col, int _mask, out Vector3 _resMove, out Collider _hitCol) {
-//		return MoveManager.MoveTo(_pos, _col, _mask, out _resMove, out _hitCol);
-//	}
-//	bool MoveTo(Vector3 _pos, Collider _col, int _mask) {
-//		Vector3 dummyResMove;
-//		Collider dummyHitCol;
-//		return MoveTo(_pos, _col, _mask, out dummyResMove, out dummyHitCol);
-//	}
-//	bool MoveTo(Vector3 _pos, Collider _col, int _mask, out Vector3 _resMove) {
-//		Collider dummyHitCol;
-//		return MoveTo(_pos, _col, _mask, out _resMove, out dummyHitCol);
-//	}
-//	bool MoveTo(Vector3 _pos, Collider _col, int _mask, out Collider _hitCol) {
-//		Vector3 dummyResMove;
-//		return MoveTo(_pos, _col, _mask, out dummyResMove, out _hitCol);
-//	}
+	static public bool MoveTo(Vector3 _pos, GameObject _moveObj, int _mask, out Vector3 _resMove, out Collider _hitCol, bool _dontExtrusionFlg = false) {
+		return Move(_pos - _moveObj.transform.position, _moveObj, _mask, out _resMove, out _hitCol, _dontExtrusionFlg);
+	}
+	static public bool MoveTo(Vector3 _pos, GameObject _moveObj, int _mask, bool _dontExtrusionFlg = false) {
+		Vector3 dummyResMove;
+		Collider dummyHitCol;
+		return MoveTo(_pos, _moveObj, _mask, out dummyResMove, out dummyHitCol, _dontExtrusionFlg);
+	}
+	static public bool MoveTo(Vector3 _pos, GameObject _moveObj, int _mask, out Vector3 _resMove, bool _dontExtrusionFlg = false) {
+		Collider dummyHitCol;
+		return MoveTo(_pos, _moveObj, _mask, out _resMove, out dummyHitCol, _dontExtrusionFlg);
+	}
+	static public bool MoveTo(Vector3 _pos, GameObject _moveObj, int _mask, out Collider _hitCol, bool _dontExtrusionFlg = false) {
+		Vector3 dummyResMove;
+		return MoveTo(_pos, _moveObj, _mask, out dummyResMove, out _hitCol, _dontExtrusionFlg);
+	}
+
+	//	bool MoveTo(Vector3 _pos, Collider _col, int _mask, out Vector3 _resMove, out Collider _hitCol) {
+	//		return MoveManager.MoveTo(_pos, _col, _mask, out _resMove, out _hitCol);
+	//	}
+	//	bool MoveTo(Vector3 _pos, Collider _col, int _mask) {
+	//		Vector3 dummyResMove;
+	//		Collider dummyHitCol;
+	//		return MoveTo(_pos, _col, _mask, out dummyResMove, out dummyHitCol);
+	//	}
+	//	bool MoveTo(Vector3 _pos, Collider _col, int _mask, out Vector3 _resMove) {
+	//		Collider dummyHitCol;
+	//		return MoveTo(_pos, _col, _mask, out _resMove, out dummyHitCol);
+	//	}
+	//	bool MoveTo(Vector3 _pos, Collider _col, int _mask, out Collider _hitCol) {
+	//		Vector3 dummyResMove;
+	//		return MoveTo(_pos, _col, _mask, out dummyResMove, out _hitCol);
+	//	}
 
 	public void StopOverMoveVirtical(MoveType _stopMinPriority = MoveType.other) {
 		for (MoveType type = _stopMinPriority; type <= (MoveType.max - 1); type++) {
@@ -892,7 +925,7 @@ public class MoveManager : MonoBehaviour {
 //		if (((moveWeightMng != null) && (hitWeightMng != null) && (hitMoveMng != null)) &&
 //			!_disExtFlg &&										// 押し出し不可フラグがfalse
 //			(moveWeightMng.WeightLv > hitWeightMng.WeightLv) &&	// _hitCol側の方が軽い
-//			!hitMoveMng.DisableExtrusionFlg) {                  // _hitColの他オブジェクトからの押し出しが無効
+//			!hitMoveMng.extrusionIgnore) {                  // _hitColの他オブジェクトからの押し出しが無効
 //
 //			Debug.LogWarning("押し出したい");
 //
