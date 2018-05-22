@@ -24,7 +24,7 @@ public class OnewayFloor : MonoBehaviour {
 		var l = new List<GameObject>();
 
 		LayerMask lMask = LayerMask.GetMask(new string[] { "Player", "Box" });
-		var rc = Physics.OverlapBox(mFloorCollider.transform.position, mFloorCollider.transform.lossyScale / 2.0f, mFloorCollider.transform.rotation, lMask);
+		var rc = Physics.OverlapBox(transform.position, transform.lossyScale / 2.0f, transform.rotation, lMask);
 
 		foreach (var r in rc) {
 			l.Add(r.gameObject);
@@ -70,14 +70,6 @@ public class OnewayFloor : MonoBehaviour {
 		return Vector3.zero;
 	}
 
-	static OnewayFloor GetComponentFromCollider(GameObject aCollider) {
-		//コライダーのタグで、OnewayFloorのギミックかどうかを判別
-		if(!aCollider.CompareTag("OnewayFloor")) {
-			return null;
-		}
-		return aCollider.transform.parent.GetComponent<OnewayFloor>();
-	}
-
 
 #if UNITY_EDITOR
 
@@ -115,7 +107,9 @@ public class OnewayFloor : MonoBehaviour {
 
 
 		//コライダーの大きさ変更
-		mFloorCollider.transform.localScale = new Vector3(mWidth, mFloorCollider.transform.localScale.y, mFloorCollider.transform.localScale.z);
+		Vector3 lColliderSize = GetComponent<BoxCollider>().size;
+		lColliderSize.x = mWidth;
+		GetComponent<BoxCollider>().size = lColliderSize;
 
 		switch(mDirection) {
 			case CDirection.cUp:
@@ -168,10 +162,7 @@ public class OnewayFloor : MonoBehaviour {
 	int mWidth;
 
 
-	[SerializeField, EditOnPrefab,  Tooltip("床のコライダー"), Space(16)]
-	GameObject mFloorCollider;
-
-	[SerializeField, EditOnPrefab, Tooltip("床の全てのモデルの親")]
+	[SerializeField, EditOnPrefab, Tooltip("床の全てのモデルの親"), Space(16)]
 	GameObject mFloorModel;
 
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("床の左端のモデル")]
