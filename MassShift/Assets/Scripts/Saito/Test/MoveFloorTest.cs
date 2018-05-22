@@ -16,15 +16,15 @@ public class MoveFloorTest : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.U)) {
 			Debug.Log("ToFlying", mMoveFloor);
-			mMoveFloor.mWeight = WeightManager.Weight.flying;
+			mMoveFloor.mWeightManager.WeightLv = WeightManager.Weight.flying;
 		}
 		if (Input.GetKeyDown(KeyCode.I)) {
 			Debug.Log("ToLight", mMoveFloor);
-			mMoveFloor.mWeight = WeightManager.Weight.light;
+			mMoveFloor.mWeightManager.WeightLv = WeightManager.Weight.light;
 		}
 		if (Input.GetKeyDown(KeyCode.O)) {
 			Debug.Log("ToHeavy", mMoveFloor);
-			mMoveFloor.mWeight = WeightManager.Weight.heavy;
+			mMoveFloor.mWeightManager.WeightLv = WeightManager.Weight.heavy;
 		}
 	}
 }

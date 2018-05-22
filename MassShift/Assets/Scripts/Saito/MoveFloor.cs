@@ -7,7 +7,7 @@ public class MoveFloor : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//現在の重さの位置へ移動する
-		mFloor.transform.localPosition = GetTargetLocalPosition(mWeight);
+		mFloor.transform.localPosition = GetTargetLocalPosition();
 	}
 	
 	// Update is called once per frame
@@ -73,7 +73,7 @@ public class MoveFloor : MonoBehaviour {
 		}
 		//処理
 
-		Vector3 lTargetLocalPosition = GetTargetLocalPosition(mWeight);
+		Vector3 lTargetLocalPosition = GetTargetLocalPosition();
 		if(mFloor.transform.localPosition != lTargetLocalPosition) {
 			mState = CState.cToMoving;
 		}
@@ -83,7 +83,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
-			mMoveDirection = GetTargetLocalPosition(mWeight) - mFloor.transform.localPosition;
+			mMoveDirection = GetTargetLocalPosition() - mFloor.transform.localPosition;
 		}
 
 		//処理
@@ -116,14 +116,14 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
-			mMoveDirection = GetTargetLocalPosition(mWeight) - mFloor.transform.localPosition;
+			mMoveDirection = GetTargetLocalPosition() - mFloor.transform.localPosition;
 		}
 
 		//
 		//処理
 		//
 
-		Vector3 lTargetLocalPosition = GetTargetLocalPosition(mWeight);
+		Vector3 lTargetLocalPosition = GetTargetLocalPosition();
 
 
 		//方向転換のチェック
@@ -169,8 +169,8 @@ public class MoveFloor : MonoBehaviour {
 
 	Vector3 mMoveDirection;
 
-	Vector3 GetTargetLocalPosition(WeightManager.Weight aWeight) {
-		switch (aWeight) {
+	Vector3 GetTargetLocalPosition() {
+		switch (GetWeight()) {
 			case WeightManager.Weight.flying:
 				return Vector3.up * mUpHeight;
 			case WeightManager.Weight.light:
@@ -181,6 +181,11 @@ public class MoveFloor : MonoBehaviour {
 		Debug.LogError("ErrorWeight", this);
 		return Vector3.zero;
 	}
+
+	WeightManager.Weight GetWeight() {
+		return mWeightManager.WeightLv;
+	}
+
 
 	Vector3 MovePosition(Vector3 aFrom, Vector3 aTo, float aDistance) {
 		Vector3 lDir = aTo - aFrom;
@@ -310,11 +315,11 @@ public class MoveFloor : MonoBehaviour {
 		ResizeRail();
 
 		//現在の重さの位置へ移動する
-		mFloor.transform.localPosition = GetTargetLocalPosition(mWeight);
+		mFloor.transform.localPosition = GetTargetLocalPosition();
 	}
 
 	private void OnValidate() {
-		UnityEditor.EditorApplication.delayCall += Resize;
+		//UnityEditor.EditorApplication.delayCall += Resize;
 	}
 
 #endif
@@ -329,9 +334,8 @@ public class MoveFloor : MonoBehaviour {
 	int mDownHeight;
 
 
-
-	[Tooltip("重さ（仮）"), Space(16)]
-	public WeightManager.Weight mWeight;
+	[SerializeField, Tooltip("重さ"), Space(16)]
+	public WeightManager mWeightManager;
 
 	[SerializeField, Tooltip("動き出すときの振動数")]
 	int mToMovingHz = 5;
