@@ -270,10 +270,14 @@ public class MoveFloor : MonoBehaviour {
 		//コライダーの大きさ変更
 		mFloor.GetComponent<BoxCollider>().size = new Vector3(mWidth, 1.0f, 1.0f);
 
+		//セレクトエリアの大きさ変更
 		Vector3 lSelectAreaSize = mSelectArea.transform.localScale;
 		lSelectAreaSize.x = mWidth + mSelectAreaWidth * 2.0f;
 		lSelectAreaSize.y = 1.0f + mSelectAreaHeight * 2.0f;
 		mSelectArea.transform.localScale = lSelectAreaSize;
+
+		//フレームの大きさ変更
+		mHilight.transform.localScale = new Vector3(mWidth, 1.0f, 1.0f);
 	}
 
 	//レールのサイズ変更
@@ -370,6 +374,9 @@ public class MoveFloor : MonoBehaviour {
 
 	[SerializeField, Tooltip("床"), Space(16)]
 	GameObject mFloor;
+
+	[SerializeField, EditOnPrefab, Tooltip("選択されたときに光るフレーム")]
+	GameObject mHilight;
 
 	[SerializeField, EditOnPrefab, Tooltip("選択範囲のコライダー")]
 	GameObject mSelectArea;
