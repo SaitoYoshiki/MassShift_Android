@@ -6,7 +6,11 @@ public class Water : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
+		//シェーダーの波の大きさの設定
+		mModel.GetComponentInChildren<Renderer>().material.SetFloat("_Amp", 1.0f / mHeight * mAmp);
+		mModel.GetComponentInChildren<Renderer>().material.SetFloat("_Cycle", 1.0f / mWidth * mCycle);
+		mModel.GetComponentInChildren<Renderer>().material.SetFloat("_Hz", 1.0f * mSpeed);
 	}
 	
 	// Update is called once per frame
@@ -19,6 +23,15 @@ public class Water : MonoBehaviour {
 
 	[SerializeField, Tooltip("縦の大きさ")]
 	int mHeight;
+
+	[SerializeField, EditOnPrefab, Tooltip("波の間隔")]
+	float mCycle = 1.0f;
+
+	[SerializeField, EditOnPrefab, Tooltip("波の大きさ")]
+	float mAmp = 0.01f;
+
+	[SerializeField, EditOnPrefab, Tooltip("波の速さ")]
+	float mSpeed = 60.0f;
 
 	[SerializeField]
 	GameObject mModel;

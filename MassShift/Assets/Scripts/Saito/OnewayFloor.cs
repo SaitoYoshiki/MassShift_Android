@@ -70,6 +70,14 @@ public class OnewayFloor : MonoBehaviour {
 		return Vector3.zero;
 	}
 
+	static OnewayFloor GetComponentFromCollider(GameObject aCollider) {
+		//コライダーのタグで、OnewayFloorのギミックかどうかを判別
+		if(!aCollider.CompareTag("OnewayFloor")) {
+			return null;
+		}
+		return aCollider.transform.parent.GetComponent<OnewayFloor>();
+	}
+
 
 #if UNITY_EDITOR
 
