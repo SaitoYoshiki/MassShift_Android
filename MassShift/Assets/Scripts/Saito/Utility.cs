@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class Utility {
 
@@ -32,5 +33,18 @@ public class Utility {
 			}
 		}
 		return false;
+	}
+
+
+	public static int GetArea() {
+		string lSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+		Regex r = new Regex("Stage(d)-(d)");
+
+		int lRes = 0;
+		if(int.TryParse(r.Match(lSceneName).Groups[1].Value, out lRes)) {
+			return lRes;
+		}
+		return 0;
 	}
 }

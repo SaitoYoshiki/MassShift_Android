@@ -5,14 +5,28 @@ using UnityEngine;
 public class Goal : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 
 		mLampList = new List<GameObject>();
-		for(int i = 0; i < mButtonList.Count; i++) {
+		for (int i = 0; i < mButtonList.Count; i++) {
 			mLampList.Add(mLampModel.transform.GetChild(i).gameObject);
 		}
 
 		TurnLamp();
+
+
+		//エリアによって、マテリアルの変更
+		switch (Utility.GetArea()) {
+			case 1:
+				EditorUtility.ChangeMaterial(mModel, mArea1Material, mArea1Material);
+				break;
+			case 2:
+				EditorUtility.ChangeMaterial(mModel, mArea2Material, mArea1Material);
+				break;
+			case 3:
+				EditorUtility.ChangeMaterial(mModel, mArea3Material, mArea1Material);
+				break;
+		}
 	}
 	
 	// Update is called once per frame
@@ -263,6 +277,14 @@ public class Goal : MonoBehaviour {
 	[SerializeField, Disable]
 	List<Player> mInPlayerList = new List<Player>();
 
+	[SerializeField, EditOnPrefab, Tooltip("エリア1の背景のマテリアル")]
+	Material mArea1Material;
+
+	[SerializeField, EditOnPrefab, Tooltip("エリア2の背景のマテリアル")]
+	Material mArea2Material;
+
+	[SerializeField, EditOnPrefab, Tooltip("エリア3の背景のマテリアル")]
+	Material mArea3Material;
 
 	[SerializeField, PrefabOnly,EditOnPrefab, Tooltip("ランプの上端のモデル")]
 	GameObject mLampTopPrefab;

@@ -139,7 +139,7 @@ public class StageBlock : MonoBehaviour {
 		}
 
 		//コライダーの大きさ変更
-		mHitCollider.transform.localScale = new Vector3(mWidth, mHeight, 1.0f);
+		mHitCollider.transform.localScale = new Vector3(mWidth, mHeight, mHitCollider.transform.localScale.z);
 		mHitCollider.transform.localPosition = new Vector3(mWidth / 2.0f, mHeight / 2.0f, 0.0f);
 	}
 
