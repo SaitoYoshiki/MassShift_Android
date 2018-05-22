@@ -191,17 +191,14 @@ public class MoveFloor : MonoBehaviour {
 		Vector3 lWorldPosition = transform.TransformPoint(aToLocalPosition);
 		Vector3 lWorldMoveDelta = lWorldPosition - mFloor.transform.position;
 
-		Vector3 lBeforeColliderPosition = mFloorCollider.transform.position;
+		Vector3 lBeforeColliderPosition = mFloor.transform.position;
 
 		//行けるところを計算する
-		MoveManager.Move(lWorldMoveDelta, mFloorCollider.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Box", "Stage", "Player"}));
+		MoveManager.Move(lWorldMoveDelta, mFloor.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Box", "Stage", "Player"}));
 
 		//コライダーの位置をもとに戻す
-		Vector3 lMoveRes = mFloorCollider.transform.position - lBeforeColliderPosition;
-		mFloorCollider.transform.position = lBeforeColliderPosition;
-
-		mFloor.transform.localPosition = transform.InverseTransformPoint(mFloor.transform.position + lMoveRes);
-
+		Vector3 lMoveRes = mFloor.transform.position - lBeforeColliderPosition;
+	
 		//動けた場合
 		if(lMoveRes.magnitude != 0.0f){
 			RotateGear(lMoveRes);	//動けた分歯車を回転
@@ -266,7 +263,7 @@ public class MoveFloor : MonoBehaviour {
 
 
 		//コライダーの大きさ変更
-		mFloorCollider.transform.localScale = new Vector3(mWidth, 1.0f, 1.0f);
+		mFloor.GetComponent<BoxCollider>().size = new Vector3(mWidth, 1.0f, 1.0f);
 
 		Vector3 lSelectAreaSize = mSelectArea.transform.localScale;
 		lSelectAreaSize.x = mWidth + mSelectAreaWidth * 2.0f;
@@ -369,9 +366,6 @@ public class MoveFloor : MonoBehaviour {
 
 	[SerializeField, Tooltip("床"), Space(16)]
 	GameObject mFloor;
-
-	[SerializeField, EditOnPrefab, Tooltip("床のコライダー")]
-	GameObject mFloorCollider;
 
 	[SerializeField, EditOnPrefab, Tooltip("選択範囲のコライダー")]
 	GameObject mSelectArea;
