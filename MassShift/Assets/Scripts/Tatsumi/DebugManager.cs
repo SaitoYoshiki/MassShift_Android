@@ -50,8 +50,7 @@ public class DebugManager : MonoBehaviour {
 		}
 	}
 
-	[Multiline(3), SerializeField]
-	string manual = "実行中にDebugModeKeyを二度押しすると\nデバッグモードを有効化/無効化できます。\n(SttがDisable以外である必要があります。)";
+	[Multiline(3), SerializeField] string manual = "実行中にDebugModeKeyを二度押しすると\nデバッグモードを有効化/無効化できます。\n(SttがDisable以外である必要があります。)";
 	[SerializeField] DebugState stt = DebugState.off;
 	DebugState Stt {
 		get {

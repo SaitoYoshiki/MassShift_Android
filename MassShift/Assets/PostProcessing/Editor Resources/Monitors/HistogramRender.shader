@@ -25,7 +25,8 @@ Shader "Hidden/Post FX/Monitors/Histogram Render"
 
                 float remapI = i.uv.x * 255.0;
                 uint index = floor(remapI);
-                float delta = frac(remapI);
+                float 
+					= frac(remapI);
                 float v1 = _Histogram[index][_Channel];
                 float v2 = _Histogram[min(index + 1, 255)][_Channel];
                 float h = v1 * (1.0 - delta) + v2 * delta;

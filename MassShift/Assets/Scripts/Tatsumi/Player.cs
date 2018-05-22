@@ -9,13 +9,29 @@ public class Player : MonoBehaviour {
 
 	[SerializeField] float walkSpd = 2.0f;       // 左右移動最高速度
 	[SerializeField] float walkStopTime = 0.2f;  // 左右移動最高速度から停止までの時間(秒)
-	[SerializeField] float jumpDis = 2.0f;       // 最大ジャンプ距離
-	[SerializeField] float jumpHeight = 2.0f;    // 最大ジャンプ高度
-	[SerializeField] float jumpTime = 1.0f;      // 最大ジャンプ滞空時間(秒)
 
-	[SerializeField] float walkStandbyVec = 0.0f;    // 移動しようとしている方向
-	[SerializeField] bool jumpStandbyFlg = false;   // ジャンプしようとしているフラグ
-								   //	float jumpLimitTime = 0.0f;						// 次回ジャンプ可能時間
+	[SerializeField] List<float> jumpWeightLvDis;       // 最大ジャンプ距離
+	float JumpDis {
+		get {
+			return jumpWeightLvDis[(int)WeightMng.WeightLv];
+		}
+	}
+	[SerializeField] List<float> jumpWeightLvHeight;    // 最大ジャンプ高度
+	float JumpHeight {
+		get {
+			return jumpWeightLvHeight[(int)WeightMng.WeightLv];
+		}
+	}
+	[SerializeField] List<float> jumpWeightLvTime;      // 最大ジャンプ滞空時間(秒)
+	float JumpTime {
+		get {
+			return jumpWeightLvTime[(int)WeightMng.WeightLv];
+		}
+	}
+
+	[SerializeField] float walkStandbyVec = 0.0f;	// 移動しようとしている方向
+	[SerializeField] bool jumpStandbyFlg = false;	// ジャンプしようとしているフラグ
+//	float jumpLimitTime = 0.0f;						// 次回ジャンプ可能時間
 
 	[SerializeField] float remainJumpTime = 0.0f;
 
@@ -85,7 +101,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] Transform rotTransform = null;
 	[SerializeField] Vector3 rotVec = new Vector3(1.0f, 0.0f, 0.0f); // 左右向きと非接地面
 	[SerializeField] float rotSpd = 0.2f;
-	[SerializeField] float turnRotMinSpd = 1.0f;
+	[SerializeField] float turnRotBorderSpd = 1.0f;
 
 	// Use this for initialization
 	//	void Start () {}
@@ -98,7 +114,7 @@ public class Player : MonoBehaviour {
 		// ジャンプ入力
 		jumpStandbyFlg = (Input.GetAxis("Jump") != 0.0f);
 
-		// 残りジャンプ滞空時間
+		// ジャンプ滞空時間
 		remainJumpTime = (!Land.IsLanding ? remainJumpTime + Time.deltaTime : 0.0f);
 
 		// 持ち上げ/下げ
@@ -143,7 +159,7 @@ public class Player : MonoBehaviour {
 		// 空中なら
 		else {
 			// 左右方向へ加速
-			MoveMng.AddMove(new Vector3(walkStandbyVec * (jumpDis / jumpTime) * Time.deltaTime, 0.0f, 0.0f));
+			MoveMng.AddMove(new Vector3(walkStandbyVec * (JumpDis / JumpTime) * Time.deltaTime, 0.0f, 0.0f));
 		}
 	}
 	void Jump() {
@@ -153,15 +169,17 @@ public class Player : MonoBehaviour {
 		// ジャンプ可能でなければ
 		if (!jumpFlg) return;
 
-		// ステージに接地していなければ
-		if (!Land.IsLanding) {
+		// ステージ又は水面に接地していなければ
+		if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
 			PileWeight pile = GetComponent<PileWeight>();
 			// 接地しているオブジェクトにも接地していなければ
 			List<Transform> pileObjs = pile.GetPileBoxList(new Vector3(0.0f, MoveMng.GravityForce, 0.0f));
 			bool stagePile = false;
 			foreach (var pileObj in pileObjs) {
 				Landing pileLand = pileObj.GetComponent<Landing>();
-				if (pileLand && (pileLand.IsLanding || pileLand.IsExtrusionLanding)) {
+				WaterState pileWaterStt = pileObj.GetComponent<WaterState>();
+				if ((pileLand && (pileLand.IsLanding || pileLand.IsExtrusionLanding)) ||
+					(pileWaterStt && (pileWaterStt.IsWaterSurface))) {
 					stagePile = true;
 				}
 			}
@@ -186,17 +204,19 @@ public class Player : MonoBehaviour {
 		//		float jumpGravityForce = (0.5f * Mathf.Pow(jumpTime * 0.5f, 2) + jumpHeight);	// ジャンプ中の重力加速度
 		float jumpGravityForce = -10;   // ジャンプ中の重力加速度
 
-		MoveMng.AddMove(new Vector3(0.0f, (-jumpGravityForce * jumpTime * 0.5f), 0.0f));
+		MoveMng.AddMove(new Vector3(0.0f, (-jumpGravityForce * JumpTime * 0.5f), 0.0f));
 		Debug.Log(jumpGravityForce);
 
 		// 離地
 		Land.IsLanding = false;
+		WaterStt.IsWaterSurface = false;
+		WaterStt.BeginWaterStopIgnore();
 
 		// ジャンプ入力を無効化
 		jumpStandbyFlg = false;
 
 		// 通常の重力加速度を一時的に無効
-		MoveMng.GravityCustomTime = (Time.time + jumpTime);
+		MoveMng.GravityCustomTime = (Time.time + JumpTime);
 		MoveMng.GravityForce = jumpGravityForce;
 
 		// 次回ジャンプ可能時間を設定
@@ -219,11 +239,11 @@ public class Player : MonoBehaviour {
 		if ((Lift.St == Lifting.LiftState.invalid) ||
 			(Lift.St == Lifting.LiftState.standby)) {
 			// 接地中なら
-			if (Land.IsLanding) {
+			if (Land.IsLanding || WaterStt.IsWaterSurface) {
 				// 移動方向によって向きを設定
-				if (MoveMng.PrevMove.x > turnRotMinSpd) {
+				if (MoveMng.PrevMove.x > turnRotBorderSpd) {
 					rotVec.x = 1.0f;
-				} else if (MoveMng.PrevMove.x < -turnRotMinSpd) {
+				} else if (MoveMng.PrevMove.x < -turnRotBorderSpd) {
 					rotVec.x = -1.0f;
 				}
 			}

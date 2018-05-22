@@ -22,6 +22,9 @@ public class WeightManager : MonoBehaviour {
 		set {
 			weightLv = value;
 
+			// 一応の同期
+			WeightLvSeem = value;
+
 			// 通常の重力加速度設定に戻す
 			if (MoveMng) {
 				MoveMng.GravityCustomTime = 0.0f;
@@ -64,7 +67,7 @@ public class WeightManager : MonoBehaviour {
 	}
 
 	// 自身に積み重なっている重さオブジェクトの中で最も重いオブジェクトの重さレベルを返す
-	[SerializeField] Weight pileMaxWeightLv;
+	[SerializeField] Weight pileMaxWeightLv =  WeightDefLv;
 	public Weight PileMaxWeightLv {
 		get {
 			if (pileWeightUpdateTime < Time.time) {
@@ -85,7 +88,16 @@ public class WeightManager : MonoBehaviour {
 	}
 
 	float pileWeightUpdateTime = 0.0f;
-	[SerializeField] int pileCount;
+
+	[SerializeField] Weight weightLvSeem = WeightDefLv;
+	public Weight WeightLvSeem {
+		get {
+			return weightLvSeem;
+		}
+		set {
+			weightLvSeem = value;
+		}
+	}
 		
 	// pull元からpush先へ指定数の重さレベルを移し、移す事に成功したレベル数を返す
 	public int PullWeight(WeightManager _from, int _num = 1) {
@@ -119,7 +131,6 @@ public class WeightManager : MonoBehaviour {
 	// 成功したらtrueを返す
 	// _checkOnlyがtrueなら成功するかどうかだけを返し、レベルを変更しない
 	public bool AddWeightLevel(bool _checkOnly) {
-		string logMsg = name + ": " + weightLv + " -> ";
 		switch (WeightLv) {
 		case Weight.flying:
 			if (!_checkOnly) {
@@ -162,5 +173,9 @@ public class WeightManager : MonoBehaviour {
 			Debug.LogError("不明な重さレベルに変更されようとしました。");
 			return false;
 		}
+	}
+
+	void Start() {
+		WeightLvSeem = WeightLv;
 	}
 }
