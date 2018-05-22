@@ -122,9 +122,24 @@ public class Button : MonoBehaviour {
 	//ボタンの上にオブジェクトが乗っているかの更新
 	//
 	void UpdateIsPush() {
-		LayerMask lLayerMask = LayerMask.GetMask(new string[] { "Box", "Player" });
+		LayerMask lLayerMask = LayerMask.GetMask(new string[] { "Box", "Player", "Stage" });
 		Collider[] lHitColliders = Physics.OverlapBox(mWeightCheckCollider.transform.position, mWeightCheckCollider.transform.localScale / 2.0f, mWeightCheckCollider.transform.rotation, lLayerMask);
-		_IsPush = lHitColliders.Length > 0;
+
+		bool lIsPush = false;
+		foreach(var c in lHitColliders) {
+			if(c.gameObject.layer == LayerMask.NameToLayer("Box") || c.gameObject.layer == LayerMask.NameToLayer("Player")) {
+				lIsPush = true;
+				break;
+			}
+			if(c.gameObject.layer == LayerMask.NameToLayer("Stage")) {
+				if(c.CompareTag("MoveFloor")) {
+					lIsPush = true;
+					break;
+				}
+			}
+		}
+
+		_IsPush = lIsPush;
 	}
 
 
