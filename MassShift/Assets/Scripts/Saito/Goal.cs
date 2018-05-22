@@ -116,7 +116,7 @@ public class Goal : MonoBehaviour {
 	}
 
 	//ボタンが全てオンかどうか
-	bool IsAllButtonOn {
+	public bool IsAllButtonOn {
 		get {
 			if (mTotalButtonOn_Debug) return true;
 			if (ButtonOnCount() == ButtonCount()) {
