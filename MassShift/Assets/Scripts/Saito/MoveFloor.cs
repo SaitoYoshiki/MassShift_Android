@@ -188,11 +188,32 @@ public class MoveFloor : MonoBehaviour {
 		return aFrom + lDir.normalized * aDistance;
 	}
 	void MoveMoveFloor(Vector3 aToLocalPosition) {
-		RotateGear(mFloor.transform.localPosition, aToLocalPosition);
-		Vector3 lWorldPosition = mFloor.transform.TransformPoint(aToLocalPosition);
-		//行けるところを計算する
+		Vector3 lWorldPosition = transform.TransformPoint(aToLocalPosition);
+		Vector3 lWorldMoveDelta = lWorldPosition - mFloor.transform.position;
 
-		mFloor.transform.localPosition = mFloor.transform.InverseTransformPoint(lWorldPosition);
+		Vector3 lBeforeColliderPosition = mFloorCollider.transform.position;
+
+		//行けるところを計算する
+		MoveManager.Move(lWorldMoveDelta, mFloorCollider.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Box", "Stage", "Player"}));
+
+		//コライダーの位置をもとに戻す
+		Vector3 lMoveRes = mFloorCollider.transform.position - lBeforeColliderPosition;
+		mFloorCollider.transform.position = lBeforeColliderPosition;
+
+		mFloor.transform.localPosition = transform.InverseTransformPoint(mFloor.transform.position + lMoveRes);
+
+		//動けた場合
+		if(lMoveRes.magnitude != 0.0f){
+			RotateGear(lMoveRes);	//動けた分歯車を回転
+		}
+		else {
+			if(mStateTime % 2.0f < 0.5f) {
+				Vector3 lVibration = GetFloorPositionAnimation(mStateTime, mStateTime + 1.0f, mTurnHz, mTurnAmp);
+				Debug.Log("Vibration:" + lVibration);
+				VibrationFloor(lVibration);
+			}
+		}
+		
 	}
 	void VibrationFloor(Vector3 aToLocalPosition) {
 		RotateGear(mFloorModel.transform.localPosition, aToLocalPosition);
@@ -206,7 +227,10 @@ public class MoveFloor : MonoBehaviour {
 	}
 
 	void RotateGear(Vector3 aFrom, Vector3 aTo) {
-		float lDistance = aTo.y - aFrom.y;
+		RotateGear(aTo - aFrom);
+	}
+	void RotateGear(Vector3 aMove) {
+		float lDistance = aMove.y;
 		mGearLeftModel.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, lDistance * -mGearRotateSpeed);
 		mGearRightModel.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, lDistance * mGearRotateSpeed);
 	}
