@@ -52,7 +52,9 @@ public class MoveManager : MonoBehaviour {
 			return customWeightLvMaxSpd;
 		}
 		set {
-			customWeightLvMaxSpd.Clear();
+			if (customWeightLvMaxSpd != null) {
+				customWeightLvMaxSpd.Clear();
+			}
 			customWeightLvMaxSpd = value;
 		}
 	} 

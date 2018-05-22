@@ -8,27 +8,23 @@ public class WaterState : MonoBehaviour {
 	[SerializeField] bool isInWater = false;
 	public bool IsInWater {
 		get {
-			Debug.LogWarning("get:" + isInWater);
 			return isInWater;
 		}
 		set {
-			Debug.LogWarning("set");
 			// 変更がなかった
-			bool review = isInWater;
-			Debug.LogWarning(isInWater + "(" + review + "): " + value);
 			if (isInWater == value) return;
 
 			// 値を変更
 			isInWater = value;
 
-			Debug.LogWarning(value);
-
 			// 入水時
 			if (isInWater) {
+				Debug.Log("InWater OneTimeMaxSpd:" + weightLvEnterWaterMoveMax[(int)WeightMng.WeightLv] + " StayMaxSpd:" + weightLvStayWaterMoveMax[(int)WeightMng.WeightLv] + Support.ObjectInfoToString(gameObject));
 				SetWaterMaxSpeed(weightLvEnterWaterMoveMax, weightLvStayWaterMoveMax);
 			}
 			// 出水時
 			else {
+				Debug.Log("OutWater OneTimeMaxSpd:" + weightLvExitWaterMoveMax[(int)WeightMng.WeightLv] + " StayMaxSpd:null" + Support.ObjectInfoToString(gameObject));
 				SetWaterMaxSpeed(weightLvExitWaterMoveMax, null);
 			}
 		}
@@ -91,13 +87,10 @@ public class WaterState : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		isInWater = false;
-		if (Support.GetColliderHitInfoList(GetComponent<Collider>(), Vector3.zero, LayerMask.GetMask("WaterArea")).Count > 0) {
-			IsInWater = true;
-		}
+		IsInWater = (Support.GetColliderHitInfoList(GetComponent<Collider>(), Vector3.zero, LayerMask.GetMask("WaterArea")).Count > 0);
 
 		// 水中の挙動
-		if (IsInWater && IsWaterSurface) {
+		if (IsInWater && !IsWaterSurface) {
 			// 水による浮上
 			MoveMng.AddMove(new Vector3(0.0f, waterFloatSpd[(int)WeightMng.WeightLv], 0.0f));
 		}
@@ -105,7 +98,7 @@ public class WaterState : MonoBehaviour {
 
 	void SetWaterMaxSpeed(List<float> _oneTimeWeightLvMaxSpd, List<float> _stayWeightLvMaxSpd) {
 		// 水面に浮かぶ重さレベルでの入出水時に入出水速度が一定以下なら
-//		Debug.LogError("(" + MoveMng.TotalMove.magnitude + " <= " + cutOutSpd + ")");
+		//		Debug.LogError("(" + MoveMng.TotalMove.magnitude + " <= " + cutOutSpd + ")");
 		if ((WeightMng.WeightLv == WeightManager.Weight.light) && (MoveMng.PrevMove.magnitude <= cutOutSpd)) {
 			// 停止
 			Debug.Log("WaterState CutOut" + MoveMng.PrevMove.magnitude);
@@ -117,7 +110,11 @@ public class WaterState : MonoBehaviour {
 		}
 
 		// 継続的に最大速度を制限
-		MoveMng.CustomWeightLvMaxSpd = _stayWeightLvMaxSpd;
+		if (_stayWeightLvMaxSpd != null) {
+			MoveMng.CustomWeightLvMaxSpd.AddRange(_stayWeightLvMaxSpd);
+		} else {
+			moveMng.CustomWeightLvMaxSpd.Clear();
+		}
 	}
 
 	public void BeginWaterStopIgnore(float _time = DefaultWaterIgnoreTime) {
