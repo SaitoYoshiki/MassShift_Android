@@ -5,7 +5,7 @@ using UnityEngine;
 public class Goal : MonoBehaviour {
 
 	// Use this for initialization
-	void Start() {
+	void Awake() {
 
 		mLampList = new List<GameObject>();
 		for (int i = 0; i < mButtonList.Count; i++) {
@@ -14,17 +14,16 @@ public class Goal : MonoBehaviour {
 
 		TurnLamp();
 
-
 		//エリアによって、マテリアルの変更
 		switch (Utility.GetArea()) {
 			case 1:
-				EditorUtility.ChangeMaterial(mModel, mArea1Material, mArea1Material);
+				Utility.ChangeMaterial(mModel, mArea1Material, mBackGroundMaterial);
 				break;
 			case 2:
-				EditorUtility.ChangeMaterial(mModel, mArea2Material, mArea1Material);
+				Utility.ChangeMaterial(mModel, mArea2Material, mBackGroundMaterial);
 				break;
 			case 3:
-				EditorUtility.ChangeMaterial(mModel, mArea3Material, mArea1Material);
+				Utility.ChangeMaterial(mModel, mArea3Material, mBackGroundMaterial);
 				break;
 		}
 	}
@@ -276,6 +275,9 @@ public class Goal : MonoBehaviour {
 
 	[SerializeField, Disable]
 	List<Player> mInPlayerList = new List<Player>();
+
+	[SerializeField, EditOnPrefab, Tooltip("背景の変更対象のマテリアル")]
+	Material mBackGroundMaterial;
 
 	[SerializeField, EditOnPrefab, Tooltip("エリア1の背景のマテリアル")]
 	Material mArea1Material;

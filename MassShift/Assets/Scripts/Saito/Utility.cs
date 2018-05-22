@@ -5,6 +5,27 @@ using System.Text.RegularExpressions;
 
 public class Utility {
 
+	public static void ChangeMaterial(GameObject aGameObject, Material aMaterial, Material aTarget) {
+
+		Renderer[] renderers = aGameObject.GetComponentsInChildren<Renderer>();
+		foreach (var r in renderers) {
+
+			Material[] materials = r.materials;
+			bool lIsChange = false;
+			for (int i = 0; i < materials.Length; i++)
+			{
+				if (aTarget == null || materials[i].name == aTarget.name + " (Instance)") {
+					lIsChange = true;
+					materials[i] = aMaterial;
+				}
+			}
+			if (lIsChange) {
+				r.materials = materials;
+			}
+		}
+	}
+
+
 	public static void ChangeMaterialColor(GameObject aGameObject, Material aMaterial, string aPropertyName, Color aColor) {
 
 		Renderer[] renderers = aGameObject.GetComponentsInChildren<Renderer>();
@@ -41,10 +62,10 @@ public class Utility {
 
 		Regex r = new Regex("Stage(d)-(d)");
 
-		int lRes = 0;
+		int lRes = 1;
 		if(int.TryParse(r.Match(lSceneName).Groups[1].Value, out lRes)) {
 			return lRes;
 		}
-		return 0;
+		return 1;
 	}
 }
