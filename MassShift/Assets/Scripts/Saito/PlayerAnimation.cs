@@ -14,8 +14,6 @@ public class PlayerAnimation : MonoBehaviour {
 	[SerializeField]
 	Transform mCatchStartHandPosition;
 
-	Vector3 mCatchStartBoxPosition;
-
 	[SerializeField]
 	Transform mCatchEndHandPosition;
 
@@ -27,6 +25,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 	[SerializeField]
 	Transform mReleaseEndBoxPosition;
+
+	Vector3 mStartDifference;
+	Vector3 mEndDifference;
 
 	[SerializeField]
 	float mCatchStartTime = 0.0f;
@@ -419,10 +420,8 @@ public class PlayerAnimation : MonoBehaviour {
 		//持ち上げている途中なら
 		if (IsCatching() || IsCatchFailed()) {
 			if(mCatchStartTime <= mStateTime && mStateTime < mCatchEndTime) {
-				Vector3 lStartDifference = mCatchStartBoxPosition - mCatchStartHandPosition.position;
-				Vector3 lEndDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
 				float lRate = (mStateTime - mCatchStartTime) / (mCatchEndTime - mCatchStartTime);
-				lRes = mHandTransform.position + Vector3.Lerp(lStartDifference, lEndDifference, lRate);
+				lRes = mHandTransform.position + Vector3.Lerp(mStartDifference, mEndDifference, lRate);
 			}
 			else {
 				lRes = mBox.transform.position;
@@ -433,7 +432,7 @@ public class PlayerAnimation : MonoBehaviour {
 				Vector3 lStartDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
 				Vector3 lEndDifference = mReleaseEndBoxPosition.position - mReleaseEndHandPosition.position;
 				float lRate = (mStateTime - mReleaseStartTime) / (mReleaseEndTime - mReleaseStartTime);
-				lRes = mHandTransform.position + Vector3.Lerp(lStartDifference, lEndDifference, lRate);
+				lRes = mHandTransform.position + Vector3.Lerp(mStartDifference, mEndDifference, lRate);
 			}
 			else {
 				lRes = mBox.transform.position;
@@ -514,7 +513,8 @@ public class PlayerAnimation : MonoBehaviour {
 	public void StartCatch(GameObject aBox) {
 		if (mIsHold == true) return;
 		mBox = aBox;
-		mCatchStartBoxPosition = aBox.transform.position;
+		mStartDifference = aBox.transform.position - mCatchStartHandPosition.position;
+		mEndDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
 		ChangeState(CState.cCatch);
 		mCompleteCatch = false;
 	}
@@ -555,6 +555,8 @@ public class PlayerAnimation : MonoBehaviour {
 
 	public void StartRelease() {
 		if (mIsHold == false) return;
+		mStartDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
+		mEndDifference = mReleaseEndBoxPosition.position - mReleaseEndHandPosition.position;
 		ChangeState(CState.cRelease);
 		mCompleteRelease = false;
 	}
