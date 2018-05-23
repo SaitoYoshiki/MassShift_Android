@@ -12,13 +12,33 @@ public class PlayerAnimation : MonoBehaviour {
 	Transform mHandTransform;
 
 	[SerializeField]
-	Transform mHoldStartPosition;
+	Transform mCatchStartHandPosition;
+
+	Vector3 mCatchStartBoxPosition;
 
 	[SerializeField]
-	Transform mHoldHandPosition;
+	Transform mCatchEndHandPosition;
 
 	[SerializeField]
-	Transform mHoldBlockPosition;
+	Transform mCatchEndBoxPosition;
+
+	[SerializeField]
+	Transform mReleaseEndHandPosition;
+
+	[SerializeField]
+	Transform mReleaseEndBoxPosition;
+
+	[SerializeField]
+	float mCatchStartTime = 0.0f;
+
+	[SerializeField]
+	float mCatchEndTime = 1.0f;
+
+	[SerializeField]
+	float mReleaseStartTime = 0.0f;
+
+	[SerializeField]
+	float mReleaseEndTime = 1.0f;
 
 	Animator mAnimator;
 
@@ -53,11 +73,14 @@ public class PlayerAnimation : MonoBehaviour {
 
 	bool mIsInit = true;
 
+	bool mCompleteCatchFailed = false;
 	bool mCompleteCatch = false;
 	bool mCompleteRelease = false;
 
 	[SerializeField]
 	public float mStateTime;
+
+	float mCatchFailedStateTime;
 
 	float mSpeed = 0.0f;
 	Vector3 mBeforePosition;
@@ -85,7 +108,6 @@ public class PlayerAnimation : MonoBehaviour {
 
 		UpdateState();
 
-		Debug.Log("normalizedTime:" + mAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
 	}
 
 
@@ -112,6 +134,9 @@ public class PlayerAnimation : MonoBehaviour {
 				break;
 			case CState.cCatch:
 				UpdateCatch();
+				break;
+			case CState.cCatchFailed:
+				UpdateCatchFailed();
 				break;
 
 			case CState.cHoldStandBy:
@@ -242,6 +267,7 @@ public class PlayerAnimation : MonoBehaviour {
 
 	void InitCatch() {
 		mAnimator.CrossFadeInFixedTime("Catch", 0.2f);
+		mAnimator.SetFloat("CatchSpeed", 1.0f);
 	}
 
 	void UpdateCatch() {
@@ -253,6 +279,31 @@ public class PlayerAnimation : MonoBehaviour {
 		if (IsAnimationEnd("Catch")) {
 			mIsHold = true;
 			mCompleteCatch = true;
+		}
+	}
+
+	void InitCatchFailed() {
+		mAnimator.SetFloat("CatchSpeed", -1.0f);
+	}
+
+	bool EndCatchFailed() {
+		if (!mAnimator.GetCurrentAnimatorStateInfo(0).IsName("Catch")) return false;
+		Debug.Log("CatchFailedTime:" + mAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+		return mAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.0f;
+	}
+
+	void UpdateCatchFailed() {
+		if (mIsInit) {
+			InitCatchFailed();
+			mIsInit = false;
+		}
+
+		mCatchFailedStateTime -= Time.deltaTime * 2.0f;
+		mStateTime = mCatchFailedStateTime;
+
+		if (EndCatchFailed() || false) {
+			mIsHold = false;
+			mCompleteCatchFailed = true;
 		}
 	}
 
@@ -363,15 +414,36 @@ public class PlayerAnimation : MonoBehaviour {
 		}
 	}
 
-
-
-
-
 	GameObject mBox;
 
 	public Vector3 GetBoxPosition() {
-		
-		return mHandTransform.position;
+		Vector3 lRes = mBox.transform.position;
+
+		//持ち上げている途中なら
+		if (IsCatching() || IsCatchFailed()) {
+			if(mCatchStartTime <= mStateTime && mStateTime < mCatchEndTime) {
+				Vector3 lStartDifference = mCatchStartBoxPosition - mCatchStartHandPosition.position;
+				Vector3 lEndDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
+				float lRate = (mStateTime - mCatchStartTime) / (mCatchEndTime - mCatchStartTime);
+				lRes = mHandTransform.position + Vector3.Lerp(lStartDifference, lEndDifference, lRate);
+			}
+			else {
+				lRes = mBox.transform.position;
+			}
+		}
+		if (IsReleasing()) {
+			if (mReleaseStartTime <= mStateTime && mStateTime < mReleaseEndTime) {
+				Vector3 lStartDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
+				Vector3 lEndDifference = mReleaseEndBoxPosition.position - mReleaseEndHandPosition.position;
+				float lRate = (mStateTime - mReleaseStartTime) / (mReleaseEndTime - mReleaseStartTime);
+				lRes = mHandTransform.position + Vector3.Lerp(lStartDifference, lEndDifference, lRate);
+			}
+			else {
+				lRes = mBox.transform.position;
+			}
+		}
+
+		return ToZeroZ(lRes);
 	}
 	Vector3 ToZeroZ(Vector3 aVec) {
 		return new Vector3(aVec.x, aVec.y, 0.0f);
@@ -391,9 +463,22 @@ public class PlayerAnimation : MonoBehaviour {
 		return mState == CState.cRelease;
 	}
 
+	public bool CompleteCatchFailed() {
+		return mCompleteCatchFailed;
+	}
+
+	public bool IsCatchFailed() {
+		return mState == CState.cCatchFailed;
+	}
+
+
 	bool IsAnimationEnd(string aAnimationName) {
 		if (!mAnimator.GetCurrentAnimatorStateInfo(0).IsName(aAnimationName)) return false;
 		return mAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f;
+	}
+
+	public float GetStateTime() {
+		return mStateTime;
 	}
 
 
@@ -432,8 +517,15 @@ public class PlayerAnimation : MonoBehaviour {
 	public void StartCatch(GameObject aBox) {
 		if (mIsHold == true) return;
 		mBox = aBox;
+		mCatchStartBoxPosition = aBox.transform.position;
 		ChangeState(CState.cCatch);
 		mCompleteCatch = false;
+	}
+
+	public void FailedCatch() {
+		mCatchFailedStateTime = mStateTime;
+		ChangeState(CState.cCatchFailed);
+		mCompleteCatchFailed = false;
 	}
 
 
@@ -470,6 +562,9 @@ public class PlayerAnimation : MonoBehaviour {
 		mCompleteRelease = false;
 	}
 
+	public void ExitCatchFailed() {
+		ChangeState(CState.cStandBy);
+	}
 	public void ExitCatch() {
 		ChangeState(CState.cHoldStandBy);
 	}

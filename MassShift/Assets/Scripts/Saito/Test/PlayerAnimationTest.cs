@@ -13,6 +13,9 @@ public class PlayerAnimationTest : MonoBehaviour {
 	[SerializeField]
 	GameObject mHoldBox;
 
+	[SerializeField]
+	bool mCatchFailed = false;
+
 	bool mHolding = false;
 
 	// Use this for initialization
@@ -72,13 +75,25 @@ public class PlayerAnimationTest : MonoBehaviour {
 		}
 
 		if(mHolding == false) {
-			if (Input.GetKeyDown(KeyCode.LeftShift)) {
-				mPlayerAnimation.StartCatch(mHoldBox);
-			}
+			
 			if(mPlayerAnimation.IsCatching()) {
 				if(mPlayerAnimation.CompleteCatch()) {
 					mHolding = true;
 					mPlayerAnimation.ExitCatch();
+				}
+				if (mCatchFailed || Input.GetKeyDown(KeyCode.LeftShift)) {
+					mCatchFailed = false;
+					mPlayerAnimation.FailedCatch();
+				}
+			}
+			else if(mPlayerAnimation.IsCatchFailed()) {
+				if (mPlayerAnimation.CompleteCatchFailed()) {
+					mPlayerAnimation.ExitCatchFailed();
+				}
+			}
+			else {
+				if (Input.GetKeyDown(KeyCode.LeftShift)) {
+					mPlayerAnimation.StartCatch(mHoldBox);
 				}
 			}
 		}
@@ -94,8 +109,9 @@ public class PlayerAnimationTest : MonoBehaviour {
 			}
 		}
 		
-		if(mHolding || mPlayerAnimation.IsReleasing() || mPlayerAnimation.IsCatching()) {
+		if(mHolding || mPlayerAnimation.IsReleasing() || mPlayerAnimation.IsCatching() || mPlayerAnimation.IsCatchFailed()) {
 			mHoldBox.transform.position = mPlayerAnimation.GetBoxPosition();
+			Debug.Log("StateTime:" + mPlayerAnimation.GetStateTime());
 		}
 	}
 
