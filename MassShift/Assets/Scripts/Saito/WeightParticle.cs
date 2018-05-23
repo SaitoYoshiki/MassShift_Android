@@ -5,17 +5,31 @@ using UnityEngine;
 [RequireComponent(typeof(WeightEffect))]
 public class WeightParticle : MonoBehaviour {
 
-	[SerializeField]
+	[SerializeField, EditOnPrefab]
+	GameObject mFlyingParticlePrefab;
+
+	[SerializeField, EditOnPrefab]
+	GameObject mLightParticlePrefab;
+
+	[SerializeField, EditOnPrefab]
+	GameObject mHeavyParticlePrefab;
+
+	[SerializeField, EditOnPrefab]
+	GameObject mParticleParent;
+
 	GameObject mFlyingParticle;
 
-	[SerializeField]
 	GameObject mLightParticle;
 
-	[SerializeField]
 	GameObject mHeavyParticle;
 
 	// Use this for initialization
 	void Awake () {
+
+		mFlyingParticle = Instantiate(mFlyingParticlePrefab, mParticleParent.transform);
+		mLightParticle = Instantiate(mLightParticlePrefab, mParticleParent.transform);
+		mHeavyParticle = Instantiate(mHeavyParticlePrefab, mParticleParent.transform);
+
 		GetComponent<WeightEffect>().OnWeightChange += ChangeParticle;
 	}
 	
