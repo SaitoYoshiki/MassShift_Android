@@ -396,7 +396,3271 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: standby
+      takeName: standby
+      firstFrame: 1
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: walk
+      takeName: walk
+      firstFrame: 61
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: jump up
+      takeName: jump up
+      firstFrame: 91
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: jump top
+      takeName: jump top
+      firstFrame: 121
+      lastFrame: 150
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: jump down
+      takeName: jump down
+      firstFrame: 151
+      lastFrame: 180
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: pickup
+      takeName: pickup
+      firstFrame: 181
+      lastFrame: 210
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: hold
+      takeName: hold
+      firstFrame: 211
+      lastFrame: 270
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: drop
+      takeName: drop
+      firstFrame: 271
+      lastFrame: 300
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: hold walk
+      takeName: hold walk
+      firstFrame: 301
+      lastFrame: 330
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: hold jump up
+      takeName: hold jump up
+      firstFrame: 331
+      lastFrame: 360
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: hold jump top
+      takeName: hold jump top
+      firstFrame: 361
+      lastFrame: 390
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: hold jump down
+      takeName: hold jump down
+      firstFrame: 391
+      lastFrame: 420
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot_mesh
+        weight: 1
+      - path: robot_mesh/antenna_a_mesh
+        weight: 1
+      - path: robot_mesh/antenna_b_mesh
+        weight: 1
+      - path: robot_mesh/antenna_c_mesh
+        weight: 1
+      - path: robot_mesh/antenna_d_mesh
+        weight: 1
+      - path: robot_mesh/antenna_e_mesh
+        weight: 1
+      - path: robot_mesh/antenna_f_mesh
+        weight: 1
+      - path: robot_mesh/body_mesh
+        weight: 1
+      - path: robot_mesh/head_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/l_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/l_elbow_mesh
+        weight: 1
+      - path: robot_mesh/l_eye_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/l_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/l_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/l_hand_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/l_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/l_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/l_wrist_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_a_mesh
+        weight: 1
+      - path: robot_mesh/r_arm_b_mesh
+        weight: 1
+      - path: robot_mesh/r_elbow_mesh
+        weight: 1
+      - path: robot_mesh/r_eye_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a0_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_a3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_b3_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c1_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c2_mesh
+        weight: 1
+      - path: robot_mesh/r_finger_c3_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_a_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_b_mesh
+        weight: 1
+      - path: robot_mesh/r_foot_c_mesh
+        weight: 1
+      - path: robot_mesh/r_hand_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_a_mesh
+        weight: 1
+      - path: robot_mesh/r_leg_b_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_a_mesh
+        weight: 1
+      - path: robot_mesh/r_shoulder_b_mesh
+        weight: 1
+      - path: robot_mesh/r_wrist_mesh
+        weight: 1
+      - path: robot_mesh/sara1_mesh
+        weight: 1
+      - path: robot_mesh/sara2_mesh
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/antenna_f
+        weight: 1
+      - path: root/antenna_f/antenna_e
+        weight: 1
+      - path: root/antenna_f/antenna_e/antenna_d
+        weight: 1
+      - path: root/down_body
+        weight: 1
+      - path: root/down_body/l_l_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b
+        weight: 1
+      - path: root/down_body/l_l_a/l_l_b/l_l_c 1/l_foot_a/l_foot_b/l_foot_c
+        weight: 1
+      - path: root/down_body/r_l_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b
+        weight: 1
+      - path: root/down_body/r_l_a/r_l_b/r_l_c 1/r_foot_a/r_foot_b/r_foot_c
+        weight: 1
+      - path: root/upper_body
+        weight: 1
+      - path: root/upper_body/head
+        weight: 1
+      - path: root/upper_body/head/top_joint
+        weight: 1
+      - path: root/upper_body/l_shoulder
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_a_0/l_f_a_1/l_f_a_2/l_f_a_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_b_1/l_f_b_2/l_f_b_3
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2
+        weight: 1
+      - path: root/upper_body/l_shoulder/l_elbow/l_hand/l_f_c_1/l_f_c_2/l_f_c_3
+        weight: 1
+      - path: root/upper_body/r_shoulder
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_a_0/r_f_a_1/r_f_a_2/r_f_a_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_b_1/r_f_b_2/r_f_b_3
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2
+        weight: 1
+      - path: root/upper_body/r_shoulder/r_elbow/r_hand/r_f_c_1/r_f_c_2/r_f_c_3
+        weight: 1
+      - path: root_c
+        weight: 1
+      - path: root_c/body
+        weight: 1
+      - path: root_c/body/head_c
+        weight: 1
+      - path: root_c/body/l_s_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c
+        weight: 1
+      - path: root_c/body/l_s_c/l_a_c/l_hand_c
+        weight: 1
+      - path: root_c/body/r_s_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c
+        weight: 1
+      - path: root_c/body/r_s_c/r_a_c/r_hand_c
+        weight: 1
+      - path: root_c/down_body_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c
+        weight: 1
+      - path: root_c/down_body_c/l_l_c/l_f_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c
+        weight: 1
+      - path: root_c/down_body_c/r_l_c/r_f_c
+        weight: 1
+      - path: root_c/l_foot_ik
+        weight: 1
+      - path: root_c/l_hand_ik
+        weight: 1
+      - path: root_c/r_foot_ik
+        weight: 1
+      - path: root_c/r_hand_ik
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
