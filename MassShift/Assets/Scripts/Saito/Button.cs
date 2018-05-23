@@ -38,8 +38,8 @@ public class Button : MonoBehaviour {
 
 	//ボタンを動かす
 	void MoveLedge() {
-
-		mLedge.transform.position = mLedgeStartPosition + (mLedgeMoveEnd.transform.position - mLedgeMoveStart.transform.position) * mPushRate;
+		Vector3 lNewPosition = mLedgeStartPosition + (mLedgeMoveEnd.transform.position - mLedgeMoveStart.transform.position) * mPushRate;
+		MoveManager.MoveTo(lNewPosition, mLedge, LayerMask.GetMask(new string[] { "Box", "Player"}), true);
 	}
 
 	//ライトを点灯させる
@@ -122,7 +122,7 @@ public class Button : MonoBehaviour {
 	//ボタンの上にオブジェクトが乗っているかの更新
 	//
 	void UpdateIsPush() {
-		LayerMask lLayerMask = LayerMask.GetMask(new string[] { "Box", "Player", "Stage" });
+		LayerMask lLayerMask = LayerMask.GetMask(new string[] { "Box", "Player" });
 		Collider[] lHitColliders = Physics.OverlapBox(mWeightCheckCollider.transform.position, mWeightCheckCollider.transform.localScale / 2.0f, mWeightCheckCollider.transform.rotation, lLayerMask);
 
 		bool lIsPush = false;
@@ -130,12 +130,6 @@ public class Button : MonoBehaviour {
 			if(c.gameObject.layer == LayerMask.NameToLayer("Box") || c.gameObject.layer == LayerMask.NameToLayer("Player")) {
 				lIsPush = true;
 				break;
-			}
-			if(c.gameObject.layer == LayerMask.NameToLayer("Stage")) {
-				if(c.CompareTag("MoveFloor")) {
-					lIsPush = true;
-					break;
-				}
 			}
 		}
 
