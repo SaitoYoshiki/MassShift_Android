@@ -58,7 +58,7 @@ public class Area {
 
 	//現在のエリア番号を返す（ステージ中なら、０・１・２・３．それ以外は-1）
 	//
-	public static int GetAreaIndex() {
+	public static int GetAreaNumber() {
 		string lSceneName = GetSceneName();
 
 		//チュートリアルかどうかの判定
@@ -85,7 +85,7 @@ public class Area {
 
 	//現在のステージ番号を返す（ステージ中なら、０・１・２・３…。それ以外は-1）
 	//
-	public static int GetStageIndex() {
+	public static int GetStageNumber() {
 		string lSceneName = GetSceneName();
 
 		//チュートリアルかどうかの判定
@@ -114,13 +114,13 @@ public class Area {
 
 	//チュートリアルを除いたエリア数を返す
 	//
-	public static int GetAreaNum() {
+	public static int GetAreaCount() {
 		return Instance.mStageNum.Count;
 	}
 
 	//ステージ数を返す（エリア番号は１・２・３）
 	//
-	public static int GetStageNum(int aAreaNumber) {
+	public static int GetStageCount(int aAreaNumber) {
 
 		//チュートリアルなら
 		if(aAreaNumber == 0) {
@@ -129,7 +129,7 @@ public class Area {
 
 		int lAreaIndex = GetAreaIndex(aAreaNumber);
 
-		if (GetAreaNum() <= lAreaIndex) return -1;
+		if (GetAreaCount() <= lAreaIndex) return -1;
 		if (lAreaIndex < 0) return -1;
 		return Instance.mStageNum[lAreaIndex];
 	}
@@ -170,8 +170,8 @@ public class Area {
 		int lStageIndex = GetStageIndex(aStageNumber);
 
 		//最終ステージだけ、次のステージが存在しない
-		if (GetAreaNum() - 1 == lAreaIndex) {
-			if (GetStageNum(aAreaNumber) - 1 == lStageIndex) {
+		if (GetAreaCount() - 1 == lAreaIndex) {
+			if (GetStageCount(aAreaNumber) - 1 == lStageIndex) {
 				return false;
 			}
 		}
@@ -198,15 +198,15 @@ public class Area {
 		int lStageIndex = GetStageIndex(aStageNumber);
 
 		//範囲外チェック
-		if (GetAreaNum() <= lAreaIndex) return false;
+		if (GetAreaCount() <= lAreaIndex) return false;
 		if (lAreaIndex < 0) return false;
 
 		//範囲外チェック
-		if (GetStageNum(aAreaNumber) <= lStageIndex) return false;
+		if (GetStageCount(aAreaNumber) <= lStageIndex) return false;
 		if (lStageIndex < 0) return false;
 
 		//エリアの最後のステージには、次のステージが存在しない
-		if (lStageIndex == GetStageNum(aAreaNumber) - 1) return false;
+		if (lStageIndex == GetStageCount(aAreaNumber) - 1) return false;
 
 		return true;
 	}
