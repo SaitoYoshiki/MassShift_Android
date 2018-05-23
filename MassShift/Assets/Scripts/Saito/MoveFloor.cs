@@ -74,7 +74,7 @@ public class MoveFloor : MonoBehaviour {
 		//処理
 
 		Vector3 lTargetLocalPosition = GetTargetLocalPosition();
-		if(mFloor.transform.localPosition != lTargetLocalPosition) {
+		if(!ReachFloor(lTargetLocalPosition)) {
 			mState = CState.cToMoving;
 		}
 	}
@@ -145,10 +145,15 @@ public class MoveFloor : MonoBehaviour {
 		Vector3 lLocalPosition = MovePosition(mFloor.transform.localPosition, lTargetLocalPosition, mMoveSpeed * Time.deltaTime);
 		MoveMoveFloor(lLocalPosition);
 
-		if(mFloor.transform.localPosition == lTargetLocalPosition) {
+		if(ReachFloor(lTargetLocalPosition)) {
 			mState = CState.cFromMoving;
 			return;
 		}
+	}
+
+	bool ReachFloor(Vector3 aTargetLocalPosition) {
+		Vector3 lDistance = aTargetLocalPosition - mFloor.transform.localPosition;
+		return Mathf.Abs(lDistance.y) < 0.02f;
 	}
 
 	void UpdateTurn() {
@@ -268,7 +273,7 @@ public class MoveFloor : MonoBehaviour {
 
 
 		//コライダーの大きさ変更
-		mFloor.GetComponent<BoxCollider>().size = new Vector3(mWidth, 1.0f, 1.0f);
+		mFloor.GetComponent<BoxCollider>().size = new Vector3(mWidth - 0.1f * 2, 1.0f, 1.0f);
 
 		//セレクトエリアの大きさ変更
 		Vector3 lSelectAreaSize = mSelectArea.transform.localScale;
@@ -277,7 +282,7 @@ public class MoveFloor : MonoBehaviour {
 		mSelectArea.transform.localScale = lSelectAreaSize;
 
 		//フレームの大きさ変更
-		mHilight.transform.localScale = new Vector3(mWidth, 1.0f, 1.0f);
+		mHilight.transform.localScale = new Vector3((1.0f - 0.1f) * mWidth, 1.0f, 1.0f);
 	}
 
 	//レールのサイズ変更
