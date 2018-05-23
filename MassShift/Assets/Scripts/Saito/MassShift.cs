@@ -232,7 +232,7 @@ public class MassShift : MonoBehaviour
 				l.GetComponent<LightBall>().PlayEffect();
 				mLightBallShare.Add(l);
 
-				//s.GetComponent<WeightManager>().SeemWeightLv -= GetShiftWeight();	//見かけの重さを減らす
+				s.GetComponent<WeightManager>().WeightLvSeem -= GetShiftWeight();	//見かけの重さを減らす
 			}
 
 
@@ -348,7 +348,7 @@ public class MassShift : MonoBehaviour
 			}
 
 			foreach (var s in mDest.GetComponent<ShareWeightBox>().GetShareAllListExceptOwn()) {
-				//s.GetComponent<WeightManager>().SeemWeightLv += GetShiftWeight();
+				s.GetComponent<WeightManager>().WeightLvSeem += GetShiftWeight();
 			}
 			ChangeState(CSelectState.cSuccess);	//成功状態へ
 		}
@@ -383,7 +383,7 @@ public class MassShift : MonoBehaviour
 			mLightBall.GetComponent<LightBall>().InitPoint(mSource.transform.position, mDest.transform.position);
 			mLightBall.GetComponent<LightBall>().PlayEffect();
 
-			//mSource.GetComponent<WeightManager>().SeemWeightLv -= GetShiftWeight();	//見かけの重さを減らす
+			mSource.GetComponent<WeightManager>().WeightLvSeem -= GetShiftWeight();	//見かけの重さを減らす
 		}
 
 
@@ -398,7 +398,7 @@ public class MassShift : MonoBehaviour
 		if (lLightBall.IsReached) {
 
 			//移せるなら
-			if (!CanShiftSourceToDest(mSource, mDest)) {
+			if (CanShiftSourceToDest(mSource, mDest)) {
 
 				//それが共有ボックスなら
 				if (mDest.GetComponent<ShareWeightBox>()) {
@@ -481,7 +481,7 @@ public class MassShift : MonoBehaviour
 		//光の弾が移し元へ到達したら
 		if (mLightBall.GetComponent<LightBall>().IsReached) {
 
-			//mSource.GetComponent<WeightManager>().SeemWeightLv += GetShiftWeight();
+			mSource.GetComponent<WeightManager>().WeightLvSeem += GetShiftWeight();
 
 			DestroyLightBall(mLightBall);
 			if (mSource.GetComponent<ShareWeightBox>()) {
@@ -568,7 +568,7 @@ public class MassShift : MonoBehaviour
 
 			//見かけの重さを戻す
 			foreach (var s in mDest.GetComponent<ShareWeightBox>().GetShareAllListExceptOwn()) {
-				//s.GetComponent<WeightManager>().SeemWeightLv += GetShiftWeight();
+				s.GetComponent<WeightManager>().WeightLvSeem += GetShiftWeight();
 			}
 			ChangeState(CSelectState.cFail);	//失敗状態へ
 		}
@@ -912,13 +912,13 @@ public class MassShift : MonoBehaviour
 		if (mLightBallTemplate.GetComponent<LightBall>().ThroughShotLine(aFrom.transform.position, aTo.transform.position, new GameObject[] { mSource, mDest, mSelect }.ToList())) {
 			//線とカーソルを、射線が通っているときの色にする
 			lMassShiftLine.ChangeColor(mCanSelectColor * mCanSelectColorPower);
-			ChangeCursorColor(mCanSelectColor);
+			ChangeCursorColor(mCanSelectColor * mCanSelectColorPower);
 			lMassShiftLine.UpdatePosition();	//線を移動させる
 		}
 		else {
 			//通っていない色にする
 			lMassShiftLine.ChangeColor(mCanNotSelectColor * mCanNotSelectColorPower);
-			ChangeCursorColor(mCanNotSelectColor);
+			ChangeCursorColor(mCanNotSelectColor * mCanNotSelectColorPower);
 		}
 	}
 

@@ -16,7 +16,7 @@ public class WeightEffect : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mWeightManager = GetComponent<WeightManager>();
-		mBeforeWeight = mWeightManager.WeightLv;    //見かけの重さでエフェクトを出す
+		mBeforeWeight = mWeightManager.WeightLvSeem;    //見かけの重さでエフェクトを出す
 		OnWeightChange(mBeforeWeight);
 	}
 	
@@ -24,7 +24,7 @@ public class WeightEffect : MonoBehaviour {
 	void Update () {
 
 		//見かけの重さが変更されていたら、イベントを呼び出す
-		WeightManager.Weight lWeight = mWeightManager.WeightLv;
+		WeightManager.Weight lWeight = mWeightManager.WeightLvSeem;
 		if(mBeforeWeight != lWeight){
 			OnWeightChange(lWeight);
 			mBeforeWeight = lWeight;
