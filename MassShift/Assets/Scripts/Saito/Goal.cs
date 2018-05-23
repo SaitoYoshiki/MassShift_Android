@@ -15,7 +15,10 @@ public class Goal : MonoBehaviour {
 		TurnLamp();
 
 		//エリアによって、マテリアルの変更
-		switch (Utility.GetArea()) {
+		switch (Area.GetAreaNumber()) {
+			case 0:
+				Utility.ChangeMaterial(mModel, mArea1Material, mBackGroundMaterial);
+				break;
 			case 1:
 				Utility.ChangeMaterial(mModel, mArea1Material, mBackGroundMaterial);
 				break;
@@ -24,6 +27,9 @@ public class Goal : MonoBehaviour {
 				break;
 			case 3:
 				Utility.ChangeMaterial(mModel, mArea3Material, mBackGroundMaterial);
+				break;
+			default:
+				Utility.ChangeMaterial(mModel, null, mBackGroundMaterial);
 				break;
 		}
 	}
