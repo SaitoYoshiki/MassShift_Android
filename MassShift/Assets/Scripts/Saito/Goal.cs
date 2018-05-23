@@ -29,7 +29,7 @@ public class Goal : MonoBehaviour {
 				Utility.ChangeMaterial(mModel, mArea3Material, mBackGroundMaterial);
 				break;
 			default:
-				Utility.ChangeMaterial(mModel, null, mBackGroundMaterial);
+				//Utility.ChangeMaterial(mModel, null, mBackGroundMaterial);
 				break;
 		}
 	}
