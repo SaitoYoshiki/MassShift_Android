@@ -16,14 +16,6 @@ public class SoundManager : MonoBehaviour {
 		Destroy(this);
 	}
 
-	public static SoundManager GetInstance() {
-		var sm = FindObjectOfType<SoundManager>();
-		if (sm == null) {
-			Debug.LogError("<color=#ff0000>SoundManagerが存在しません</color>");
-		}
-		return sm;
-	}
-
 	public GameObject Play(GameObject aSoundPrefab, float aDelay) {
 		var lSoundInstance = Instantiate(aSoundPrefab, mSounds.transform);
 		lSoundInstance.GetComponent<AudioSource>().PlayDelayed(aDelay);
@@ -45,6 +37,21 @@ public class SoundManager : MonoBehaviour {
 		}
 		else {
 			aSoundInstance.GetComponent<AudioSource>().UnPause();
+		}
+	}
+
+
+	//シングルトン的
+	static SoundManager sInstance = null;
+	public static SoundManager Instance {
+		get {
+			if (sInstance == null) {
+				sInstance = FindObjectOfType<SoundManager>();
+				if (sInstance == null) {
+					Debug.LogError("<color=#ff0000>SoundManagerが存在しません</color>");
+				}
+			}
+			return sInstance;
 		}
 	}
 }
