@@ -56,7 +56,7 @@ public class ShakeCamera : MonoBehaviour {
 		mShakeTimeFromStart = 0.0f;
 	}
 
-	public static void AllShake(float aTime) {
+	public static void ShakeAll(float aTime) {
 		foreach (var s in FindObjectsOfType<ShakeCamera>()) {
 			s.Shake(aTime);
 		}

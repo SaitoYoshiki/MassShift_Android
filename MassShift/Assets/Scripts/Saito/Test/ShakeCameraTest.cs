@@ -17,7 +17,7 @@ public class ShakeCameraTest : MonoBehaviour {
 		
 		if(Input.GetKeyDown(KeyCode.T)) {
 			//Shake(mTime);
-			ShakeCamera.AllShake(mTime);
+			ShakeCamera.ShakeAll(mTime);
 		}
 	}
 
