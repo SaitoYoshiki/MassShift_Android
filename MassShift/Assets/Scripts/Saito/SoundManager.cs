@@ -12,11 +12,12 @@ public class SoundManager : MonoBehaviour {
 		var sms = FindObjectsOfType<SoundManager>();
 		if(sms.Length >= 2) {
 			Debug.LogError("<color=#ff0000>SoundManagerが複数作成されています</color>", this);
+			Destroy(this);
 		}
-		Destroy(this);
 	}
 
 	public GameObject Play(GameObject aSoundPrefab, float aDelay) {
+		if (aSoundPrefab == null) return null;
 		var lSoundInstance = Instantiate(aSoundPrefab, mSounds.transform);
 		lSoundInstance.GetComponent<AudioSource>().PlayDelayed(aDelay);
 		return lSoundInstance;
@@ -26,12 +27,13 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	public void Stop(GameObject aSoundInstance) {
+		if (aSoundInstance == null) return;
 		aSoundInstance.GetComponent<AudioSource>().Stop();
 		Destroy(aSoundInstance);
 	}
 
 	public void Pause(GameObject aSoundInstance, bool aPause) {
-
+		if (aSoundInstance == null) return;
 		if (aPause) {
 			aSoundInstance.GetComponent<AudioSource>().Pause();
 		}
