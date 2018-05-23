@@ -5,25 +5,29 @@ using System.Text.RegularExpressions;
 
 public class Area {
 
-	List<int> mStageNum = new List<int>() {
-		3,	//チュートリアル
+	readonly int mTutorialNum = 3;	//チュートリアルのステージ数
+
+	readonly List<int> mStageNum = new List<int>() {
 		5,	//エリア１
 		5,	//エリア２
 		5	//エリア３
 	};
 
-	const string cStageSceneName = "Stage{0}-{1}";
 	const string cTutorialSceneName = "Tutorial-{0}";
+	const string cStageSceneName = "Stage{0}-{1}";
 
-	static Area sInstance = null;
-	
+
 	//シングルトン
 	//
-	static Area GetInstance() {
-		if(sInstance == null) {
-			sInstance = new Area();
+	static Area sInstance = null;
+	
+	static Area Instance {
+		get {
+			if (sInstance == null) {
+				sInstance = new Area();
+			}
+			return sInstance;
 		}
-		return sInstance;
 	}
 
 
@@ -33,29 +37,39 @@ public class Area {
 		return UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 	}
 
+
 	//ステージのシーン名を返す
 	//
-	public static string GetStageSceneName(int aAreaIndex, int aStageIndex) {
-		if(aAreaIndex == 0) {
-			return string.Format(cTutorialSceneName, aStageIndex);
+	public static string GetStageSceneName(int aAreaNumber, int aStageNumber) {
+
+		//チュートリアルなら
+		if (aAreaNumber == 0) {
+			return string.Format(cTutorialSceneName, aStageNumber);
 		}
-		if(1 <= aAreaIndex && aAreaIndex < GetAreaNum()) {
-			return string.Format(cStageSceneName, aAreaIndex, aStageIndex);
+
+		int lAreaIndex = GetAreaIndex(aAreaNumber);
+
+		if (0 <= lAreaIndex && lAreaIndex < GetAreaNum()) {
+			return string.Format(cStageSceneName, aAreaNumber, aStageNumber);
 		}
 		return "";
 	}
+
 
 	//現在のエリア番号を返す（ステージ中なら、０・１・２・３．それ以外は-1）
 	//
 	public static int GetAreaIndex() {
 		string lSceneName = GetSceneName();
 
+		//チュートリアルかどうかの判定
 		Regex r = new Regex(string.Format(cTutorialSceneName, @"(\d+?)"));
 
 		if (r.IsMatch(lSceneName)) {
 			return 0;
 		}
 
+
+		//ステージかどうかの判定
 		r = new Regex(string.Format(cStageSceneName, @"(\d+?)", @"(\d+?)"));
 
 		if(r.IsMatch(lSceneName)) {
@@ -68,11 +82,13 @@ public class Area {
 		return -1;
 	}
 
+
 	//現在のステージ番号を返す（ステージ中なら、０・１・２・３…。それ以外は-1）
 	//
 	public static int GetStageIndex() {
 		string lSceneName = GetSceneName();
 
+		//チュートリアルかどうかの判定
 		Regex r = new Regex(string.Format(cTutorialSceneName, @"(\d+?)"));
 
 		if (r.IsMatch(lSceneName)) {
@@ -82,6 +98,7 @@ public class Area {
 			return lRes;
 		}
 
+		//エリア１・２・３かどうかの判定
 		r = new Regex(string.Format(cStageSceneName, @"(\d+?)", @"(\d+?)"));
 
 		if (r.IsMatch(lSceneName)) {
@@ -95,45 +112,66 @@ public class Area {
 	}
 
 
-	//エリア数を返す
+	//チュートリアルを除いたエリア数を返す
 	//
 	public static int GetAreaNum() {
-		return GetInstance().mStageNum.Count;
+		return Instance.mStageNum.Count;
 	}
 
-	//ステージ数を返す（エリア番号は、０・１・２・３）
+	//ステージ数を返す（エリア番号は１・２・３）
 	//
-	public static int GetStageNum(int aAreaIndex) {
-		if (GetAreaNum() <= aAreaIndex) return -1;
-		if (aAreaIndex < 0) return -1;
-		return GetInstance().mStageNum[aAreaIndex];
+	public static int GetStageNum(int aAreaNumber) {
+
+		//チュートリアルなら
+		if(aAreaNumber == 0) {
+			return Instance.mTutorialNum;
+		}
+
+		int lAreaIndex = GetAreaIndex(aAreaNumber);
+
+		if (GetAreaNum() <= lAreaIndex) return -1;
+		if (lAreaIndex < 0) return -1;
+		return Instance.mStageNum[lAreaIndex];
 	}
 
 
 	//次のステージのシーン名を返す
 	//
-	public static string GetNextStageSceneName(int aAreaIndex, int aStageIndex) {
-		if (!ExistNextStage(aAreaIndex, aStageIndex)) return "";
-		if(!ExistNextStageSameArea(aAreaIndex, aStageIndex)) {
-			aAreaIndex += 1;
-			aStageIndex = 0;
+	public static string GetNextStageSceneName(int aAreaNumber, int aStageNumber) {
+
+		//次のシーンが存在しないなら
+		if (!ExistNextStage(aAreaNumber, aStageNumber)) return "";
+
+		//次のシーンが同じエリアに存在しないなら
+		if(!ExistNextStageSameArea(aAreaNumber, aStageNumber)) {
+			//次のエリアの最初のステージへ
+			aAreaNumber += 1;
+			aStageNumber = 1;
 		}
+		//次のシーンが同じエリアに存在するなら
 		else {
-			aStageIndex += 1;
+			//次のステージへ
+			aStageNumber += 1;
 		}
-		return GetStageSceneName(aAreaIndex, aStageIndex);
+		return GetStageSceneName(aAreaNumber, aStageNumber);
 	}
 
 
 	//ゲーム中に、次のステージが存在しない
 	//
-	public static bool ExistNextStage(int aAreaIndex, int aStageIndex) {
+	public static bool ExistNextStage(int aAreaNumber, int aStageNumber) {
 
-		int lStageListIndex = GetStageListIndex(aStageIndex);
+		//チュートリアルなら
+		if(aAreaNumber == 0) {
+			return true;	//必ず存在する
+		}
+
+		int lAreaIndex = GetAreaIndex(aAreaNumber);
+		int lStageIndex = GetStageIndex(aStageNumber);
 
 		//最終ステージだけ、次のステージが存在しない
-		if(GetAreaNum() - 1 == aAreaIndex) {
-			if (GetStageNum(aAreaIndex) - 1 == lStageListIndex) {
+		if (GetAreaNum() - 1 == lAreaIndex) {
+			if (GetStageNum(aAreaNumber) - 1 == lStageIndex) {
 				return false;
 			}
 		}
@@ -144,23 +182,45 @@ public class Area {
 
 	//同じエリアに、次のステージが存在しない
 	//
-	public static bool ExistNextStageSameArea(int aAreaIndex, int aStageIndex) {
-		//エリア3の場合、aAreaIndex→3
-		//GetAreaNum()→4となる
-		if (GetAreaNum() - 1 < aAreaIndex) return false;
-		if (aAreaIndex < 0) return false;
+	public static bool ExistNextStageSameArea(int aAreaNumber, int aStageNumber) {
+		
+		//チュートリアルの場合
+		if(aAreaNumber == 0) {
+			//範囲外チェック
+			if (aStageNumber <= 0) return false;
+			if (Instance.mTutorialNum < aStageNumber) return false;
+			//チュートリアルの最終ステージには次のステージがない
+			if (Instance.mTutorialNum == aStageNumber) return false;
+			return true;
+		}
 
-		int lStageListIndex = GetStageListIndex(aStageIndex);
-		if (GetStageNum(aAreaIndex) - 1 <= lStageListIndex) return false;
-		if (lStageListIndex < 0) return false;
+		int lAreaIndex = GetAreaIndex(aAreaNumber);
+		int lStageIndex = GetStageIndex(aStageNumber);
+
+		//範囲外チェック
+		if (GetAreaNum() <= lAreaIndex) return false;
+		if (lAreaIndex < 0) return false;
+
+		//範囲外チェック
+		if (GetStageNum(aAreaNumber) <= lStageIndex) return false;
+		if (lStageIndex < 0) return false;
+
+		//エリアの最後のステージには、次のステージが存在しない
+		if (lStageIndex == GetStageNum(aAreaNumber) - 1) return false;
 
 		return true;
 	}
 
 
-	//ステージのインデックスは１・２・３で、配列を参照するためにずらす
+	//１・２・３のエリア番号を、配列のインデックスに対応させる
 	//
-	static int GetStageListIndex(int aStageIndex) {
-		return aStageIndex - 1;
+	static int GetAreaIndex(int aAreaNumber) {
+		return aAreaNumber - 1;
+	}
+
+	//１・２・３のステージ番号を、配列のインデックスに対応させる
+	//
+	static int GetStageIndex(int aStageNumber) {
+		return aStageNumber - 1;
 	}
 }
