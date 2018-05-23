@@ -49,7 +49,7 @@ public class Area {
 
 		int lAreaIndex = GetAreaIndex(aAreaNumber);
 
-		if (0 <= lAreaIndex && lAreaIndex < GetAreaNum()) {
+		if (0 <= lAreaIndex && lAreaIndex < GetAreaCount()) {
 			return string.Format(cStageSceneName, aAreaNumber, aStageNumber);
 		}
 		return "";

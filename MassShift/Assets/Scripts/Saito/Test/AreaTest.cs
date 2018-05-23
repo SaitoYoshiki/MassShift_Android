@@ -7,14 +7,14 @@ public class AreaTest : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		Debug.Log("AreaIndex:" + Area.GetAreaIndex());
-		Debug.Log("StageIndex:" + Area.GetStageIndex());
+		Debug.Log("AreaIndex:" + Area.GetAreaNumber());
+		Debug.Log("StageIndex:" + Area.GetStageNumber());
 
-		Debug.Log("AreaNum:" + Area.GetAreaNum());
-		Debug.Log("Area0-StageNum:" + Area.GetStageNum(0));
-		Debug.Log("Area1-StageNum:" + Area.GetStageNum(1));
-		Debug.Log("Area2-StageNum:" + Area.GetStageNum(2));
-		Debug.Log("Area3-StageNum:" + Area.GetStageNum(3));
+		Debug.Log("AreaNum:" + Area.GetAreaCount());
+		Debug.Log("Area0-StageNum:" + Area.GetStageCount(0));
+		Debug.Log("Area1-StageNum:" + Area.GetStageCount(1));
+		Debug.Log("Area2-StageNum:" + Area.GetStageCount(2));
+		Debug.Log("Area3-StageNum:" + Area.GetStageCount(3));
 
 		Debug.Log("Stage1-1のシーン名:" + Area.GetStageSceneName(1, 1));
 		Debug.Log("Stage0-3のシーン名:" + Area.GetStageSceneName(0, 3));
