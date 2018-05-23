@@ -209,7 +209,7 @@ public class DebugManager : MonoBehaviour {
 			// デバッグモード有効化/無効化の有効時間外なら
 			else {
 				// 次の有効時間を設定
-				switchLimitTime = (Time.time + switchTimeRange);
+				switchLimitTime = (Time.time + (switchTimeRange * Time.timeScale));
 			}
 		}
 
@@ -447,7 +447,7 @@ public class DebugManager : MonoBehaviour {
 			}
 		}
 		if (timeSclRepeat) {
-			timeSclNowRepeatTime += Time.fixedDeltaTime;
+			timeSclNowRepeatTime += Time.deltaTime;
 		} else {
 			timeSclNowRepeatTime = 0.0f;
 		}

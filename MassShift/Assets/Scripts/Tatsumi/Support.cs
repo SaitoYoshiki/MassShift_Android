@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Support {
-	const float FloatMin = 0.0001f;
+	const float FloatMin = 0.001f;
 
 	// 指定コライダーが接触するコライダーのリストを返す
-	static public List<RaycastHit> GetColliderHitInfoList(Collider _col, Vector3 _move, int _mask) {
+	static public List<RaycastHit> GetColliderHitInfoList(Collider _col, Vector3 _move, int _mask, List<Collider> _ignoreColList = null) {
 		List<RaycastHit> hitInfoList = new List<RaycastHit>();
 
 		// コライダーが存在しなければ
@@ -40,6 +40,23 @@ public class Support {
 			Debug.LogWarning("コライダーがMeshColliderでした。衝突が検知されません。" + Support.ObjectInfoToString(_col.gameObject));
 		} else {
 			Debug.LogWarning("コライダーがBoxCollider, SphereCollider, CapsuleCollider, MeshColliderのいずれでもありませんでした。衝突が検知されません。" + Support.ObjectInfoToString(_col.gameObject));
+		}
+
+		if (_ignoreColList == null) {
+			_ignoreColList = new List<Collider>();
+		}
+		// 自身を判定無視対象に追加
+		if (!_ignoreColList.Contains(_col)) {
+			_ignoreColList.Add(_col);
+		}
+
+		// 判定無視対象をリストから除く
+		foreach (var ignoreCol in _ignoreColList) {
+			for (int idx = (hitInfoList.Count - 1); idx >= 0; idx--) {
+				if (hitInfoList[idx].collider == ignoreCol) {
+		//			hitInfoList.RemoveAt(idx);
+				}
+			}
 		}
 
 		// 自身との判定があれば除く
