@@ -199,7 +199,7 @@ public class MoveFloor : MonoBehaviour {
 		Vector3 lBeforeColliderPosition = mFloor.transform.position;
 
 		//行けるところを計算する
-		MoveManager.Move(lWorldMoveDelta, mFloor.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Box", "Stage", "Player"}));
+		MoveManager.Move(lWorldMoveDelta, mFloor.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Box", "Stage", "Player"}), false, true);
 
 		//コライダーの位置をもとに戻す
 		Vector3 lMoveRes = mFloor.transform.position - lBeforeColliderPosition;
