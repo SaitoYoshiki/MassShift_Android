@@ -98,15 +98,25 @@ public class PlayerAnimationTest : MonoBehaviour {
 			}
 		}
 		else {
-			if (Input.GetKeyDown(KeyCode.LeftShift)) {
-				mPlayerAnimation.StartRelease();
-			}
 			if (mPlayerAnimation.IsReleasing()) {
+				if (Input.GetKeyDown(KeyCode.LeftShift)) {
+					mHolding = false;
+					mPlayerAnimation.ExitRelease();
+				}
+
 				if (mPlayerAnimation.CompleteRelease()) {
 					mHolding = false;
 					mPlayerAnimation.ExitRelease();
 				}
 			}
+			else {
+				if (Input.GetKeyDown(KeyCode.LeftShift)) {
+					mPlayerAnimation.StartRelease();
+				}
+			}
+
+			
+			
 		}
 		
 		if(mHolding || mPlayerAnimation.IsReleasing() || mPlayerAnimation.IsCatching() || mPlayerAnimation.IsCatchFailed()) {

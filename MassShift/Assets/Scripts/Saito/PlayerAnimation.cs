@@ -277,7 +277,6 @@ public class PlayerAnimation : MonoBehaviour {
 		}
 
 		if (IsAnimationEnd("Catch")) {
-			mIsHold = true;
 			mCompleteCatch = true;
 		}
 	}
@@ -301,8 +300,7 @@ public class PlayerAnimation : MonoBehaviour {
 		mCatchFailedStateTime -= Time.deltaTime * 2.0f;
 		mStateTime = mCatchFailedStateTime;
 
-		if (EndCatchFailed() || false) {
-			mIsHold = false;
+		if (EndCatchFailed()) {
 			mCompleteCatchFailed = true;
 		}
 	}
@@ -410,7 +408,6 @@ public class PlayerAnimation : MonoBehaviour {
 
 		if (IsAnimationEnd("Release")) {
 			mCompleteRelease = true;
-			mIsHold = false;
 		}
 	}
 
@@ -563,12 +560,15 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	public void ExitCatchFailed() {
+		mIsHold = false;
 		ChangeState(CState.cStandBy);
 	}
 	public void ExitCatch() {
+		mIsHold = true;
 		ChangeState(CState.cHoldStandBy);
 	}
 	public void ExitRelease() {
+		mIsHold = false;
 		ChangeState(CState.cStandBy);
 	}
 }
