@@ -13,7 +13,9 @@ public class LandImpact : MonoBehaviour {
 	float mImpactDistance = 1.0f;
 
 
-	Vector3 mBeforePosition;	//前回の位置を保存
+	Vector3 mBeforePosition;    //前回の位置を保存
+
+	[SerializeField, Disable]
 	Vector3 mHighestPosition;	//落下時の、最高地点を保存
 
 	bool mBeforeLanding = false;    //前のフレームで設置していたか
@@ -29,6 +31,7 @@ public class LandImpact : MonoBehaviour {
 		mWeightManager = GetComponent<WeightManager>();
 
 		mHighestPosition = transform.position;  //最高地点を更新
+		mBeforePosition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -37,15 +40,6 @@ public class LandImpact : MonoBehaviour {
 		if(Time.deltaTime == 0.0f) {
 			return;
 		}
-
-		//最高地点の更新
-		//
-
-		//上向きに進んでいたら
-		if (transform.position.y >= mBeforePosition.y) {
-			mHighestPosition = transform.position;	//最高地点を更新
-		}
-		mBeforePosition = transform.position;
 
 
 		//接地判定
@@ -57,9 +51,20 @@ public class LandImpact : MonoBehaviour {
 
 			//一定距離以上落ちていたら
 			if (mHighestPosition.y - transform.position.y >= mImpactDistance) {
-				OnLand(mWeightManager.WeightLv);	//インパクトのイベントを呼び出す
+				OnLand(mWeightManager.WeightLv);    //インパクトのイベントを呼び出す
 			}
 		}
 		mBeforeLanding = lLanding;
+
+
+		//最高地点の更新
+		//
+
+		//上向きに進んでいたら
+		if (transform.position.y > mBeforePosition.y) {
+			mHighestPosition = transform.position;	//最高地点を更新
+		}
+		mBeforePosition = transform.position;
+		
 	}
 }
