@@ -11,26 +11,41 @@ public class Landing : MonoBehaviour {
 			return isLanding;
 		}
 		set {
+			Debug.Log("isLanding " + value + " " + name);
+
+			if (value == true) {
+				// 縦方向の移動を停止
+				MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
+				MoveMng.StopMoveVirtical(MoveManager.MoveType.gravity);
+			}
+	
 			// 値に変化がない
 			if (isLanding == value) return;
 
 			// 値を変更
 			isLanding = value;
 
-			Debug.Log("isLanding " + value + " " + name);
-
 			// 接地時
 			if (value == true) {
-				// 縦方向の移動を停止
-				MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
-				MoveMng.StopMoveVirtical(MoveManager.MoveType.gravity);
-
 				// ジャンプによる通常の重力加速度停止を解除
 				MoveMng.GravityCustomTime = 0.0f;
+
+				// 有効になった瞬間
+				IsLandingChange = true;
 			}
 		}
 	}
 
+	[SerializeField] bool isLandingChange = false;
+	public bool IsLandingChange {
+		get {
+			return isLandingChange;
+		}
+		set {
+			isLandingChange = value;
+		}
+	}
+		
 	[SerializeField] bool isExtrusionLanding;
 	public bool IsExtrusionLanding {
 		get {
@@ -112,7 +127,7 @@ public class Landing : MonoBehaviour {
 
 	// 接触時にその接触が指定方向への接触かを判定
 	public bool GetIsLanding(Vector3 _move) {
-		if ((_move == Vector3.zero) || (landingCol.localPosition == Vector3.zero)) return false;
+		if (_move == Vector3.zero) return false;
 
 		float dot = Vector3.Dot((Vector3.up * WeightMng.WeightForce).normalized, _move.normalized);
 //		Debug.LogError(landingCol.localPosition + " " + _move + " " + (dot < 0.0f));

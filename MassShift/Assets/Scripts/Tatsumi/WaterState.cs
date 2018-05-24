@@ -89,10 +89,27 @@ public class WaterState : MonoBehaviour {
 	void FixedUpdate () {
 		IsInWater = (Support.GetColliderHitInfoList(GetComponent<Collider>(), Vector3.zero, LayerMask.GetMask("WaterArea")).Count > 0);
 
-		// 水中の挙動
-		if (IsInWater && !IsWaterSurface) {
-			// 水による浮上
-			MoveMng.AddMove(new Vector3(0.0f, waterFloatSpd[(int)WeightMng.WeightLv], 0.0f));
+		// 水中/水上の挙動
+		if (IsInWater) {
+			// 水中なら
+			if (!IsWaterSurface) {
+				// 水による浮上
+				MoveMng.AddMove(new Vector3(0.0f, waterFloatSpd[(int)WeightMng.WeightLv], 0.0f));
+			}
+			// 水上なら
+			else {
+				// 重さに変化が無ければ
+				if (WeightMng.WeightLv == WeightManager.Weight.light) {
+					// 落下しない
+					MoveMng.StopMoveVirtical(MoveManager.MoveType.gravity);
+					MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
+				}
+				// 重さが変化していれば
+				else {
+					// 水面状態を解除
+					IsWaterSurface = false;
+				}
+			}
 		}
 	}
 

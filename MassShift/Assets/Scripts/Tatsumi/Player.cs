@@ -3,12 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-	[SerializeField] bool walkFlg = true;    // 左右移動可能フラグ
-	[SerializeField] bool jumpFlg = true;    // ジャンプ可能フラグ
-	[SerializeField] bool shotFlg = true;    // ショット可能フラグ
+	[SerializeField] bool canWalk = true;	// 左右移動可能フラグ
+	public bool CanWalk {
+		get {
+			return canWalk;
+		}
+		set {
+			canWalk = value;
+		}
+	}
+	[SerializeField] bool canJump = true;	// ジャンプ可能フラグ
+	public bool CanJump {
+		get {
+			return canJump;
+		}
+		set {
+			canJump = value;
+		}
+	}
+	[SerializeField] bool canShift = true;	// 重さ移し可能フラグ
+	public bool CanShift {
+		get {
+			return canShift;
+		}
+		set {
+			canShift = value;
+		}
+	}
+	[SerializeField] bool isShift = true;	// 重さ移し中フラグ
+	public bool IsShift {
+		get {
+			return isShift;
+		}
+		set {
+			isShift = value;
+		}
+	}
+	public bool IsLanding {
+		get {
+			if (!Land) return false;
+			return Land.IsLanding;
+		}
+	}
 
 	[SerializeField] float walkSpd = 2.0f;       // 左右移動最高速度
-	[SerializeField] float walkStopTime = 0.2f;  // 左右移動最高速度から停止までの時間(秒)
+	[SerializeField] float walkStopTime = 0.2f;  // 左右移動最高速度から停止までの時間
 
 	[SerializeField] List<float> jumpWeightLvDis;       // 最大ジャンプ距離
 	float JumpDis {
@@ -22,7 +61,7 @@ public class Player : MonoBehaviour {
 			return jumpWeightLvHeight[(int)WeightMng.WeightLv];
 		}
 	}
-	[SerializeField] List<float> jumpWeightLvTime;      // 最大ジャンプ滞空時間(秒)
+	[SerializeField] List<float> jumpWeightLvTime;      // 最大ジャンプ滞空時間
 	float JumpTime {
 		get {
 			return jumpWeightLvTime[(int)WeightMng.WeightLv];
@@ -98,6 +137,19 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	PlayerAnimation plAnim = null;
+	PlayerAnimation PlAnim {
+		get {
+			if (!plAnim) {
+				plAnim = GetComponent<PlayerAnimation>();
+				if (!plAnim) {
+					Debug.LogError("PlayerAnimationが見つかりませんでした。");
+				}
+			}
+			return plAnim;
+		}
+	}
+
 	[SerializeField] Transform rotTransform = null;
 	[SerializeField] Vector3 rotVec = new Vector3(1.0f, 0.0f, 0.0f); // 左右向きと非接地面
 	[SerializeField] float rotSpd = 0.2f;
@@ -135,21 +187,53 @@ public class Player : MonoBehaviour {
 		Walk();
 
 		// ジャンプ
-		Jump();
+		bool isJump = Jump();
 
 		// 立ち止まり
 		WalkDown();
 
 		// 左右上下回転
 		Rotate();
+
+		// 着地アニメーション
+		if (Land.IsLanding && Land.IsLandingChange) {
+			Land.IsLandingChange = false;
+			PlAnim.StartLand();
+		}
+
+		// 落下アニメーション
+		if (!Land.IsLanding && Land.IsLandingChange) {
+			Land.IsLandingChange = false;
+			if (!isJump) {
+				//PlAnim.StartFall();
+			}
+		}
 	}
 
 	void Walk() {
+		// 歩行アニメーション
+		if (walkStandbyVec != 0.0f) {
+			if (!Lift.IsLifting) {
+				PlAnim.StartWalk();
+			} else {
+				PlAnim.StartHoldWalk();
+			}
+			PlAnim.SetSpeed(Mathf.Abs(walkStandbyVec));
+		}
+		// 待機アニメーション
+		else {
+			if (!Lift.IsLifting) {
+				PlAnim.StartStandBy();
+			} else {
+				PlAnim.StartHoldStandBy();
+			}
+		}
+
 		// 左右移動入力があれば
 		if (walkStandbyVec == 0.0f) return;
 
 		// 左右移動可能でなければ
-		if (!walkFlg) return;
+		if (!canWalk) return;
 
 		// 地上なら
 		if (Land.IsLanding) {
@@ -162,15 +246,17 @@ public class Player : MonoBehaviour {
 			MoveMng.AddMove(new Vector3(walkStandbyVec * (JumpDis / JumpTime) * Time.deltaTime, 0.0f, 0.0f));
 		}
 	}
-	void Jump() {
+	bool Jump() {
 		// ジャンプ入力がなければ
-		if (!jumpStandbyFlg) return;
+		if (!jumpStandbyFlg) return false;
 
 		// ジャンプ可能でなければ
-		if (!jumpFlg) return;
+		if (!canJump) return false;
 
 		// ステージ又は水面に接地していなければ
-		if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
+		Debug.LogWarning("IsLanding:" + Land.IsLanding);
+//		if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
+		if (!(Land.IsLanding || WaterStt.IsWaterSurface)) {
 			PileWeight pile = GetComponent<PileWeight>();
 			// 接地しているオブジェクトにも接地していなければ
 			List<Transform> pileObjs = pile.GetPileBoxList(new Vector3(0.0f, MoveMng.GravityForce, 0.0f));
@@ -185,7 +271,7 @@ public class Player : MonoBehaviour {
 			}
 			if ((pileObjs.Count == 0) || !stagePile) {
 				// ジャンプ不可
-				return;
+				return false;
 			}
 		}
 
@@ -194,6 +280,13 @@ public class Player : MonoBehaviour {
 
 		Debug.Log("Jump");
 
+		// ジャンプアニメーション
+		if (!Lift.IsLifting) {
+			PlAnim.StartJump();
+		}else {
+			PlAnim.StartHoldJump();
+		}
+
 		// 前回までの上下方向の加速度を削除
 		MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
 
@@ -201,8 +294,8 @@ public class Player : MonoBehaviour {
 		MoveMng.StopMoveHorizontalAll();
 
 		// 上方向へ加速
-		//		float jumpGravityForce = (0.5f * Mathf.Pow(jumpTime * 0.5f, 2) + jumpHeight);	// ジャンプ中の重力加速度
-		float jumpGravityForce = -10;   // ジャンプ中の重力加速度
+		//float jumpGravityForce = (0.5f * Mathf.Pow(jumpTime * 0.5f, 2) + jumpHeight);	// ジャンプ中の重力加速度
+		float jumpGravityForce = -100;   // ジャンプ中の重力加速度
 
 		MoveMng.AddMove(new Vector3(0.0f, (-jumpGravityForce * JumpTime * 0.5f), 0.0f));
 		Debug.Log(jumpGravityForce);
@@ -216,11 +309,13 @@ public class Player : MonoBehaviour {
 		jumpStandbyFlg = false;
 
 		// 通常の重力加速度を一時的に無効
-		MoveMng.GravityCustomTime = (Time.time + JumpTime);
-		MoveMng.GravityForce = jumpGravityForce;
+		//MoveMng.GravityCustomTime = (Time.time + JumpTime);
+		//MoveMng.GravityForce = jumpGravityForce;
 
 		// 次回ジャンプ可能時間を設定
 		//		jumpLimitTime = Time.time + jumpTime * 0.5f;	// ジャンプしてからジャンプ滞空時間の半分の時間まではジャンプ不可
+
+		return true;
 	}
 	void WalkDown() {
 		// 接地中でなければ
