@@ -92,6 +92,14 @@ public class MoveManager : MonoBehaviour {
 		}
 	}
 	[SerializeField] Collider useCol = null;			// 当たり判定を行うコライダー
+	public Collider UseCol {
+		get {
+			return useCol;
+		}
+		set {
+			useCol = value;
+		}
+	}
 
 	[SerializeField] float gravityCustomTime = 0.0f;	// 通常の重力加速度を一時停止する時間
 	public float GravityCustomTime {
@@ -187,14 +195,14 @@ public class MoveManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		if (useCol == null) {
-			useCol = GetComponent<BoxCollider>();
+		if (UseCol == null) {
+			UseCol = GetComponent<BoxCollider>();
 		}
-		if (useCol == null) {
-			useCol = GetComponent<SphereCollider>();
+		if (UseCol == null) {
+			UseCol = GetComponent<SphereCollider>();
 		}
-		if (useCol == null) {
-			useCol = GetComponent<CapsuleCollider>();
+		if (UseCol == null) {
+			UseCol = GetComponent<CapsuleCollider>();
 		}
 	}
 
