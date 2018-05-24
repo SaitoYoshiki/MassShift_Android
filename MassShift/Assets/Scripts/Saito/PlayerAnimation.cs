@@ -43,7 +43,6 @@ public class PlayerAnimation : MonoBehaviour {
 
 	Animator mAnimator;
 
-	bool mIsHold = false;
 	public bool mIsHover = false;	//浮いているかどうか
 
 	enum CState {
@@ -517,7 +516,6 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	public void StartCatch(GameObject aBox) {
-		if (mIsHold == true) return;
 		mBox = aBox;
 		mStartDifference = aBox.transform.position - mCatchStartHandPosition.position;
 		mEndDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
@@ -560,7 +558,6 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	public void StartRelease() {
-		if (mIsHold == false) return;
 		mStartDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
 		mEndDifference = mReleaseEndBoxPosition.position - mReleaseEndHandPosition.position;
 		ChangeState(CState.cRelease);
@@ -568,15 +565,12 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	public void ExitCatchFailed() {
-		mIsHold = false;
 		ChangeState(CState.cStandBy);
 	}
 	public void ExitCatch() {
-		mIsHold = true;
 		ChangeState(CState.cHoldStandBy);
 	}
 	public void ExitRelease() {
-		mIsHold = false;
 		ChangeState(CState.cStandBy);
 	}
 }
