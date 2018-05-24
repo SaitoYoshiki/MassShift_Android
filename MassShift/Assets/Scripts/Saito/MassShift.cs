@@ -235,7 +235,7 @@ public class MassShift : MonoBehaviour
 			//選択元から重さを移せない時
 			else {
 				//失敗
-				FindObjectOfType<SoundManager>().Play(mCantShiftSE);
+				SoundManager.SPlay(mCantShiftSE);
 				ChangeState(CSelectState.cFail);
 				return;
 			}
@@ -289,6 +289,7 @@ public class MassShift : MonoBehaviour
 				lc.mMoveSpeed = (lc.From - lc.To).magnitude / lMinDistance * mLightBallTemplate.GetComponent<LightBall>().mMoveSpeed;
 			}
 
+			SoundManager.SPlay(mShiftSourceSE);
 		}
 
 
@@ -315,7 +316,7 @@ public class MassShift : MonoBehaviour
 			foreach (var s in mLightBallShare) {
 				DestroyLightBall(s);
 			}
-			ChangeState(CSelectState.cMoveSourceToDest);	//移し元から移し先へ移す状態へ
+			ChangeState(CSelectState.cMoveSourceToDest);    //移し元から移し先へ移す状態へ
 		}
 	}
 
@@ -358,6 +359,8 @@ public class MassShift : MonoBehaviour
 				LightBall lc = l.GetComponent<LightBall>();
 				lc.mMoveSpeed = (lc.From - lc.To).magnitude / lMinDistance * mLightBallTemplate.GetComponent<LightBall>().mMoveSpeed;
 			}
+
+			SoundManager.SPlay(mShiftDestSE);
 		}
 
 
@@ -389,7 +392,7 @@ public class MassShift : MonoBehaviour
 			foreach (var s in mDest.GetComponent<ShareWeightBox>().GetShareAllListExceptOwn()) {
 				s.GetComponent<WeightManager>().WeightLvSeem += GetShiftWeight();
 			}
-			ChangeState(CSelectState.cSuccess);	//成功状態へ
+			ChangeState(CSelectState.cSuccess); //成功状態へ
 		}
 	}
 
@@ -422,7 +425,9 @@ public class MassShift : MonoBehaviour
 			mLightBall.GetComponent<LightBall>().InitPoint(GetMassPosition(mSource), GetMassPosition(mDest));
 			mLightBall.GetComponent<LightBall>().PlayEffect();
 
-			mSource.GetComponent<WeightManager>().WeightLvSeem -= GetShiftWeight();	//見かけの重さを減らす
+			mSource.GetComponent<WeightManager>().WeightLvSeem -= GetShiftWeight(); //見かけの重さを減らす
+
+			SoundManager.SPlay(mShiftSourceSE);
 		}
 
 
@@ -452,12 +457,14 @@ public class MassShift : MonoBehaviour
 			//移せないなら
 			else {
 				ChangeState(CSelectState.cReturnToSource);  //移し元へ光の弾は帰っていく
+				SoundManager.SPlay(mCantShiftSE);
 				return;
 			}
 		}
 
 		//もし障害物に当たっていたら
 		if (lLightBall.IsHit) {
+			SoundManager.SPlay(mCancelShiftSE);
 			ChangeState(CSelectState.cReturnToSource);
 			return;
 		}
@@ -493,6 +500,8 @@ public class MassShift : MonoBehaviour
 
 		DestroyLightBall(mLightBall);	//光の弾を消去する
 		ChangeState(CSelectState.cNormal);  //通常状態へ
+
+		SoundManager.SPlay(mShiftDestSE);
 	}
 
 
@@ -528,6 +537,7 @@ public class MassShift : MonoBehaviour
 			}
 			else {
 				ChangeState(CSelectState.cFail);
+				SoundManager.SPlay(mShiftSourceSE);
 			}
 		}
 	}
@@ -575,6 +585,8 @@ public class MassShift : MonoBehaviour
 				LightBall lc = l.GetComponent<LightBall>();
 				lc.mMoveSpeed = (lc.From - lc.To).magnitude / lMinDistance * mLightBallTemplate.GetComponent<LightBall>().mMoveSpeed;
 			}
+
+			SoundManager.SPlay(mShiftDestSE);
 		}
 
 
@@ -609,7 +621,8 @@ public class MassShift : MonoBehaviour
 			foreach (var s in mDest.GetComponent<ShareWeightBox>().GetShareAllListExceptOwn()) {
 				s.GetComponent<WeightManager>().WeightLvSeem += GetShiftWeight();
 			}
-			ChangeState(CSelectState.cFail);	//失敗状態へ
+			ChangeState(CSelectState.cFail);    //失敗状態へ
+			SoundManager.SPlay(mShiftDestSE);
 		}
 
 	}
