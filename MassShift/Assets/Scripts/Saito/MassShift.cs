@@ -267,7 +267,7 @@ public class MassShift : MonoBehaviour
 			foreach (var s in lSourceShare.GetShareAllListExceptOwn()) {
 
 				GameObject l = Instantiate(mLightBallPrefab, transform);
-				l.GetComponent<LightBall>().InitPoint(s.transform.position, mSource.transform.position);
+				l.GetComponent<LightBall>().InitPoint(GetMassPosition(s.gameObject), GetMassPosition(mSource));
 				l.GetComponent<LightBall>().PlayEffect();
 				mLightBallShare.Add(l);
 
@@ -302,7 +302,7 @@ public class MassShift : MonoBehaviour
 
 			LightBall l = mLightBallShare[i].GetComponent<LightBall>();
 			ShareWeightBox s = lShareList[i].GetComponent<ShareWeightBox>();
-			l.SetPoint(s.transform.position, mSource.transform.position);
+			l.SetPoint(GetMassPosition(s.gameObject), GetMassPosition(mSource));
 			l.UpdatePoint();
 			if (l.IsReached == false) {
 				lAllReach = false;
@@ -339,7 +339,7 @@ public class MassShift : MonoBehaviour
 			foreach (var s in lDestShare.GetShareAllListExceptOwn()) {
 
 				GameObject l = Instantiate(mLightBallPrefab, transform);
-				l.GetComponent<LightBall>().InitPoint(mDest.transform.position, s.transform.position);
+				l.GetComponent<LightBall>().InitPoint(GetMassPosition(mDest), GetMassPosition(s.gameObject));
 				l.GetComponent<LightBall>().PlayEffect();
 				mLightBallShare.Add(l);
 			}
@@ -371,7 +371,7 @@ public class MassShift : MonoBehaviour
 
 			LightBall l = mLightBallShare[i].GetComponent<LightBall>();
 			ShareWeightBox s = lShareList[i].GetComponent<ShareWeightBox>();
-			l.SetPoint(mDest.transform.position, s.transform.position);
+			l.SetPoint(GetMassPosition(mDest), GetMassPosition(s.gameObject));
 			l.UpdatePoint();
 			if (l.IsReached == false) {
 				lAllReach = false;
@@ -419,7 +419,7 @@ public class MassShift : MonoBehaviour
 			mLightBall.GetComponent<LightBall>().mIgnoreList.Add(mSource);
 			mLightBall.GetComponent<LightBall>().mIgnoreList.Add(mDest);
 
-			mLightBall.GetComponent<LightBall>().InitPoint(mSource.transform.position, mDest.transform.position);
+			mLightBall.GetComponent<LightBall>().InitPoint(GetMassPosition(mSource), GetMassPosition(mDest));
 			mLightBall.GetComponent<LightBall>().PlayEffect();
 
 			mSource.GetComponent<WeightManager>().WeightLvSeem -= GetShiftWeight();	//見かけの重さを減らす
@@ -429,7 +429,7 @@ public class MassShift : MonoBehaviour
 		var lLightBall = mLightBall.GetComponent<LightBall>();
 
 		//光の弾の位置の更新
-		lLightBall.SetPoint(mSource.transform.position, mDest.transform.position);
+		lLightBall.SetPoint(GetMassPosition(mSource), GetMassPosition(mDest));
 		lLightBall.UpdatePoint();
 
 
@@ -509,12 +509,12 @@ public class MassShift : MonoBehaviour
 			ShowModelHilight(mDest, false, Color.white);
 
 			//光の弾を戻す
-			mLightBall.GetComponent<LightBall>().InitPoint(mLightBall.transform.position, mSource.transform.position);
+			mLightBall.GetComponent<LightBall>().InitPoint(GetMassPosition(mLightBall), GetMassPosition(mSource));
 			mLightBall.GetComponent<LightBall>().PlayEffect();
 		}
 
 		//光の弾の更新
-		mLightBall.GetComponent<LightBall>().SetPoint(mLightBall.GetComponent<LightBall>().From, mSource.transform.position);
+		mLightBall.GetComponent<LightBall>().SetPoint(mLightBall.GetComponent<LightBall>().From, GetMassPosition(mSource));
 		mLightBall.GetComponent<LightBall>().UpdatePoint();
 
 		//光の弾が移し元へ到達したら
@@ -554,7 +554,7 @@ public class MassShift : MonoBehaviour
 			{
 
 				GameObject l = Instantiate(mLightBallPrefab, transform);
-				l.GetComponent<LightBall>().InitPoint(mDest.transform.position, s.transform.position);
+				l.GetComponent<LightBall>().InitPoint(GetMassPosition(mDest), GetMassPosition(s.gameObject));
 				l.GetComponent<LightBall>().PlayEffect();
 				mLightBallShare.Add(l);
 			}
@@ -589,7 +589,7 @@ public class MassShift : MonoBehaviour
 
 			LightBall l = mLightBallShare[i].GetComponent<LightBall>();
 			ShareWeightBox s = lShareList[i].GetComponent<ShareWeightBox>();
-			l.SetPoint(mDest.transform.position, s.transform.position);
+			l.SetPoint(GetMassPosition(mDest), GetMassPosition(s.gameObject));
 			l.UpdatePoint();
 			if (l.IsReached == false)
 			{
@@ -939,6 +939,22 @@ public class MassShift : MonoBehaviour
 #endregion
 
 
+	//重さを移す場所を取得する
+	//
+	Vector3 GetMassPosition(GameObject aGameObject) {
+
+		Transform lWeightParticle = aGameObject.transform.Find("WeightParticle");
+		if (lWeightParticle != null) {
+			return lWeightParticle.position;
+		}
+
+		lWeightParticle = aGameObject.transform.Find("Rotation/WeightParticle");
+		if (lWeightParticle != null) {
+			return lWeightParticle.position;
+		}
+
+		return aGameObject.transform.position;
+	}
 
 	//重さを移す表示線の更新
 	//
@@ -946,11 +962,14 @@ public class MassShift : MonoBehaviour
 
 		MassShiftLine lMassShiftLine = aMassShiftLine.GetComponent<MassShiftLine>();
 
+		Vector3 lFromPosition = GetMassPosition(aFrom);
+		Vector3 lToPosition = GetMassPosition(aTo);
+
 		//重さを移す表示の線の、位置を更新
-		lMassShiftLine.SetLinePosition(aFrom.transform.position, aTo.transform.position);
+		lMassShiftLine.SetLinePosition(lFromPosition, lToPosition);
 
 		//もし射線が通っているなら
-		if (mLightBallTemplate.GetComponent<LightBall>().ThroughShotLine(aFrom.transform.position, aTo.transform.position, new GameObject[] { mSource, mDest, mSelect }.ToList())) {
+		if (mLightBallTemplate.GetComponent<LightBall>().ThroughShotLine(lFromPosition, lToPosition, new GameObject[] { mSource, mDest, mSelect }.ToList())) {
 			//線とカーソルを、射線が通っているときの色にする
 			lMassShiftLine.ChangeColor(mCanSelectColor * mCanSelectColorPower);
 			ChangeCursorColor(mCanSelectColor * mCanSelectColorPower);
@@ -1003,14 +1022,15 @@ public class MassShift : MonoBehaviour
 
 		if (aModel == null) return;
 
-		GameObject lFrame = aModel.transform.Find("Model/Hilight").gameObject;
+		Transform lFrame = aModel.transform.Find("Model/Hilight");
+		if (lFrame == null) return;
 
 		if (aIsShow == false) {
-			lFrame.SetActive(false);
+			lFrame.gameObject.SetActive(false);
 		}
 		else {
-			lFrame.SetActive(true);
-			Utility.ChangeMaterialColor(lFrame, null, "_Color", aColor);
+			lFrame.gameObject.SetActive(true);
+			Utility.ChangeMaterialColor(lFrame.gameObject, null, "_Color", aColor);
 		}
 	}
 
