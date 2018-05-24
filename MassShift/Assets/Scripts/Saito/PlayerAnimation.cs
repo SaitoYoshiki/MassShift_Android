@@ -503,6 +503,10 @@ public class PlayerAnimation : MonoBehaviour {
 		ChangeState(CState.cJumpStart);
 	}
 
+	public void StartFall() {
+		ChangeState(CState.cJumpFall);
+	}
+
 	bool StartLandCheck() {
 		if (mState == CState.cJumpLand) return false;
 		if (mState == CState.cJumpMid) return true;
@@ -541,6 +545,10 @@ public class PlayerAnimation : MonoBehaviour {
 
 	public void StartHoldJump() {
 		ChangeState(CState.cHoldJumpStart);
+	}
+
+	public void StartHoldFall() {
+		ChangeState(CState.cHoldJumpFall);
 	}
 
 	bool StartHoldLandCheck() {
