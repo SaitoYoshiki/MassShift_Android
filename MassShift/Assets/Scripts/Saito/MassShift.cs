@@ -26,19 +26,32 @@ public class MassShift : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
-	{
+	void Update() {
+
 		if (Time.timeScale == 0.0f) return;
+
+		UpdateCanShift();
 		
+		UpdateState();
+	}
+
+	void UpdateCanShift() {
 		//プレイヤーが重さを移せるなら
-		if(PlayerCanShift()) {
-			CanShift = true;
+		if (PlayerCanShift()) {
+			_mPlayerCanShift = true;
 		}
 		else {
-			CanShift = false;
+			_mPlayerCanShift = false;
 		}
 
-		UpdateState();
+		if (CanShift == true) {
+			if (mState == CSelectState.cCantShift) {
+				ChangeState(CSelectState.cNormal);
+			}
+		}
+		else {
+			ChangeState(CSelectState.cCantShift);
+		}
 	}
 
 	void PlayerIsShift(bool aValue) {
@@ -1088,22 +1101,15 @@ public class MassShift : MonoBehaviour
 	#region CanShift
 
 	bool _mCanShift = true;
+	bool _mPlayerCanShift = true;
 
 	//重さを移せる状態かどうか
 	//
 	public bool CanShift {
 		get {
-			return _mCanShift;
+			return _mCanShift && _mPlayerCanShift;	//両方がtrueでないと移せない
 		}
 		set {
-			if (value == true) {
-				if (mState == CSelectState.cCantShift) {
-					ChangeState(CSelectState.cNormal);
-				}
-			}
-			else {
-				ChangeState(CSelectState.cCantShift);
-			}
 			_mCanShift = value;
 		}
 	}
