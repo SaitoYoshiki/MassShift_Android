@@ -415,16 +415,19 @@ public class PlayerAnimation : MonoBehaviour {
 	GameObject mBox;
 
 	public Vector3 GetBoxPosition() {
-		Vector3 lRes = mBox.transform.position;
+		Vector3 lRes = mCatchEndBoxPosition.position;
 
 		//持ち上げている途中なら
 		if (IsCatching() || IsCatchFailed()) {
 			if(mCatchStartTime <= mStateTime && mStateTime < mCatchEndTime) {
 				float lRate = (mStateTime - mCatchStartTime) / (mCatchEndTime - mCatchStartTime);
-				lRes = mHandTransform.position + Vector3.Lerp(mStartDifference, mEndDifference, lRate);
+				lRes = mHandTransform.position + Vector3.Lerp(mStartDifference, mEndDifference, Mathf.Clamp01(lRate));
 			}
-			else {
+			else if (mStateTime < mCatchStartTime) {
 				lRes = mBox.transform.position;
+			}
+			else if (mCatchEndTime <= mStateTime) {
+				lRes = mCatchEndBoxPosition.position;
 			}
 		}
 		if (IsReleasing()) {
@@ -432,13 +435,16 @@ public class PlayerAnimation : MonoBehaviour {
 				Vector3 lStartDifference = mCatchEndBoxPosition.position - mCatchEndHandPosition.position;
 				Vector3 lEndDifference = mReleaseEndBoxPosition.position - mReleaseEndHandPosition.position;
 				float lRate = (mStateTime - mReleaseStartTime) / (mReleaseEndTime - mReleaseStartTime);
-				lRes = mHandTransform.position + Vector3.Lerp(mStartDifference, mEndDifference, lRate);
+				lRes = mHandTransform.position + Vector3.Lerp(mStartDifference, mEndDifference, Mathf.Clamp01(lRate));
 			}
-			else {
-				lRes = mBox.transform.position;
+			else if (mStateTime < mReleaseStartTime) {
+				lRes = mCatchEndBoxPosition.position;
+			}
+			else if (mReleaseEndTime <= mStateTime) {
+				lRes = mReleaseEndBoxPosition.position;
 			}
 		}
-
+		
 		return ToZeroZ(lRes);
 	}
 	Vector3 ToZeroZ(Vector3 aVec) {
