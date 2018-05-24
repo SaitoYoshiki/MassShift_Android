@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MoveManager : MonoBehaviour {
 	// 定数
@@ -322,6 +323,9 @@ public class MoveManager : MonoBehaviour {
 
 			// y軸判定衝突判定
 			if (hitInfos.Length > 0) {
+				// 近い順にソート
+				hitInfos = hitInfos.OrderBy(x => x.distance).ToArray();
+
 				///Debug.LogError(_moveCol.name + " y軸衝突");
 				///foreach (var hitInfo in hitInfos) {
 				///	Debug.LogError(hitInfo.collider.name);
@@ -330,17 +334,19 @@ public class MoveManager : MonoBehaviour {
 
 				// y軸の全ての衝突を取得
 				RaycastHit nearHitinfo = new RaycastHit();
-				float dis = float.MinValue;
+//				float dis = float.MinValue;
 				foreach (var hitInfo in hitInfos) {
-					float cmpDis = (Mathf.Abs(_moveCol.bounds.center.y - hitInfo.collider.bounds.center.y) - (_moveCol.bounds.size.y + hitInfo.collider.bounds.size.y) * 0.5f) * -1;
-					if (cmpDis > dis) {
-						dis = cmpDis;
+//					float cmpDis = (Mathf.Abs(_moveCol.bounds.center.y - hitInfo.collider.bounds.center.y) - (_moveCol.bounds.size.y + hitInfo.collider.bounds.size.y) * 0.5f) * -1;
+					float dis = (Mathf.Abs(_moveCol.bounds.center.y - hitInfo.collider.bounds.center.y) - (_moveCol.bounds.size.y + hitInfo.collider.bounds.size.y) * 0.5f);
+//					if (cmpDis > dis) {
+//					dis = cmpDis;
 						nearHitinfo = hitInfo;
-					}
+//					}
 
 					/**/
 					nearHitinfo = hitInfo;
-					dis += ColMargin;
+					dis -= ColMargin;
+					dis = Mathf.Clamp(dis, 0, dis);
 
 					// 押し出し判定
 					WeightManager moveWeightMng = _moveCol.GetComponent<WeightManager>();
@@ -358,7 +364,7 @@ public class MoveManager : MonoBehaviour {
 						// 直前まで移動
 						///Debug.LogError("yMove bef pos:" + _moveCol.transform.position.x + ", " + _moveCol.transform.position.y);
 						//					UnityEditor.EditorApplication.isPaused = true;
-						_moveCol.transform.position += new Vector3(0.0f, -moveVec.y * dis, 0.0f);
+						_moveCol.transform.position += new Vector3(0.0f, moveVec.y * dis, 0.0f);
 						///Debug.LogError("yMove aft pos:" + _moveCol.transform.position.x + ", " + _moveCol.transform.position.y);
 						//					UnityEditor.EditorApplication.isPaused = true;
 
