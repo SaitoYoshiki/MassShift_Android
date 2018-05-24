@@ -70,6 +70,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if(mNeedInitState == true) {
 			mNeedInitState = false;
+			mFloorModel.transform.localPosition = Vector3.zero;
 		}
 		//処理
 
@@ -83,6 +84,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
+			mFloorModel.transform.localPosition = Vector3.zero;
 			mMoveDirection = GetTargetLocalPosition() - mFloor.transform.localPosition;
 		}
 
@@ -100,6 +102,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
+			mFloorModel.transform.localPosition = Vector3.zero;
 		}
 
 		//処理
@@ -107,7 +110,15 @@ public class MoveFloor : MonoBehaviour {
 		Vector3 lVibration = GetFloorPositionAnimation(mStateTime, mFromMovingTime, mFromMovingHz, mFromMovingAmp);
 		VibrationFloor(lVibration);
 
+		//重さに応じた場所まで、現在の場所から遠いなら
+		Vector3 lTargetLocalPosition = GetTargetLocalPosition();
+		if (!ReachFloor(lTargetLocalPosition)) {
+			mState = CState.cToMoving;
+			return;
+		}
+
 		if (mStateTime >= mFromMovingTime) {
+			mFloor.transform.localPosition = lTargetLocalPosition;
 			mState = CState.cStay;
 		}
 	}
@@ -116,6 +127,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
+			mFloorModel.transform.localPosition = Vector3.zero;
 			mMoveDirection = GetTargetLocalPosition() - mFloor.transform.localPosition;
 		}
 
@@ -152,8 +164,11 @@ public class MoveFloor : MonoBehaviour {
 	}
 
 	bool ReachFloor(Vector3 aTargetLocalPosition) {
-		Vector3 lDistance = aTargetLocalPosition - mFloor.transform.localPosition;
-		return Mathf.Abs(lDistance.y) < 0.02f;
+		return DistanceToTarget() < 0.02f;
+	}
+	float DistanceToTarget() {
+		Vector3 lDistance = GetTargetLocalPosition() - mFloor.transform.localPosition;
+		return Mathf.Abs(lDistance.y);
 	}
 
 	void UpdateTurn() {
@@ -213,8 +228,11 @@ public class MoveFloor : MonoBehaviour {
 		if(lMoveRes.magnitude != 0.0f){
 			RotateGear(lMoveRes);	//動けた分歯車を回転
 		}
+		//動けない場合、たまに振動する
 		else {
-			if(mStateTime % 2.0f < 0.5f) {
+			bool lIsVibTime = mStateTime % 2.0f < 0.5f;
+			bool lIsFarToTarget = DistanceToTarget() >= 0.5f;
+			if (lIsFarToTarget && lIsVibTime) {
 				Vector3 lVibration = GetFloorPositionAnimation(mStateTime, mStateTime + 1.0f, mTurnHz, mTurnAmp);
 				//Debug.Log("Vibration:" + lVibration);
 				VibrationFloor(lVibration);
