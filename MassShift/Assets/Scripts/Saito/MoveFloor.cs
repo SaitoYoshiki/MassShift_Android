@@ -70,6 +70,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if(mNeedInitState == true) {
 			mNeedInitState = false;
+			mFloorModel.transform.localPosition = Vector3.zero;
 		}
 		//処理
 
@@ -83,6 +84,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
+			mFloorModel.transform.localPosition = Vector3.zero;
 			mMoveDirection = GetTargetLocalPosition() - mFloor.transform.localPosition;
 		}
 
@@ -100,6 +102,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
+			mFloorModel.transform.localPosition = Vector3.zero;
 		}
 
 		//処理
@@ -107,7 +110,15 @@ public class MoveFloor : MonoBehaviour {
 		Vector3 lVibration = GetFloorPositionAnimation(mStateTime, mFromMovingTime, mFromMovingHz, mFromMovingAmp);
 		VibrationFloor(lVibration);
 
+		//重さに応じた場所まで、現在の場所から遠いなら
+		Vector3 lTargetLocalPosition = GetTargetLocalPosition();
+		if (!ReachFloor(lTargetLocalPosition)) {
+			mState = CState.cToMoving;
+			return;
+		}
+
 		if (mStateTime >= mFromMovingTime) {
+			mFloor.transform.localPosition = lTargetLocalPosition;
 			mState = CState.cStay;
 		}
 	}
@@ -116,6 +127,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
+			mFloorModel.transform.localPosition = Vector3.zero;
 			mMoveDirection = GetTargetLocalPosition() - mFloor.transform.localPosition;
 		}
 
