@@ -54,7 +54,7 @@ public class Fence : MonoBehaviour
 		}
 
 		mCollider.transform.localScale = new Vector3(mLength, 1.0f, 1.0f);
-		mCollider.transform.localPosition = new Vector3(mLength / 2.0f, 0.0f, 0.0f);
+		mCollider.transform.localPosition = new Vector3(mLength / 2.0f - 0.5f, 0.0f, 0.0f);
 
 		//現在のモデルの削除
 		for (int i = mModel.transform.childCount - 1; i >= 0; i--) {
