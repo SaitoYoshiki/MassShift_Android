@@ -29,8 +29,27 @@ public class MassShift : MonoBehaviour
 	void Update()
 	{
 		if (Time.timeScale == 0.0f) return;
+		
+		//プレイヤーが重さを移せるなら
+		if(PlayerCanShift()) {
+			CanShift = true;
+		}
+		else {
+			CanShift = false;
+		}
 
 		UpdateState();
+	}
+
+	void PlayerIsShift(bool aValue) {
+		var p = FindObjectOfType<Player>();
+		if (p == null) return;
+		p.IsShift = aValue;
+	}
+	bool PlayerCanShift() {
+		var p = FindObjectOfType<Player>();
+		if (p == null) return true;
+		return p.CanShift;
 	}
 
 
@@ -76,6 +95,7 @@ public class MassShift : MonoBehaviour
 				UpdateSuccess();
 				break;
 			case CSelectState.cFail:
+				MoveCursor();
 				UpdateFail();
 				break;
 			case CSelectState.cCantShift:
@@ -113,6 +133,9 @@ public class MassShift : MonoBehaviour
 			mSource = null;
 			mDest = null;
 			mSelect = null;
+
+			//プレイヤーに、現在移していないと伝える
+			PlayerIsShift(false);
 		}
 
 		//選択中のオブジェクトを更新
@@ -182,6 +205,9 @@ public class MassShift : MonoBehaviour
 			//選択元から重さを移せるとき
 			if (CanShiftSource(mSource)) {
 				mDest = mSelect;
+
+				//プレイヤーに、現在移している最中だと伝える
+				PlayerIsShift(true);
 
 				//共有ボックスなら
 				if (mSource.GetComponent<ShareWeightBox>()) {
@@ -396,7 +422,7 @@ public class MassShift : MonoBehaviour
 
 		//もし移し先へ到達していたら
 		if (lLightBall.IsReached) {
-
+			
 			//移せるなら
 			if (CanShiftSourceToDest(mSource, mDest)) {
 
@@ -453,7 +479,7 @@ public class MassShift : MonoBehaviour
 		}
 
 		DestroyLightBall(mLightBall);	//光の弾を消去する
-		ChangeState(CSelectState.cNormal);	//通常状態へ
+		ChangeState(CSelectState.cNormal);  //通常状態へ
 	}
 
 
@@ -591,6 +617,8 @@ public class MassShift : MonoBehaviour
 
 			//移す表示の線を消す
 			mMassShiftLine.SetActive(false);
+
+
 		}
 
 		//重さを移すボタンが押されていないなら
