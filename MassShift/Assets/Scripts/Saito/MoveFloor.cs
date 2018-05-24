@@ -216,7 +216,7 @@ public class MoveFloor : MonoBehaviour {
 		else {
 			if(mStateTime % 2.0f < 0.5f) {
 				Vector3 lVibration = GetFloorPositionAnimation(mStateTime, mStateTime + 1.0f, mTurnHz, mTurnAmp);
-				Debug.Log("Vibration:" + lVibration);
+				//Debug.Log("Vibration:" + lVibration);
 				VibrationFloor(lVibration);
 			}
 		}
