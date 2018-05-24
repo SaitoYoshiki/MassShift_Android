@@ -115,7 +115,7 @@ public class Landing : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		mask = LayerMask.GetMask(new string[] { "Stage", "Player", "Box" });
+		mask = LayerMask.GetMask(new string[] { "Stage", "Player", "Box", "Fence" });
 	}
 
 	// Update is called once per frame

@@ -108,7 +108,7 @@ public class Lifting : MonoBehaviour {
 
 			// オブジェクトの位置を同期
 			if (liftMoveFlg) {
-				if (heavyFailedFlg || (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box" })))) {
+				if (heavyFailedFlg || (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" })))) {
 					Debug.Log("持ち上げ失敗");
 
 					// 同期できなければ下ろす
@@ -143,7 +143,7 @@ public class Lifting : MonoBehaviour {
 			MoveMng.StopMoveHorizontalAll();
 
 			// オブジェクトの位置を同期
-			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box" }))) {
+			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" }))) {
 				Debug.Log("下ろし失敗");
 
 				// 同期できなければ離す
@@ -189,7 +189,7 @@ public class Lifting : MonoBehaviour {
 			MoveMng.StopMoveHorizontalAll();
 
 			// オブジェクトの位置を同期
-			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box" }))) {
+			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" }))) {
 				Debug.Log("持ち上げ失敗に失敗");
 
 				// 同期できなければ下ろす
@@ -251,7 +251,7 @@ public class Lifting : MonoBehaviour {
 
 		case LiftState.lifting:
 			// オブジェクトの位置を同期
-			MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box" }));
+			MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" }));
 			break;
 
 		default:
