@@ -95,6 +95,19 @@ public class Landing : MonoBehaviour {
 		}
 	}
 
+	PlayerAnimation plAnim = null;
+	PlayerAnimation PlAnim {
+		get {
+			if (!plAnim) {
+				plAnim = GetComponent<PlayerAnimation>();
+				if (!plAnim) {
+					Debug.LogError("PlayerAnimationが見つかりませんでした。");
+				}
+			}
+			return plAnim;
+		}
+	}
+
 	// 当たり判定を行うレイヤーマスク
 	int mask;
 

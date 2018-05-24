@@ -306,11 +306,11 @@ public class MoveManager : MonoBehaviour {
 			_ignoreColList.Add(_moveCol);
 		}
 
-		string testStr = _moveCol.name;
-		foreach (var ignoreCol in _ignoreColList) {
-			testStr += "\n" + ignoreCol.name;
-		}
-		Debug.LogWarning(testStr);
+//		string testStr = _moveCol.name;
+//		foreach (var ignoreCol in _ignoreColList) {
+//			testStr += "\n" + ignoreCol.name;
+//		}
+//		Debug.LogWarning(testStr);
 
 		///Debug.LogError(moveVec);
 

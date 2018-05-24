@@ -36,6 +36,19 @@ public class Lifting : MonoBehaviour {
 		}
 	}
 
+	PlayerAnimation plAnim = null;
+	PlayerAnimation PlAnim {
+		get {
+			if (!plAnim) {
+				plAnim = GetComponent<PlayerAnimation>();
+				if (!plAnim) {
+					Debug.LogError("PlayerAnimationが見つかりませんでした。");
+				}
+			}
+			return plAnim;
+		}
+	}
+
 	MoveManager moveMng = null;
 	MoveManager MoveMng {
 		get {
