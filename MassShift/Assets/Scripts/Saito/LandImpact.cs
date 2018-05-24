@@ -27,6 +27,8 @@ public class LandImpact : MonoBehaviour {
 	void Start () {
 		mLanding = GetComponent<Landing>();
 		mWeightManager = GetComponent<WeightManager>();
+
+		mHighestPosition = transform.position;  //最高地点を更新
 	}
 	
 	// Update is called once per frame
