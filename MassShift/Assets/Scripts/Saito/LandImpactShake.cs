@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(LandImpact))]
-public class LandShake : MonoBehaviour {
+public class LandImpactShake : MonoBehaviour {
 
 	[SerializeField, Tooltip("揺れる時間"), EditOnPrefab]
 	float mShakeTime = 0.2f;

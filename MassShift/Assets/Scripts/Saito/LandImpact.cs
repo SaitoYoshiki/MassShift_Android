@@ -60,5 +60,4 @@ public class LandImpact : MonoBehaviour {
 		}
 		mBeforeLanding = lLanding;
 	}
-
 }
