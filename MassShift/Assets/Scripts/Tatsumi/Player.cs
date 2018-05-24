@@ -30,6 +30,16 @@ public class Player : MonoBehaviour {
 			canShift = value;
 		}
 	}
+	[SerializeField]
+	bool canRotation = true;
+	public bool CanRotation {
+		get {
+			return canRotation;
+		}
+		set {
+			canRotation = value;
+		}
+	}
 	[SerializeField] bool isShift = true;	// 重さ移し中フラグ
 	public bool IsShift {
 		get {
@@ -43,6 +53,16 @@ public class Player : MonoBehaviour {
 		get {
 			if (!Land) return false;
 			return Land.IsLanding;
+		}
+	}
+	[SerializeField]
+	bool isRotation = false;
+	bool IsRotation {
+		get {
+			return isRotation;
+		}
+		set {
+			isRotation = value;
 		}
 	}
 
@@ -69,7 +89,8 @@ public class Player : MonoBehaviour {
 	}
 
 	[SerializeField] float walkStandbyVec = 0.0f;	// 移動しようとしている方向
-	[SerializeField] bool jumpStandbyFlg = false;	// ジャンプしようとしているフラグ
+	[SerializeField] bool jumpStandbyFlg = false;   // ジャンプしようとしているフラグ
+	bool prevJumpStandbyFlg = false;
 //	float jumpLimitTime = 0.0f;						// 次回ジャンプ可能時間
 
 	[SerializeField] float remainJumpTime = 0.0f;
@@ -154,6 +175,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] Vector3 rotVec = new Vector3(1.0f, 0.0f, 0.0f); // 左右向きと非接地面
 	[SerializeField] float rotSpd = 0.2f;
 	[SerializeField] float turnRotBorderSpd = 1.0f;
+	[SerializeField] float correctionaAngle = 1.0f;
 
 	// Use this for initialization
 	//	void Start () {}
@@ -164,13 +186,14 @@ public class Player : MonoBehaviour {
 		walkStandbyVec = Input.GetAxis("Horizontal");
 
 		// ジャンプ入力
+		prevJumpStandbyFlg = jumpStandbyFlg;
 		jumpStandbyFlg = (Input.GetAxis("Jump") != 0.0f);
 
 		// ジャンプ滞空時間
 		remainJumpTime = (!Land.IsLanding ? remainJumpTime + Time.deltaTime : 0.0f);
 
 		// 持ち上げ/下げ
-		if (Land.IsLanding) {
+		if (Land.IsLanding && !IsRotation) {
 			if ((Input.GetAxis("Lift") != 0.0f)) {
 				if (!liftTrg) {
 					Lift.Lift();
@@ -243,12 +266,12 @@ public class Player : MonoBehaviour {
 		// 空中なら
 		else {
 			// 左右方向へ加速
-			MoveMng.AddMove(new Vector3(walkStandbyVec * (JumpDis / JumpTime) * Time.deltaTime, 0.0f, 0.0f));
+			MoveMng.AddMove(new Vector3(walkStandbyVec * (JumpDis / JumpTime) * Time.fixedDeltaTime, 0.0f, 0.0f));
 		}
 	}
 	bool Jump() {
-		// ジャンプ入力がなければ
-		if (!jumpStandbyFlg) return false;
+		// ジャンプ入力(トリガー)がなければ
+		if (!jumpStandbyFlg || prevJumpStandbyFlg) return false;
 
 		// ジャンプ可能でなければ
 		if (!canJump) return false;
@@ -295,10 +318,12 @@ public class Player : MonoBehaviour {
 
 		// 上方向へ加速
 		//float jumpGravityForce = (0.5f * Mathf.Pow(jumpTime * 0.5f, 2) + jumpHeight);	// ジャンプ中の重力加速度
-		float jumpGravityForce = -100;   // ジャンプ中の重力加速度
+		//		float jumpGravityForce = -100;   // ジャンプ中の重力加速度
 
-		MoveMng.AddMove(new Vector3(0.0f, (-jumpGravityForce * JumpTime * 0.5f), 0.0f));
-		Debug.Log(jumpGravityForce);
+		//		MoveMng.AddMove(new Vector3(0.0f, (-jumpGravityForce * JumpTime * 0.5f), 0.0f));
+		//		Debug.Log(jumpGravityForce);
+
+		MoveMng.AddMove(new Vector3(0.0f, (JumpHeight), 0.0f));
 
 		// 離地
 		Land.IsLanding = false;
@@ -330,9 +355,11 @@ public class Player : MonoBehaviour {
 	}
 
 	void Rotate() {
-		// 持ち上げモーション中は処理しない
-		if ((Lift.St == Lifting.LiftState.invalid) ||
-			(Lift.St == Lifting.LiftState.standby)) {
+		if (!CanRotation) return;
+
+//		// 持ち上げモーション中は処理しない
+//		if ((Lift.St == Lifting.LiftState.invalid) ||
+//			(Lift.St == Lifting.LiftState.standby)) {
 			// 接地中なら
 			if (Land.IsLanding || WaterStt.IsWaterSurface) {
 				// 移動方向によって向きを設定
@@ -346,13 +373,26 @@ public class Player : MonoBehaviour {
 			// 接地方向によって向きを設定
 			if (WeightMng.WeightLv == WeightManager.Weight.flying) {
 				rotVec.y = 1.0f;
-			} else if (MoveMng.PrevMove.y > 0.0f) {
+			} else {
 				rotVec.y = 0.0f;
 			}
 
-			// 設定された向きにスラープ
+			// 結果の姿勢を求める
 			Quaternion qt = Quaternion.Euler(rotVec.y * 180.0f, -90.0f + rotVec.x * 90.0f, 0.0f);
-			rotTransform.rotation = Quaternion.Slerp(rotTransform.rotation, qt, rotSpd);
+
+			// 現在の向きと結果の向きとの角度が一定以内なら
+			float angle = Quaternion.Angle(rotTransform.rotation, qt);
+			if (angle < correctionaAngle) {
+				// 向きを合わせる
+				rotTransform.rotation = Quaternion.Lerp(rotTransform.rotation, qt, 1);
+				IsRotation = false;
+			}
+			// 角度が一定以上なら
+			else {
+				// 設定された向きにスラープ
+				rotTransform.rotation = Quaternion.Slerp(rotTransform.rotation, qt, rotSpd);
+				IsRotation = true;
+			}
 		}
-	}
+//	}
 }

@@ -26,6 +26,9 @@ public class WaterState : MonoBehaviour {
 			else {
 				Debug.Log("OutWater OneTimeMaxSpd:" + weightLvExitWaterMoveMax[(int)WeightMng.WeightLv] + " StayMaxSpd:null" + Support.ObjectInfoToString(gameObject));
 				SetWaterMaxSpeed(weightLvExitWaterMoveMax, null);
+
+				// 水面状態を解除
+				IsWaterSurface = false;
 			}
 		}
 	}

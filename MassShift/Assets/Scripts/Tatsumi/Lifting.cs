@@ -143,7 +143,7 @@ public class Lifting : MonoBehaviour {
 			MoveMng.StopMoveHorizontalAll();
 
 			// オブジェクトの位置を同期
-			if (!MoveManager.MoveTo(liftPoint.position, liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box" }))) {
+			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box" }))) {
 				Debug.Log("下ろし失敗");
 
 				// 同期できなければ離す
@@ -250,10 +250,6 @@ public class Lifting : MonoBehaviour {
 //			break;
 
 		case LiftState.lifting:
-			// 移動不可
-			MoveMng.StopMoveVirticalAll();
-			MoveMng.StopMoveHorizontalAll();
-
 			// オブジェクトの位置を同期
 			MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box" }));
 			break;
@@ -270,9 +266,10 @@ public class Lifting : MonoBehaviour {
 			// 重さ変更中は処理しない
 			if (false) return null;	//test
 
-			// ジャンプと重さ変更を不可に
+			// ジャンプ、重さ変更、振り向きを不可に
 			Pl.CanJump = false;
 			Pl.CanShift = false;
+			Pl.CanRotation = false;
 
 			RaycastHit hitInfo;
 			// 持ち上げれるオブジェクトがあれば
@@ -288,9 +285,10 @@ public class Lifting : MonoBehaviour {
 			break;
 
 		case LiftState.lifting:
-			// ジャンプと重さ変更を不可に
+			// ジャンプ、重さ変更、振り向きを不可に
 			Pl.CanJump = false;
 			Pl.CanShift = false;
+			Pl.CanRotation = false;
 
 			// 下ろし始める
 			LiftDown();
@@ -347,6 +345,13 @@ public class Lifting : MonoBehaviour {
 		// 持ち上げ中のプレイヤー当たり判定を有効化/無効化
 		liftingCol.enabled = _liftUp;
 
+		// 有効な当たり判定をMoveManagerに登録
+		if (standbyCol.enabled) {
+			MoveMng.UseCol = standbyCol;
+		}else {
+			MoveMng.UseCol = liftingCol;
+		}
+
 		// 持ち上げきったのなら
 		if (_liftUp) {
 			// 持ち上げ状態に遷移
@@ -364,7 +369,8 @@ public class Lifting : MonoBehaviour {
 			Pl.CanShift = true;
 		}
 
-		// プレイヤーのジャンプを可能に
+		// プレイヤーのジャンプ、振り向きを可能に
 		Pl.CanJump = true;
+		Pl.CanRotation = true;
 	}
 }
