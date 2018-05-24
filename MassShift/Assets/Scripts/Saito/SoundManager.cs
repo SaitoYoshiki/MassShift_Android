@@ -56,4 +56,23 @@ public class SoundManager : MonoBehaviour {
 			return sInstance;
 		}
 	}
+
+
+	public static GameObject SPlay(GameObject aSoundPrefab, float aDelay) {
+		if (Instance == null) return null;
+		return Instance.Play(aSoundPrefab, aDelay);
+	}
+	public static GameObject SPlay(GameObject aSoundPrefab) {
+		return SPlay(aSoundPrefab, 0.0f);
+	}
+
+	public static void SStop(GameObject aSoundInstance) {
+		if (Instance == null) return;
+		Instance.Stop(aSoundInstance);
+	}
+
+	public static void SPause(GameObject aSoundInstance, bool aPause) {
+		if (Instance == null) return;
+		Instance.Pause(aSoundInstance, aPause);
+	}
 }
