@@ -7,6 +7,9 @@ public class StageSelectManager : MonoBehaviour {
 	[SerializeField]
 	List<Goal> mGoal;
 
+	[SerializeField]
+	List<TextMesh> mText;
+
 	Player mPlayer;
 
 	// Use this for initialization
@@ -24,22 +27,38 @@ public class StageSelectManager : MonoBehaviour {
 	}
 
 	IEnumerator StageSelectMain() {
+		
+		//ステージ開始時の演出
+		//Fade.Start();
 
-		float lTakeTime;
+		//フェードが終わるのを待つ
+		while(true) {
+			//if(Fade.IsFinish()) break;
+			break;
+			yield return null;
+		}
 
 		int lSelectStageNum = -1;
 
 		//ゲームメインのループ
 		while (true) {
 
+			SetEnterColor(-1);
+
 			bool lIsEnter = Input.GetKeyDown(KeyCode.W);
 
 			//ゴール判定
 			//
 			for(int i = 0; i < mGoal.Count; i++) {
-				if(lIsEnter && CanEnter(mGoal[i])) {
-					lSelectStageNum = i;
-					break;
+				if(CanEnter(mGoal[i])) {
+
+					SetEnterColor(i);
+
+					//もし入る操作が行われているなら
+					if(lIsEnter) {
+						lSelectStageNum = i;
+						break;
+					}
 				}
 			}
 
@@ -51,27 +70,33 @@ public class StageSelectManager : MonoBehaviour {
 			yield return null;	//ゲームメインを続ける
 		}
 
-		//扉が閉まる演出
+		//ステージ終了時の演出
+		//Fade.Start();
 
-		//扉が閉まる演出の終了待ち
+		//フェードが終わるのを待つ
+		while (true) {
+			//if(Fade.IsFinish()) break;
+			break;
+			yield return null;
+		}
 
 
 		//ステージ遷移
 		UnityEngine.SceneManagement.SceneManager.LoadScene(Area.GetStageSceneName(1, lSelectStageNum + 1));
 
-		//リザルト画面を出す
-		//
-		lTakeTime = 0.0f;
-
-		//リザルト画面で、シーン移動するので、これ以上先にはいかない
-		while (true) {
-			yield return null;
-		}
 	}
 
 	bool CanEnter(Goal lGoal) {
 		if (lGoal == null) return false;
 		if (!lGoal.IsInPlayer(mPlayer)) return false;
 		return true;
+	}
+
+	void SetEnterColor(int aIndex) {
+		foreach(var t in mText) {
+			t.color = Color.gray;
+		}
+		if (aIndex == -1) return;
+		mText[aIndex].color = Color.green;
 	}
 }
