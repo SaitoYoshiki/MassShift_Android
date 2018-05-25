@@ -5,7 +5,7 @@ using System.Linq;
 
 public class MoveManager : MonoBehaviour {
 	// 定数
-	const float ColMargin = 0.01f;
+	const float ColMargin = 0.05f;
 
 	public enum MoveType {
 		min = -3,
@@ -361,7 +361,7 @@ public class MoveManager : MonoBehaviour {
 					/**/
 					nearHitinfo = hitInfo;
 					dis -= ColMargin;
-					dis = Mathf.Clamp(dis, 0, dis);
+					dis = Mathf.Max(dis, 0.0f);
 
 					// 押し出し判定
 					WeightManager moveWeightMng = _moveCol.GetComponent<WeightManager>();

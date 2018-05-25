@@ -257,7 +257,7 @@ public class Player : MonoBehaviour {
 
 	void Walk() {
 		// 歩行アニメーション
-		if (walkStandbyVec != 0.0f) {
+		if ((walkStandbyVec != 0.0f) && CanWalk) {
 			if (!Lift.IsLifting) {
 				PlAnim.StartWalk();
 			} else {
@@ -298,19 +298,18 @@ public class Player : MonoBehaviour {
 		// ジャンプ可能でなければ
 		if (!canJump) return false;
 
-		// ステージ又は水面に接地していなければ
+		// ステージに接地、又は水面で安定していなければ
 		Debug.LogWarning("IsLanding:" + Land.IsLanding);
-		//		if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
+		//if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
 		if (!(Land.IsLanding || WaterStt.IsWaterSurface)) {
 			PileWeight pile = GetComponent<PileWeight>();
-			// 接地しているオブジェクトにも接地していなければ
+			// 接地、又は安定しているオブジェクトにも接地していなければ
 			List<Transform> pileObjs = pile.GetPileBoxList(new Vector3(0.0f, MoveMng.GravityForce, 0.0f));
 			bool stagePile = false;
 			foreach (var pileObj in pileObjs) {
 				Landing pileLand = pileObj.GetComponent<Landing>();
 				WaterState pileWaterStt = pileObj.GetComponent<WaterState>();
-				if ((pileLand && (pileLand.IsLanding || pileLand.IsExtrusionLanding)) ||
-					(pileWaterStt && (pileWaterStt.IsWaterSurface))) {
+				if ((pileLand && (pileLand.IsLanding || pileLand.IsExtrusionLanding)) || (pileWaterStt && (pileWaterStt.IsWaterSurface))) {
 					stagePile = true;
 				}
 			}
@@ -369,7 +368,11 @@ public class Player : MonoBehaviour {
 	}
 	void WalkDown() {
 		// 接地中でなければ
-		if (!Land.IsLanding) return;
+		if (!Land.IsLanding) {
+			// 水面
+
+			return;
+		}
 
 		// 進行方向側への左右入力があれば
 		if ((walkStandbyVec != 0.0f) && (Mathf.Sign(MoveMng.PrevMove.x) == Mathf.Sign(walkStandbyVec))) return;
