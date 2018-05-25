@@ -5,7 +5,7 @@ using System.Linq;
 
 public class MoveManager : MonoBehaviour {
 	// 定数
-	const float ColMargin = 0.05f;
+	const float ColMargin = 0.01f;
 
 	public enum MoveType {
 		min = -3,
