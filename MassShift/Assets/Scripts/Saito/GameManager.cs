@@ -11,11 +11,22 @@ public class GameManager : MonoBehaviour {
 	[SerializeField, EditOnPrefab]
 	List<GameObject> mAreaBGM;
 
+	[SerializeField]
+	StageTransition mTransition;
+
+	[SerializeField]
+	GameObject mResult;
+
+	[SerializeField]
+	GameObject mPause;
+
 	// Use this for initialization
 	void Start() {
 		mMassShift = FindObjectOfType<MassShift>();
 		mPlayer = FindObjectOfType<Player>();
 		mGoal = FindObjectOfType<Goal>();
+
+		mTransition = FindObjectOfType<StageTransition>();
 
 		//ゲーム進行のコルーチンを開始
 		StartCoroutine(GameMain());
@@ -33,42 +44,43 @@ public class GameManager : MonoBehaviour {
 
 		//ステージ開始時の演出
 		//
-		
-		//TODO: プレイヤーを操作不可に
-		mMassShift.CanShift = false;	//重さを移せない
-		
-		lTakeTime = 0.0f;
+
+		//プレイヤーを操作不可に
+		OnCantOperation();
+
+		mTransition.ActivateDoor();
+		mTransition.OpenDoorParent();
 
 		//演出が終了するまで待機
 		while (true) {
-			lTakeTime += Time.deltaTime;
-			if (lTakeTime >= 2.0f) {
-				break;
-			}
+			//if (mTransition.GetOpenEnd()) break;
+			break;
 			yield return null;
 		}
 
 		//BGMを再生する
-		Area.GetAreaNumber();
+		SoundManager.SPlay(mAreaBGM[Area.GetAreaNumber()]);
 
 
 		//ゲームメインの開始
 		//
 
-		//TODO プレイヤーが操作可能になる
-
-		//重さを移せるようになる
-		mMassShift.CanShift = true;
+		//プレイヤーが操作可能になる
+		OnCanOperation();
 
 		//ゲームメインのループ
 		while (true) {
-			
+
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				mPause.SetActive(!mPause.activeInHierarchy);
+			}
+
 			//ゴール判定
 			//
-			if(CanGoal()) {
+			if (CanGoal()) {
 				break;
 			}
-			
+
 			yield return null;	//ゲームメインを続ける
 		}
 
@@ -76,32 +88,10 @@ public class GameManager : MonoBehaviour {
 		//ゴール時の、プレイヤーがドアから出ていく演出
 		//
 
-		//TODO Playerを操作不可にする
+		//Playerを操作不可にする
+		OnCantOperation();
 
-		//重さを移せなくする
-		mMassShift.CanShift = false;
-
-
-		lTakeTime = 0.0f;
-
-		//ドアから出ていく演出が終了するまで待機
-		while (true) {
-			lTakeTime += Time.deltaTime;
-			if (lTakeTime >= 2.0f) {
-				break;
-			}
-			yield return null;
-		}
-
-
-		//リザルト画面を出す
-		//
-		lTakeTime = 0.0f;
-
-		//リザルト画面で、シーン移動するので、これ以上先にはいかない
-		while (true) {
-			yield return null;
-		}
+		mResult.SetActive(true);
 	}
 
 	bool CanGoal() {
@@ -120,6 +110,23 @@ public class GameManager : MonoBehaviour {
 			return false;
 		}
 
+		if (!mPause.activeInHierarchy) {
+			return false;
+		}
+
 		return true;	//ゴール可能
+	}
+
+	void OnCantOperation() {
+		mMassShift.CanShift = false;    //重さを移せない
+		mPlayer.CanWalk = false;
+		mPlayer.CanJump = false;
+		mPlayer.CanRotation = false;
+	}
+	void OnCanOperation() {
+		mMassShift.CanShift = true;    //重さを移せる
+		mPlayer.CanWalk = true;
+		mPlayer.CanJump = true;
+		mPlayer.CanRotation = true;
 	}
 }

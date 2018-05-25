@@ -21,6 +21,9 @@ public class StageSelectManager : MonoBehaviour {
 	[SerializeField]
 	Color mStagePlateOffColor;
 
+	[SerializeField]
+	StageTransition mStageTransition;
+
 	// Use this for initialization
 	void Start() {
 
@@ -36,13 +39,14 @@ public class StageSelectManager : MonoBehaviour {
 	}
 
 	IEnumerator StageSelectMain() {
-		
+
 		//ステージ開始時の演出
-		//Fade.Start();
+		//mStageTransition.ActivateDoor();
+		//mStageTransition.OpenDoorParent();
 
 		//フェードが終わるのを待つ
 		while(true) {
-			//if(Fade.IsFinish()) break;
+			//if(mStageTransition.GetOpenEnd()) break;
 			break;
 			yield return null;
 		}
@@ -84,15 +88,14 @@ public class StageSelectManager : MonoBehaviour {
 		}
 
 		//ステージ終了時の演出
-		//Fade.Start();
+		//mStageTransition.CloseDoorParent();
 
 		//フェードが終わるのを待つ
 		while (true) {
-			//if(Fade.IsFinish()) break;
+			//if (mStageTransition.GetCloseEnd()) break;
 			break;
 			yield return null;
 		}
-
 
 		//ステージ遷移
 		UnityEngine.SceneManagement.SceneManager.LoadScene(Area.GetStageSceneName(1, lSelectStageNum + 1));
