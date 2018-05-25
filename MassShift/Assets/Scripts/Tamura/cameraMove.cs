@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class cameraMove : MonoBehaviour {
 
-    private Vector3 cameraStartPoint = new Vector3(4.0f, 2.5f, -5.0f);
-    private Vector3 cameraZoomPoint = new Vector3(1.5f, 1.5f, -2.0f);
-    private Vector3 cameraEndPoint = new Vector3(10.0f, 5.0f, -10.0f);
+    private Vector3 cameraStartPoint = new Vector3(0.0f, 2.5f, -15.0f);
+    private Vector3 cameraZoomPoint = new Vector3(-2.5f, 1.35f, -5.0f);
+    private Vector3 cameraEndPoint = new Vector3(0.0f, 5.0f, -50.0f);
 
     public float zoomInTime;
     public float zoomOutTime;
@@ -58,4 +58,14 @@ public class cameraMove : MonoBehaviour {
         }
         this.transform.position = Vector3.Lerp(_startPos, _endPos, zoomPer);
     }
+
+    void OnTutorialSelected() {
+
+    }
+
+    void OnStageSelectSelected() {
+        cameraEndPoint = new Vector3(10.0f, 5.0f, -50.0f);
+    }
+
+    // チュートリアル1の部屋と、ステージセレクト前の部屋を同じサイズにして、カメラ引きの位置は同じにする
 }

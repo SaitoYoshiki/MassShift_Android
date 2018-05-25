@@ -235,6 +235,7 @@ public class MassShift : MonoBehaviour
 			//選択元から重さを移せない時
 			else {
 				//失敗
+				MassShiftFail(mSource);
 				SoundManager.SPlay(mCantShiftSE);
 				ChangeState(CSelectState.cFail);
 				return;
@@ -456,6 +457,7 @@ public class MassShift : MonoBehaviour
 			}
 			//移せないなら
 			else {
+				MassShiftFail(mDest);
 				ChangeState(CSelectState.cReturnToSource);  //移し元へ光の弾は帰っていく
 				SoundManager.SPlay(mCantShiftSE);
 				return;
@@ -969,6 +971,15 @@ public class MassShift : MonoBehaviour
 		return aGameObject.transform.position;
 	}
 
+
+	void MassShiftFail(GameObject aTarget) {
+		if (aTarget == null) return;
+		MassShiftFailed m = aTarget.GetComponent<MassShiftFailed>();
+		if (m == null) return;
+		m.MassShiftFail();
+	}
+
+
 	//重さを移す表示線の更新
 	//
 	void UpdateMassShiftLine(GameObject aMassShiftLine, GameObject aFrom, GameObject aTo) {
@@ -1054,8 +1065,6 @@ public class MassShift : MonoBehaviour
 		g.GetComponent<LightBall>().StopEffect();
 		Destroy(g, 1.0f);
 	}
-
-
 
 	//その移し元から、重さを移せるか
 	//

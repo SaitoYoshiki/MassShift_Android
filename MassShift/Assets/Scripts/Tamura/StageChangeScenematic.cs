@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class StageChangeScenematic : MonoBehaviour {
     public enum DOOR {
         UP = 0,
@@ -10,17 +10,17 @@ public class StageChangeScenematic : MonoBehaviour {
         LEFT
     }
 
+    public DoorAnimManager daManager;
+
     bool isOpening = false;
     bool isClosing = false;
     public float doorAnimTime;
 
     [SerializeField, Range(0.0f, 1.0f)]
     float scenematicPercent;
-    float beforeScenematicPer;
 
     [SerializeField, Range(0.0f, 1.0f)]
     float scenematicStopPercent;
-    float beforeScenematicStopPer;
 
     float startTime;
     float nowTime;
@@ -79,6 +79,7 @@ public class StageChangeScenematic : MonoBehaviour {
         // ここらへんlerpで書き直したほうが良さげ
         if (timePer <= scenematicPercent) {
             this.transform.localPosition = new Vector3(startPos.x * timePer, startPos.y * timePer, 0.0f);
+
         }
         else if (timePer > scenematicPercent && timePer <= (scenematicPercent + scenematicStopPercent)) {
             secondPos = this.transform.localPosition;
@@ -94,6 +95,7 @@ public class StageChangeScenematic : MonoBehaviour {
                     else {
                         this.transform.localPosition = Vector3.zero;
                         isOpening = false;
+                        daManager.openCountPlus();
                     }
                     break;
 
@@ -105,6 +107,7 @@ public class StageChangeScenematic : MonoBehaviour {
                     else {
                         this.transform.localPosition = Vector3.zero;
                         isOpening = false;
+                        daManager.openCountPlus();
                     }
                     break;
 
@@ -116,6 +119,7 @@ public class StageChangeScenematic : MonoBehaviour {
                     else {
                         this.transform.localPosition = Vector3.zero;
                         isOpening = false;
+                        daManager.openCountPlus();
                     }
                     break;
 
@@ -127,6 +131,7 @@ public class StageChangeScenematic : MonoBehaviour {
                     else {
                         this.transform.localPosition = Vector3.zero;
                         isOpening = false;
+                        daManager.openCountPlus();
                     }
                     break;
             }
@@ -161,37 +166,41 @@ public class StageChangeScenematic : MonoBehaviour {
                     else {
                         this.transform.localPosition = Vector3.zero;
                         isClosing = false;
+                        daManager.closeCountPlus();
                     }
                 break;
 
                 case DOOR.DOWN:
-                if (this.transform.localPosition.y < 0.0f) {
-                    this.transform.localPosition = new Vector3(0.0f, secondPos.y - secondPos.y * ((nowTime - secondTime) / (doorAnimTime - secondTime)), 0.0f);
-                }
-                else {
-                    this.transform.localPosition = Vector3.zero;
-                    isClosing = false;
-                }
+                    if (this.transform.localPosition.y < 0.0f) {
+                        this.transform.localPosition = new Vector3(0.0f, secondPos.y - secondPos.y * ((nowTime - secondTime) / (doorAnimTime - secondTime)), 0.0f);
+                    }
+                    else {
+                        this.transform.localPosition = Vector3.zero;
+                        isClosing = false;
+                        daManager.closeCountPlus();
+                    }
                 break;
 
                 case DOOR.RIGHT:
-                if (this.transform.localPosition.x > 0.0f) {
-                    this.transform.localPosition = new Vector3(secondPos.x - secondPos.x * ((nowTime - secondTime) / (doorAnimTime - secondTime)), 0.0f, 0.0f);
-                }
-                else {
-                    this.transform.localPosition = Vector3.zero;
-                    isClosing = false;
-                }
+                    if (this.transform.localPosition.x > 0.0f) {
+                        this.transform.localPosition = new Vector3(secondPos.x - secondPos.x * ((nowTime - secondTime) / (doorAnimTime - secondTime)), 0.0f, 0.0f);
+                    }
+                    else {
+                        this.transform.localPosition = Vector3.zero;
+                        isClosing = false;
+                        daManager.closeCountPlus();
+                    }
                 break;
 
                 case DOOR.LEFT:
-                if (this.transform.localPosition.x < 0.0f) {
-                    this.transform.localPosition = new Vector3(secondPos.x - secondPos.x * ((nowTime - secondTime) / (doorAnimTime - secondTime)), 0.0f, 0.0f);
-                }
-                else {
-                    this.transform.localPosition = Vector3.zero;
-                    isClosing = false;
-                }
+                    if (this.transform.localPosition.x < 0.0f) {
+                        this.transform.localPosition = new Vector3(secondPos.x - secondPos.x * ((nowTime - secondTime) / (doorAnimTime - secondTime)), 0.0f, 0.0f);
+                    }
+                    else {
+                        this.transform.localPosition = Vector3.zero;
+                        isClosing = false;
+                        daManager.closeCountPlus();
+                    }
                 break;
             }
         }
@@ -207,4 +216,157 @@ public class StageChangeScenematic : MonoBehaviour {
     void OnValidate() {
 
     }
+}
+*/
+
+public class StageChangeScenematic : MonoBehaviour {
+    public enum DOOR {
+        UP = 0,
+        DOWN,
+        RIGHT,
+        LEFT
+    }
+
+    public DoorAnimManager daManager;
+
+    bool isOpening = false;
+    bool isClosing = false;
+    
+    public float doorAnimTime;
+    
+    [SerializeField, Range(0.0f, 1.0f)]
+    public float doorAnimPer;
+    [SerializeField, Range(0.0f, 1.0f)]
+    public float doorStopPer;
+
+    float startTime;
+    float stopTime;
+    
+    public Vector3 openPos;
+    public Vector3 stopPos;
+    public Vector3 closePos;
+
+    int area;
+    int stage;
+
+    void Start() {
+        area = Area.GetAreaNumber();
+        stage = Area.GetStageNumber();
+        openPos = this.transform.localPosition;
+
+        // Active時に開く
+        //StartOpening();
+    }
+
+    void Update() {
+        if (isOpening) {
+            //AnimDoor(closePos, stopPos, openPos, isOpening, true);
+            OpenDoor();
+        }
+
+        if (isClosing) {
+            //AnimDoor(openPos, stopPos, closePos, isClosing, false);
+            CloseDoor();
+        }
+    }
+
+    public void StartOpening() {
+        isOpening = true;
+        startTime = Time.realtimeSinceStartup;
+    }
+
+    public void StartClosing(){
+        isClosing = true;
+        startTime = Time.realtimeSinceStartup;
+    }
+
+    // ドア開く演出
+    void OpenDoor() {
+        float nowTime = Time.realtimeSinceStartup - startTime;
+
+        float timePer = nowTime / doorAnimTime;
+
+        // ドア開きアニメーション一段階目
+        if (timePer <= doorAnimPer) {
+            this.transform.localPosition = Vector3.Lerp(closePos, stopPos, timePer / doorAnimPer);
+
+        }
+        // ドア開きアニメーション二段階目
+        else if (timePer > doorAnimPer && timePer <= (doorAnimPer + doorStopPer)) {
+            stopTime = nowTime;
+        }
+        // ドア開きアニメーション三段階目
+        else if (timePer > (doorAnimPer + doorStopPer) && timePer <= 1.0f) {
+            nowTime = nowTime - stopTime;
+            timePer = nowTime / (doorAnimTime - stopTime);
+            this.transform.localPosition = new Vector3(stopPos.x + (openPos.x - stopPos.x) * timePer, stopPos.y + (openPos.y - stopPos.y) * timePer, 0.0f);
+        }
+        // ドア開きアニメーション終了
+        else {
+            this.transform.localPosition = openPos;
+            isOpening = false;
+            daManager.OpenCountPlus();
+        }
+    }
+
+    // ドア閉まる演出
+    void CloseDoor() {
+        float nowTime = Time.realtimeSinceStartup - startTime;
+
+        float timePer = nowTime / doorAnimTime;
+
+        // アニメーション一段階目
+        if (timePer <= doorAnimPer) {
+            this.transform.localPosition = Vector3.Lerp(openPos, stopPos, timePer / doorAnimPer);
+
+        }
+        // アニメーション二段階目
+        else if (timePer > doorAnimPer && timePer <= (doorAnimPer + doorStopPer)) {
+            stopTime = nowTime;
+        }
+        // アニメーション三段階目
+        else if (timePer > (doorAnimPer + doorStopPer) && timePer <= 1.0f) {
+            timePer = (nowTime - stopTime) / (doorAnimTime - stopTime);
+            this.transform.localPosition = new Vector3(stopPos.x + (closePos.x - stopPos.x) * timePer, stopPos.y + (closePos.y - stopPos.y) * timePer, 0.0f);
+        }
+        // アニメーション終了
+        else {
+            this.transform.localPosition = closePos;
+            isClosing = false;
+            daManager.CloseCountPlus();
+        }
+    }
+
+    // ドア開閉演出
+    /*void AnimDoor(Vector3 _startPos, Vector3 _stopPos, Vector3 _endPos, bool _flg, bool openFlg) {
+        float nowTime = Time.realtimeSinceStartup - startTime;
+
+        float timePer = nowTime / doorAnimTime;
+
+        // アニメーション一段階目
+        if (timePer <= doorAnimPer) {
+            this.transform.localPosition = Vector3.Lerp(_startPos, _stopPos, timePer / doorAnimPer);
+
+        }
+        // アニメーション二段階目
+        else if (timePer > doorAnimPer && timePer <= (doorAnimPer + doorStopPer)) {
+            stopTime = nowTime;
+        }
+        // アニメーション三段階目
+        else if (timePer > (doorAnimPer + doorStopPer) && timePer <= 1.0f) {
+            timePer = (nowTime - stopTime) / (doorAnimTime - stopTime);
+            this.transform.localPosition = new Vector3(_stopPos.x + (_endPos.x - _stopPos.x) * timePer, _stopPos.y + (_endPos.y - _endPos.y) * timePer, 0.0f);
+        }
+        // アニメーション終了
+        else {
+            this.transform.localPosition = _endPos;
+            _flg = false;
+            if (openFlg) {
+                daManager.openCountPlus();
+            }
+            else {
+                daManager.closeCountPlus();
+            }
+        }
+    }*/
 }
