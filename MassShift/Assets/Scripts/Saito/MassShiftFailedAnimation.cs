@@ -17,6 +17,6 @@ public class MassShiftFailedAnimation : MonoBehaviour {
 	}
 	
 	void PlayAnimation() {
-		mAnimator.Play(mAnimationName);
+		mAnimator.PlayInFixedTime(mAnimationName, 0, 0.0f);
 	}
 }
