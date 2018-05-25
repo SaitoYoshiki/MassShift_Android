@@ -12,6 +12,15 @@ public class StageSelectManager : MonoBehaviour {
 
 	Player mPlayer;
 
+	[SerializeField, EditOnPrefab]
+	GameObject mStageSelectBGMPrefab;
+
+	[SerializeField]
+	Color mStagePlateOnColor;
+
+	[SerializeField]
+	Color mStagePlateOffColor;
+
 	// Use this for initialization
 	void Start() {
 
@@ -37,6 +46,10 @@ public class StageSelectManager : MonoBehaviour {
 			break;
 			yield return null;
 		}
+
+		//BGMを流し始める
+		SoundManager.SPlay(mStageSelectBGMPrefab);
+
 
 		int lSelectStageNum = -1;
 
@@ -94,9 +107,9 @@ public class StageSelectManager : MonoBehaviour {
 
 	void SetEnterColor(int aIndex) {
 		foreach(var t in mText) {
-			t.color = Color.gray;
+			t.color = mStagePlateOffColor;
 		}
 		if (aIndex == -1) return;
-		mText[aIndex].color = Color.green;
+		mText[aIndex].color = mStagePlateOnColor;
 	}
 }
