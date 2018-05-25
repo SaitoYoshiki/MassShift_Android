@@ -388,22 +388,25 @@ public class Player : MonoBehaviour {
 		//		// 持ち上げモーション中は処理しない
 		//		if ((Lift.St == Lifting.LiftState.invalid) ||
 		//			(Lift.St == Lifting.LiftState.standby)) {
-		// 接地中かつ左右入力中なら
-		if ((Land.IsLanding || WaterStt.IsWaterSurface) && (walkStandbyVec != 0.0f)) {
-			// 一定の移動がある方向に向きを設定
-			if (MoveMng.PrevMove.x > turnRotBorderSpd) {
-				rotVec.x = 1.0f;
-			} else if (MoveMng.PrevMove.x < -turnRotBorderSpd) {
-				rotVec.x = -1.0f;
-			} else {
-				// 移動量が一定以下なら入力方向に向く
-				if(walkStandbyVec > 0.0f) {
+//		// 接地中なら
+//		if (Land.IsLanding || WaterStt.IsWaterSurface) {
+			// 左右入力中なら
+			if (walkStandbyVec != 0.0f) {
+				// 一定の移動がある方向に向きを設定
+				if (MoveMng.PrevMove.x > turnRotBorderSpd) {
 					rotVec.x = 1.0f;
-				}else if(walkStandbyVec < 0.0f) {
+				} else if (MoveMng.PrevMove.x < -turnRotBorderSpd) {
 					rotVec.x = -1.0f;
+				} else {
+					// 移動量が一定以下なら入力方向に向く
+					if (walkStandbyVec > 0.0f) {
+						rotVec.x = 1.0f;
+					} else if (walkStandbyVec < 0.0f) {
+						rotVec.x = -1.0f;
+					}
 				}
 			}
-		}
+//		}
 
 		// 接地方向によって向きを設定
 		if (WeightMng.WeightLv == WeightManager.Weight.flying) {
