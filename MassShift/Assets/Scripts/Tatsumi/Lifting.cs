@@ -20,10 +20,14 @@ public class Lifting : MonoBehaviour {
 	[SerializeField] Collider liftingCol = null;    // 持ち上げ中の本体当たり判定
 	[SerializeField] float stdLiftingColPoint = 1.0f;	// 接地方向が通常時の持ち上げ中の本体当たり判定の位置
 	[SerializeField] float revLiftingColPoint = 0.0f;	// 接地方向が逆の時の持ち上げ中の本体当たり判定の位置
+	[SerializeField] float liftObjMaxDisX = 0.9f;		// 持ち上げ時にx軸距離がこれ以上離れないように補正
 	[SerializeField] LiftState st;
 	public LiftState St {
 		get {
 			return st;
+		}
+		set {
+			st = value;
 		}
 	}
 	bool heavyFailedFlg = false;
@@ -31,6 +35,11 @@ public class Lifting : MonoBehaviour {
 	public bool IsLifting {
 		get {
 			return (St == LiftState.lifting);
+		}
+	}
+	public bool IsLiftStop {
+		get {
+			return ((St == LiftState.liftUp) || (St == LiftState.liftUpFailed) || (St == LiftState.liftDown) || (St == LiftState.liftDownFailed));
 		}
 	}
 
@@ -90,7 +99,7 @@ public class Lifting : MonoBehaviour {
 	}
 
 	void UpdateLifting() {
-		switch (st) {
+		switch (St) {
 		case LiftState.liftUp:
 			// 移動不可
 			MoveMng.StopMoveVirticalAll();
@@ -110,11 +119,11 @@ public class Lifting : MonoBehaviour {
 
 			// オブジェクトの位置を同期
 			if (liftMoveFlg) {
-				if (heavyFailedFlg || (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" })))) {
+				if (heavyFailedFlg || (!MoveManager.MoveTo(GetLiftUpBoxPoint(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" })))) {
 					Debug.Log("持ち上げ失敗");
 
 					// 同期できなければ下ろす
-					st = LiftState.liftUpFailed;
+					St = LiftState.liftUpFailed;
 
 					// 失敗アニメーションへの遷移
 					PlAnim.FailedCatch();
@@ -137,7 +146,7 @@ public class Lifting : MonoBehaviour {
 				plAnim.ExitCatch();
 
 				// 持ち上げ中状態
-				st = LiftState.lifting;
+				St = LiftState.lifting;
 			}
 			break;
 
@@ -154,7 +163,7 @@ public class Lifting : MonoBehaviour {
 				LiftEndObject(liftObj, false);
 
 				// 待機状態に
-				st = LiftState.standby;
+				St = LiftState.standby;
 
 				// アニメーション遷移
 				PlAnim.ExitRelease();
@@ -180,7 +189,7 @@ public class Lifting : MonoBehaviour {
 				//				liftObj = null;
 
 				// 待機状態に
-				st = LiftState.standby;
+				St = LiftState.standby;
 
 				// アニメーション遷移
 				PlAnim.ExitRelease();
@@ -197,7 +206,7 @@ public class Lifting : MonoBehaviour {
 				Debug.Log("持ち上げ失敗に失敗");
 
 				// 同期できなければ下ろす
-				st = LiftState.standby;
+				St = LiftState.standby;
 
 				LiftEndObject(liftObj, false);
 
@@ -265,15 +274,10 @@ public class Lifting : MonoBehaviour {
 
 	public GameObject Lift() {
 		Debug.Log("lift");
-		switch (st) {
+		switch (St) {
 		case LiftState.standby:
 			// 重さ変更中は処理しない
 			if (Pl.IsShift) return null;
-
-			// ジャンプ、重さ変更、振り向きを不可に
-			Pl.CanJump = false;
-			Pl.CanShift = false;
-			Pl.CanRotation = false;
 
 			// 範囲内で最も近い持ち上げられるオブジェクトを取得
 			List<RaycastHit> hitInfos = new List<RaycastHit>();
@@ -294,6 +298,12 @@ public class Lifting : MonoBehaviour {
 			if (liftableObj != null) {
 				// 重さがプレイヤーより重ければ失敗フラグを立てる
 				heavyFailedFlg = (Pl.GetComponent<WeightManager>().WeightLv < liftableObj.GetComponent<WeightManager>().WeightLv);
+
+				// ジャンプ、重さ変更、振り向きを不可に
+				Pl.CanJump = false;
+				Pl.CanShift = false;
+				Pl.CanRotation = false;
+
 				// 持ち上げ開始
 				return LiftUp(liftableObj);
 			} else {
@@ -319,7 +329,7 @@ public class Lifting : MonoBehaviour {
 	}
 	
 	GameObject LiftUp(GameObject _obj) {
-		if (st == LiftState.standby) {
+		if (St == LiftState.standby) {
 			Debug.Log("LiftUp:" + _obj.name);
 
 			// 持ち上げ中オブジェクトの設定
@@ -329,7 +339,7 @@ public class Lifting : MonoBehaviour {
 			PlAnim.StartCatch(_obj);
 
 			// 状態の変更
-			st = LiftState.liftUp;
+			St = LiftState.liftUp;
 
 			return liftObj;
 		}
@@ -346,7 +356,7 @@ public class Lifting : MonoBehaviour {
 		PlAnim.StartRelease();
 
 		// 状態の変更
-		st = LiftState.liftDown;
+		St = LiftState.liftDown;
 
 		return liftObj;
 	}
@@ -381,12 +391,12 @@ public class Lifting : MonoBehaviour {
 		// 持ち上げきったのなら
 		if (_liftUp) {
 			// 持ち上げ状態に遷移
-			st = LiftState.lifting;
+			St = LiftState.lifting;
 		}
 		// 下ろし切ったのなら
 		else {
 			// 待機状態に遷移
-			st = LiftState.standby;
+			St = LiftState.standby;
 
 			// 持ち上げオブジェクト中をnullに
 			liftObj = null;
@@ -398,5 +408,17 @@ public class Lifting : MonoBehaviour {
 		// プレイヤーのジャンプ、振り向きを可能に
 		Pl.CanJump = true;
 		Pl.CanRotation = true;
+	}
+
+	Vector3 GetLiftUpBoxPoint() {
+		if (liftObj == null) return Vector3.zero;
+
+		// x軸が離れすぎていれば近づける
+		Vector3 ret = PlAnim.GetBoxPosition();
+		float dis = (ret.x - Pl.transform.position.x);
+		if (Mathf.Abs(dis) > liftObjMaxDisX) {
+			ret = new Vector3(Pl.transform.position.x + liftObjMaxDisX * Mathf.Sign(dis), ret.y, ret.z);
+		}
+		return ret;
 	}
 }

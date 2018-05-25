@@ -212,7 +212,7 @@ public class Player : MonoBehaviour {
 		remainJumpTime = (!Land.IsLanding ? remainJumpTime + Time.deltaTime : 0.0f);
 
 		// 持ち上げ/下げ
-		if (Land.IsLanding && !IsRotation) {
+		if ((Land.IsLanding || WaterStt.IsWaterSurface) && !IsRotation) {
 			if ((Input.GetAxis("Lift") != 0.0f)) {
 				if (!liftTrg) {
 					Lift.Lift();
@@ -225,8 +225,11 @@ public class Player : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		// 左右移動
-		Walk();
+		// 持ち下ろしアニメーション中以外なら
+		if (!Lift.IsLiftStop) {
+			// 左右移動
+			Walk();
+		}
 
 		// ジャンプ
 		bool isJump = Jump();
