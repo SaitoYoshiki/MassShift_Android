@@ -85,15 +85,23 @@ public class Lifting : MonoBehaviour {
 		}
 	}
 
-	// Use this for initialization
-	void Start () {
+	[SerializeField] bool autoLiftingColMask = true;
+	[SerializeField] LayerMask liftingColMask;
+	[SerializeField] bool autoBoxMask = true;
+	[SerializeField] LayerMask boxMask;
+
+	void Awake() {
+		if (autoLiftingColMask) liftingColMask = LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" });
+		if (autoBoxMask) boxMask = LayerMask.GetMask(new string[] { "Box" });
+	}
+
+	void Start() {
 		if (liftPoint == null) {
 			Debug.LogError("LiftPointが設定されていません。");
 			enabled = false;
 		}
 	}
 
-	// Update is called once per frame
 	void Update() {
 		UpdateLifting();
 	}
@@ -119,7 +127,7 @@ public class Lifting : MonoBehaviour {
 
 			// オブジェクトの位置を同期
 			if (liftMoveFlg) {
-				if (heavyFailedFlg || (!MoveManager.MoveTo(GetLiftUpBoxPoint(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" })))) {
+				if (heavyFailedFlg || (!MoveManager.MoveTo(GetLiftUpBoxPoint(), liftObj.GetComponent<BoxCollider>(), liftingColMask))) {
 					Debug.Log("持ち上げ失敗");
 
 					// 同期できなければ下ろす
@@ -156,7 +164,7 @@ public class Lifting : MonoBehaviour {
 			MoveMng.StopMoveHorizontalAll();
 
 			// オブジェクトの位置を同期
-			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" }))) {
+			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), liftingColMask)) {
 				Debug.Log("下ろし失敗");
 
 				// 同期できなければ離す
@@ -202,7 +210,7 @@ public class Lifting : MonoBehaviour {
 			MoveMng.StopMoveHorizontalAll();
 
 			// オブジェクトの位置を同期
-			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" }))) {
+			if (!MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), liftingColMask)) {
 				Debug.Log("持ち上げ失敗に失敗");
 
 				// 同期できなければ下ろす
@@ -264,7 +272,7 @@ public class Lifting : MonoBehaviour {
 
 		case LiftState.lifting:
 			// オブジェクトの位置を同期
-			MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Stage", "Box", "Fence" }));
+			MoveManager.MoveTo(PlAnim.GetBoxPosition(), liftObj.GetComponent<BoxCollider>(), liftingColMask);
 			break;
 
 		default:
@@ -282,7 +290,7 @@ public class Lifting : MonoBehaviour {
 			// 範囲内で最も近い持ち上げられるオブジェクトを取得
 			List<RaycastHit> hitInfos = new List<RaycastHit>();
 			hitInfos.AddRange(Physics.BoxCastAll(transform.position, liftUpCol.lossyScale * 0.5f, (liftUpCol.position - transform.position),
-				liftPoint.rotation, Vector3.Distance(transform.position, liftUpCol.position), LayerMask.GetMask(new string[] { "Box" })));
+				liftPoint.rotation, Vector3.Distance(transform.position, liftUpCol.position), boxMask));
 			GameObject liftableObj = null;
 			float dis = float.MaxValue;
 			Debug.LogWarning(hitInfos.Count);
