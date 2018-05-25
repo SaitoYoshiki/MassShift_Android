@@ -22,9 +22,11 @@ public class DoorAnimManager : MonoBehaviour {
         if (openDoorCount >= doorList.Count) {
             // ドア開くアニメーションが全て終了したらステージ名フェード開始
             StageName.SetActive(true);
-            if (!StageName.GetComponent<MonoColorFade>().IsFadeEnd()) {
+            if (!StageName.GetComponent<MonoColorFade>().IsFading()) {
+                Debug.Log("文字フェード終了");
                 // ステージ名フェードアウトが終了した
                 isDoorOpenEnd = true;
+                Debug.Log("開き演出終了" + isDoorOpenEnd);
             }
         }
 

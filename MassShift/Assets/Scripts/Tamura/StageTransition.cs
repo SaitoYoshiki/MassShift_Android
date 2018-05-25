@@ -9,28 +9,44 @@ public class StageTransition : MonoBehaviour {
     int area;
     int stage;
 
-    void Start() {
+    void Awake() {
         area = Area.GetAreaNumber();
         stage = Area.GetStageNumber();
 
-        //ActivateDoor();
+        ActivateDoor();
     }
 
     // シーン開始時にエリアに対応したドアキャンバスをActivateする
     public void ActivateDoor() {
-        if (area != 0) {
+        // 対応したエリアが存在するなら
+        if (area > 0) {
             door[area - 1].SetActive(true);
+        }
+        else {
+            door[0].SetActive(true);
         }
     }
 
     // エリアに対応したドアを開ける
     public void OpenDoorParent() {
-        door[area - 1].GetComponent<DoorAnimManager>().StartDoorOpen();
+        // 対応したエリアが存在するなら
+        if (area > 0) {
+            door[area - 1].GetComponent<DoorAnimManager>().StartDoorOpen();
+        }
+        else {
+            door[0].GetComponent<DoorAnimManager>().StartDoorOpen();
+        }
     }
 
     // エリアに対応したドアを閉じる
     public void CloseDoorParent() {
-        door[area - 1].GetComponent<DoorAnimManager>().StartDoorClose();
+        // 対応したエリアが存在するなら
+        if (area > 0) {
+            door[area - 1].GetComponent<DoorAnimManager>().StartDoorClose();
+        }
+        else {
+            door[0].GetComponent<DoorAnimManager>().StartDoorClose();
+        }
     }
 
     // ドア開き演出が終了したかどうか取得
