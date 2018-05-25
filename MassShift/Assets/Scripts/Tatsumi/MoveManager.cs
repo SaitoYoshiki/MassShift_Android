@@ -277,7 +277,7 @@ public class MoveManager : MonoBehaviour {
 
 		// 移動
 		Vector3 resMove;    // 実際に移動出来た移動量
-		Move(move * Time.fixedDeltaTime, (BoxCollider)useCol, LayerMask.GetMask(new string[] { "Stage", "Player", "Box" }), out resMove);
+		Move(move * Time.fixedDeltaTime, (BoxCollider)useCol, LayerMask.GetMask(new string[] { "Stage", "Player", "Box", "Fence" }), out resMove);
 
 		// 今回の移動量を保持
 		//prevMove = resMove;
