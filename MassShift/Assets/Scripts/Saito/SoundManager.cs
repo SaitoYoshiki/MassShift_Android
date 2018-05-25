@@ -42,6 +42,13 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 
+	public GameObject Volume(GameObject aSoundPrefab, float aVolume) {
+		if (aSoundPrefab == null) return null;
+		var lSoundInstance = Instantiate(aSoundPrefab, mSounds.transform);
+		lSoundInstance.GetComponent<AudioSource>().volume = aVolume;
+		return lSoundInstance;
+	}
+
 
 	//シングルトン的
 	static SoundManager sInstance = null;

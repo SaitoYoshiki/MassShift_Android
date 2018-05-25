@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour {
 	Player mPlayer;
 	Goal mGoal;
 
+	[SerializeField, EditOnPrefab]
+	List<GameObject> mAreaBGM;
 
 	// Use this for initialization
 	void Start() {
@@ -45,6 +47,9 @@ public class GameManager : MonoBehaviour {
 			}
 			yield return null;
 		}
+
+		//BGMを再生する
+		Area.GetAreaNumber();
 
 
 		//ゲームメインの開始
