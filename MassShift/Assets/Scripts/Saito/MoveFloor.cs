@@ -365,6 +365,10 @@ public class MoveFloor : MonoBehaviour {
 	[SerializeField, Tooltip("床の幅")]
 	int mWidth;
 
+	public int Width {
+		get { return mWidth; }
+	}
+
 	[SerializeField, Tooltip("上方向の高さ")]
 	int mUpHeight;
 

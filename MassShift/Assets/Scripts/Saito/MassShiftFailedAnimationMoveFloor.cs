@@ -20,7 +20,7 @@ public class MassShiftFailedAnimationMoveFloor : MonoBehaviour {
 	}
 
 	private void Update() {
-		mFloorModel.transform.localRotation = Quaternion.Slerp(Quaternion.identity, mAnimator.transform.rotation, 1.0f / 5.0f);
+		mFloorModel.transform.localRotation = Quaternion.Slerp(Quaternion.identity, mAnimator.transform.rotation, 1.0f / GetComponentInParent<MoveFloor>().Width);
 	}
 
 	void PlayAnimation() {
