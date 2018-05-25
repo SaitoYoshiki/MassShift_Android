@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour {
 		//プレイヤーを操作不可に
 		OnCantOperation();
 
-		mTransition.ActivateDoor();
-		mTransition.OpenDoorParent();
+		//mTransition.ActivateDoor();
+		//mTransition.OpenDoorParent();
 
 		//演出が終了するまで待機
 		while (true) {
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour {
 		while (true) {
 
 			if (Input.GetKeyDown(KeyCode.Escape)) {
-				mPause.SetActive(!mPause.activeInHierarchy);
+				//mPause.SetActive(!mPause.activeInHierarchy);
 			}
 
 			//ゴール判定
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour {
 		//Playerを操作不可にする
 		OnCantOperation();
 
-		mResult.SetActive(true);
+		//mResult.SetActive(true);
 	}
 
 	bool CanGoal() {
