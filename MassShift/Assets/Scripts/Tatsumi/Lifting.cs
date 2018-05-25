@@ -289,8 +289,10 @@ public class Lifting : MonoBehaviour {
 
 			// 範囲内で最も近い持ち上げられるオブジェクトを取得
 			List<RaycastHit> hitInfos = new List<RaycastHit>();
-			hitInfos.AddRange(Physics.BoxCastAll(transform.position, liftUpCol.lossyScale * 0.5f, (liftUpCol.position - transform.position),
-				liftPoint.rotation, Vector3.Distance(transform.position, liftUpCol.position), boxMask));
+			//			hitInfos.AddRange(Physics.BoxCastAll(transform.position, liftUpCol.localScale * 0.5f, (liftUpCol.position - transform.position),
+			//				liftPoint.rotation, Vector3.Distance(transform.position, liftUpCol.position), boxMask));
+			hitInfos.AddRange(Physics.BoxCastAll(liftUpCol.transform.position, liftUpCol.localScale * 0.5f, (transform.position - liftUpCol.position),
+				liftPoint.rotation, float.Epsilon, boxMask));
 			GameObject liftableObj = null;
 			float dis = float.MaxValue;
 			Debug.LogWarning(hitInfos.Count);
