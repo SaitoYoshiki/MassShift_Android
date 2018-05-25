@@ -11,8 +11,6 @@ public class Landing : MonoBehaviour {
 			return isLanding;
 		}
 		set {
-			Debug.Log("isLanding " + value + " " + name);
-
 			if (value == true) {
 				// 縦方向の移動を停止
 				MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
@@ -21,6 +19,8 @@ public class Landing : MonoBehaviour {
 	
 			// 値に変化がない
 			if (isLanding == value) return;
+
+			Debug.Log("isLanding " + value + " " + name);
 
 			// 値を変更
 			isLanding = value;
@@ -111,14 +111,13 @@ public class Landing : MonoBehaviour {
 	}
 
 	// 当たり判定を行うレイヤーマスク
-	int mask;
+	[SerializeField] LayerMask mask;
+	[SerializeField] bool autoMask = true;
 
-	// Use this for initialization
-	void Start () {
+	void Awake() {
 		mask = LayerMask.GetMask(new string[] { "Stage", "Player", "Box", "Fence" });
 	}
 
-	// Update is called once per frame
 	void Update() {
 		if ((IsLanding) || (IsExtrusionLanding)) {
 			CheckLandingFalse();
@@ -144,12 +143,12 @@ public class Landing : MonoBehaviour {
 
 		// 接地方向に移動していなければ接地していない
 		if (WeightMng.WeightLv != WeightManager.Weight.flying) {
-			if (MoveMng.TotalMove.y > 0.0f) {
+			if (MoveMng.PrevMove.y > 0.0f) {
 				IsLanding = false;
 				return;
 			}
 		} else {
-			if (MoveMng.TotalMove.y < 0.0f) {
+			if (MoveMng.PrevMove.y < 0.0f) {
 				IsLanding = false;
 				return;
 			}

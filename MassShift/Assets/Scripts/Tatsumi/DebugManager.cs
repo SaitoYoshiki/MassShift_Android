@@ -107,7 +107,7 @@ public class DebugManager : MonoBehaviour {
 		get {
 			if ((debugTarget == null) && (!Input.GetKey(KeyCode.LeftShift))) {
 				RaycastHit hitInfo;
-				Physics.Raycast(Camera.main.ScreenPointToRay(Camera.main.WorldToScreenPoint(debugCursor.position)), out hitInfo, LayerMask.GetMask(new string[] { "Player", "Stage", "Box", "Fence" }));
+				Physics.Raycast(Camera.main.ScreenPointToRay(Camera.main.WorldToScreenPoint(debugCursor.position)), out hitInfo, debugTargetMask);
 				if (hitInfo.collider != null) {
 					return hitInfo.collider.transform;
 				}
@@ -122,6 +122,7 @@ public class DebugManager : MonoBehaviour {
 	[SerializeField] Transform debugCursor = null;
 	[SerializeField] GameObject debugCopyObject = null;
 	[SerializeField] GameObject debugDefaultCopyObject = null;
+	[SerializeField] LayerMask debugTargetMask = LayerMask.GetMask(new string[] { "Player", "Stage", "Box", "Fence" });
 
 	// デバッグモードの機能で増減したリソースの数
 	Dictionary<string, int> debugResources = new Dictionary<string, int>();
@@ -335,7 +336,7 @@ public class DebugManager : MonoBehaviour {
 		// デバッグターゲットの選択
 		if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Mouse1)) {
 			RaycastHit hitInfo;
-			Physics.Raycast(Camera.main.transform.position, (debugCursor.position - Camera.main.transform.position), out hitInfo, LayerMask.GetMask(new string[] { "Player", "Stage", "Box", "Fence" }));
+			Physics.Raycast(Camera.main.transform.position, (debugCursor.position - Camera.main.transform.position), out hitInfo, debugTargetMask);
 //			Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, LayerMask.GetMask(new string[] { "Player", "Stage", "Box" }));
 			if (hitInfo.collider == null) {
 				DebugTarget = null;

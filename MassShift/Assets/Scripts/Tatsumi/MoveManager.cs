@@ -189,9 +189,16 @@ public class MoveManager : MonoBehaviour {
 		}
 	}
 
+	[SerializeField] LayerMask mask;
+	[SerializeField] bool autoMask = true;
+
 	// 今回の更新処理で移動を無視(削除)する移動種類のリスト
 	List<MoveType> stopHorizontalMoveType = new List<MoveType>();
 	List<MoveType> stopVirticalMoveType = new List<MoveType>();
+
+	void Awake() {
+		if (autoMask) mask = LayerMask.GetMask(new string[] { "Stage", "Player", "Box", "Fence" });
+	}
 
 	// Use this for initialization
 	void Start() {
@@ -277,7 +284,7 @@ public class MoveManager : MonoBehaviour {
 
 		// 移動
 		Vector3 resMove;    // 実際に移動出来た移動量
-		Move(move * Time.fixedDeltaTime, (BoxCollider)useCol, LayerMask.GetMask(new string[] { "Stage", "Player", "Box" }), out resMove);
+		Move(move * Time.fixedDeltaTime, (BoxCollider)useCol, mask, out resMove);
 
 		// 今回の移動量を保持
 		//prevMove = resMove;
@@ -422,8 +429,9 @@ public class MoveManager : MonoBehaviour {
 
 					// 移動量を削除
 					if (stopFlg && moveMng) {
-						moveMng.StopMoveVirtical(MoveType.prevMove);
-						moveMng.StopMoveVirtical(MoveType.gravity);
+						//moveMng.StopMoveVirtical(MoveType.prevMove);
+						//moveMng.StopMoveVirtical(MoveType.gravity);
+						moveMng.StopMoveVirticalAll();
 						moveMng.GravityCustomFlg = false;
 					}
 					/**/
@@ -535,7 +543,7 @@ public class MoveManager : MonoBehaviour {
 
 				// 移動量を削除
 				if (moveMng) {
-					moveMng.StopMoveHorizontal(MoveType.prevMove);
+					moveMng.StopMoveHorizontalAll();
 				}
 			}
 			// 衝突が無ければ
