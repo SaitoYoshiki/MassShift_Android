@@ -11,8 +11,6 @@ public class Landing : MonoBehaviour {
 			return isLanding;
 		}
 		set {
-			Debug.Log("isLanding " + value + " " + name);
-
 			if (value == true) {
 				// 縦方向の移動を停止
 				MoveMng.StopMoveVirtical(MoveManager.MoveType.prevMove);
@@ -21,6 +19,8 @@ public class Landing : MonoBehaviour {
 	
 			// 値に変化がない
 			if (isLanding == value) return;
+
+			Debug.Log("isLanding " + value + " " + name);
 
 			// 値を変更
 			isLanding = value;

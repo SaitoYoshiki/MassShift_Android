@@ -85,10 +85,6 @@ public class WaterState : MonoBehaviour {
 		}
 	}
 
-	// Use this for initialization
-	//	void Start () {}
-
-	// Update is called once per frame
 	void FixedUpdate () {
 		IsInWater = (Support.GetColliderHitInfoList(GetComponent<Collider>(), Vector3.zero, LayerMask.GetMask("WaterArea")).Count > 0);
 

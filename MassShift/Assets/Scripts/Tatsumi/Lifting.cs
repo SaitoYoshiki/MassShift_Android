@@ -18,6 +18,8 @@ public class Lifting : MonoBehaviour {
 	[SerializeField] GameObject liftObj = null;     // 持ち上げ中オブジェクト
 	[SerializeField] Collider standbyCol = null;    // 非持ち上げ中の本体当たり判定
 	[SerializeField] Collider liftingCol = null;    // 持ち上げ中の本体当たり判定
+	[SerializeField] float stdLiftingColPoint = 1.0f;	// 接地方向が通常時の持ち上げ中の本体当たり判定の位置
+	[SerializeField] float revLiftingColPoint = 0.0f;	// 接地方向が逆の時の持ち上げ中の本体当たり判定の位置
 	[SerializeField] LiftState st;
 	public LiftState St {
 		get {
@@ -124,13 +126,15 @@ public class Lifting : MonoBehaviour {
 			// 持ち上げ完了時
 			if (PlAnim.CompleteCatch()) {
 				LiftEndObject(liftObj, true);
-//				// 持ち上げ中オブジェクトの判定と挙動を無効化
-//				liftObj.GetComponent<BoxCollider>().enabled = false;
-//				liftObj.GetComponent<MoveManager>().enabled = false;
-//
-//				// 持ち上げ中のプレイヤー当たり判定を有効化
-//				standbyCol.enabled = false;
-//				liftingCol.enabled = true;
+				//				// 持ち上げ中オブジェクトの判定と挙動を無効化
+				//				liftObj.GetComponent<BoxCollider>().enabled = false;
+				//				liftObj.GetComponent<MoveManager>().enabled = false;
+				//
+				//				// 持ち上げ中のプレイヤー当たり判定を有効化
+				//				standbyCol.enabled = false;
+				//				liftingCol.enabled = true;
+
+				plAnim.ExitCatch();
 
 				// 持ち上げ中状態
 				st = LiftState.lifting;
@@ -264,21 +268,34 @@ public class Lifting : MonoBehaviour {
 		switch (st) {
 		case LiftState.standby:
 			// 重さ変更中は処理しない
-			if (false) return null;	//test
+			if (Pl.IsShift) return null;
 
 			// ジャンプ、重さ変更、振り向きを不可に
 			Pl.CanJump = false;
 			Pl.CanShift = false;
 			Pl.CanRotation = false;
 
-			RaycastHit hitInfo;
+			// 範囲内で最も近い持ち上げられるオブジェクトを取得
+			List<RaycastHit> hitInfos = new List<RaycastHit>();
+			hitInfos.AddRange(Physics.BoxCastAll(transform.position, liftUpCol.lossyScale * 0.5f, (liftUpCol.position - transform.position),
+				liftPoint.rotation, Vector3.Distance(transform.position, liftUpCol.position), LayerMask.GetMask(new string[] { "Box" })));
+			GameObject liftableObj = null;
+			float dis = float.MaxValue;
+			Debug.LogWarning(hitInfos.Count);
+			foreach (var hitInfo in hitInfos) {
+				Debug.LogWarning(hitInfo.collider.name + " " + hitInfo.collider.tag);
+				if ((hitInfo.collider.tag == "LiftableObject") && (hitInfo.distance < dis)) {
+					liftableObj = hitInfo.collider.gameObject;
+					dis = hitInfo.distance;
+				}
+			}
+
 			// 持ち上げれるオブジェクトがあれば
-			if (Physics.BoxCast(transform.position, liftUpCol.lossyScale * 0.5f, (liftUpCol.position - transform.position),
-				out hitInfo, liftPoint.rotation, Vector3.Distance(transform.position, liftUpCol.position), LayerMask.GetMask(new string[] { "Box" }))) {
+			if (liftableObj != null) {
 				// 重さがプレイヤーより重ければ失敗フラグを立てる
-				heavyFailedFlg = (Pl.GetComponent<WeightManager>().WeightLv < hitInfo.collider.GetComponent<WeightManager>().WeightLv);
+				heavyFailedFlg = (Pl.GetComponent<WeightManager>().WeightLv < liftableObj.GetComponent<WeightManager>().WeightLv);
 				// 持ち上げ開始
-				return LiftUp(hitInfo.collider.gameObject);
+				return LiftUp(liftableObj);
 			} else {
 				liftObj = null;
 			}
@@ -342,6 +359,15 @@ public class Lifting : MonoBehaviour {
 		// 通常時のプレイヤー当たり判定を無効化/有効化
 		standbyCol.enabled = !_liftUp;
 
+		// 持ち上げ中のプレイヤー当たり判定有効化時に接地方向によって判定位置を移動
+		if (_liftUp) {
+			BoxCollider liftingBoxCol = ((BoxCollider)liftingCol);
+			if (Pl.GetComponent<WeightManager>().WeightForce < 0.0f) {
+				liftingBoxCol.center = new Vector3(liftingBoxCol.center.x, stdLiftingColPoint, liftingBoxCol.center.z);
+			}else {
+				liftingBoxCol.center = new Vector3(liftingBoxCol.center.x, revLiftingColPoint, liftingBoxCol.center.z);
+			}
+		}
 		// 持ち上げ中のプレイヤー当たり判定を有効化/無効化
 		liftingCol.enabled = _liftUp;
 
