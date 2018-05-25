@@ -18,18 +18,13 @@ public class MonoColorFade : MyFade {
         isFadeEnd = false;
 
         fadeColor.a = 0.0f;
-
         fadeObject.GetComponent<Text>().color = fadeColor;
+        fadeObject.GetComponent<Text>().text = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
         FadeStart();
     }
 
     void Update() {
-        /*if (Input.GetKeyDown(KeyCode.Space)) {
-            Debug.Log("Space Press");
-            FadeStart();
-        }*/
-
         if (isFading) {
             // 単色フェードのコルーチンを開始
             StartCoroutine(MonoFade());
@@ -75,5 +70,9 @@ public class MonoColorFade : MyFade {
 
             yield return null;
         }
+    }
+
+    public bool IsFadeEnd() {
+        return isFading;
     }
 }
