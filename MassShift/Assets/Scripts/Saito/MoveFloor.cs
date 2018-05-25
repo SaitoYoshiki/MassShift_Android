@@ -278,11 +278,22 @@ public class MoveFloor : MonoBehaviour {
 		GameObject lLeft = EditorUtility.InstantiatePrefab(mFloorLeftPrefab, mFloorModel);
 		lLeft.transform.localPosition = Vector3.left * (float)(mWidth - 1) / 2;
 
+		//左真ん中
+		for (int i = 1; i < (mWidth - 1) / 2; i++) {
+			float lIndexFromMiddle = i - (float)(mWidth - 1) / 2;
+			GameObject lLeftMiddle = EditorUtility.InstantiatePrefab(mFloorLeftMiddlePrefab, mFloorModel);
+			lLeftMiddle.transform.localPosition = lIndexFromMiddle * Vector3.right;
+		}
+
 		//真ん中
-		for (int i = 1; i < mWidth - 1; i++) {
-			float lIndexFromMiddle =  i - (float)(mWidth - 1) / 2;
-			GameObject lMiddle = EditorUtility.InstantiatePrefab(mFloorMiddlePrefab, mFloorModel);
-			lMiddle.transform.localPosition = lIndexFromMiddle * Vector3.right;
+		GameObject lMiddle = EditorUtility.InstantiatePrefab(mFloorMiddlePrefab, mFloorModel);
+		lMiddle.transform.localPosition = 0.0f * Vector3.left;
+
+		//右真ん中
+		for (int i = 1; i < (mWidth - 1) / 2; i++) {
+			float lIndexFromMiddle = i - (float)(mWidth - 1) / 2;
+			GameObject lRightMiddle = EditorUtility.InstantiatePrefab(mFloorRightMiddlePrefab, mFloorModel);
+			lRightMiddle.transform.localPosition = lIndexFromMiddle * Vector3.left;
 		}
 
 		//右端
@@ -416,8 +427,14 @@ public class MoveFloor : MonoBehaviour {
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("床の左端のモデル")]
 	GameObject mFloorLeftPrefab;
 
+	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("床の左の真ん中のモデル")]
+	GameObject mFloorLeftMiddlePrefab;
+
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("床の真ん中モデル")]
 	GameObject mFloorMiddlePrefab;
+
+	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("床の右の真ん中のモデル")]
+	GameObject mFloorRightMiddlePrefab;
 
 	[SerializeField, PrefabOnly, EditOnPrefab, Tooltip("床の右端のモデル")]
 	GameObject mFloorRightPrefab;
