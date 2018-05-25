@@ -367,9 +367,8 @@ public class Player : MonoBehaviour {
 		return true;
 	}
 	void WalkDown() {
-		// 接地中でなければ
-		if (!Land.IsLanding) {
-			// 水面
+		// 接地中でなく、水上で安定状態もなければ
+		if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
 
 			return;
 		}
