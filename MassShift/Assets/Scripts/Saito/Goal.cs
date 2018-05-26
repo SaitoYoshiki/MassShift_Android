@@ -1,11 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Goal : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake() {
+
+		mLampList = new List<GameObject>();
+		for(int i = 0; i < mLampModel.transform.childCount; i++) {
+			if(mLampModel.transform.GetChild(i).name == mLampPrefab.name) {
+				mLampList.Add(mLampModel.transform.GetChild(i).gameObject);
+			}
+		}
+		mLampList = mLampList.OrderByDescending(x => x.transform.localPosition.y).ToList();
 
 		TurnLamp();
 
@@ -227,12 +236,9 @@ public class Goal : MonoBehaviour {
 
 
 		//ランプ
-		mLampList = new List<GameObject>();
-
 		for (int i = 0; i < mButtonList.Count; i++) {
 			GameObject lLamp = EditorUtility.InstantiatePrefab(mLampPrefab, mLampModel);
 			lLamp.transform.localPosition = mLampBasePosition + Vector3.down * mLampInterval * i;
-			mLampList.Add(lLamp);
 		}
 
 		//土台
@@ -308,9 +314,7 @@ public class Goal : MonoBehaviour {
 	[SerializeField, EditOnPrefab, Tooltip("ランプを配置する間隔")]
 	float mLampInterval = 1.0f;
 
-	[SerializeField, Disable]
 	List<GameObject> mLampList;	//ランプのインスタンス。０から順に、上から
-
 
 	[SerializeField, EditOnPrefab, Tooltip("ゴールのモデル")]
 	GameObject mModel;
