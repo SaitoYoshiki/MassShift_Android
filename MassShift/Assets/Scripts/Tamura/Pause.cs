@@ -21,7 +21,7 @@ public class Pause : MonoBehaviour {
     // ゲームメイン側から受け取る、ポーズ可能かどうか
     public bool canPause = true;
 
-    bool pauseFlg = false;
+    public bool pauseFlg = false;
     bool optionFlg = false;
     float intencity;
     float intencityMax = 10.0f;
