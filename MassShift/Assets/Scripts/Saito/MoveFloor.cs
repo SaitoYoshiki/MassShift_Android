@@ -129,6 +129,7 @@ public class MoveFloor : MonoBehaviour {
 			mNeedInitState = false;
 			mFloorModel.transform.localPosition = Vector3.zero;
 			mMoveDirection = GetTargetLocalPosition() - mFloor.transform.localPosition;
+			mMoveFloorSEInstance = SoundManager.SPlay(mMoveFloorSE);
 		}
 
 		//
@@ -159,6 +160,7 @@ public class MoveFloor : MonoBehaviour {
 
 		if(ReachFloor(lTargetLocalPosition)) {
 			mState = CState.cFromMoving;
+			SoundManager.SStop(mMoveFloorSEInstance);
 			return;
 		}
 	}
@@ -388,6 +390,11 @@ public class MoveFloor : MonoBehaviour {
 
 	[SerializeField, Tooltip("下方向の高さ")]
 	int mDownHeight;
+
+	[SerializeField, EditOnPrefab, Tooltip("動く床のSE")]
+	GameObject mMoveFloorSE;
+
+	GameObject mMoveFloorSEInstance;
 
 
 	[SerializeField, Tooltip("重さ"), Space(16)]
