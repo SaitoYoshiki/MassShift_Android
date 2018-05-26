@@ -20,6 +20,15 @@ public class LandImpactEffect : MonoBehaviour {
 	[SerializeField, Tooltip("重さ1で水に落ちた時のエフェクト"), EditOnPrefab]
 	GameObject mLandImpactWaterLightPrefab;
 
+	[SerializeField, Tooltip("上に発生するエフェクトの発生位置のオフセット"), EditOnPrefab]
+	Vector3 mUpEffectOffset;
+
+	[SerializeField, Tooltip("水のエフェクトの発生位置のオフセット"), EditOnPrefab]
+	Vector3 mWaterEffectOffset;
+
+	[SerializeField, Tooltip("下に発生するエフェクトの発生位置のオフセット"), EditOnPrefab]
+	Vector3 mDownEffectOffset;
+
 
 	// Use this for initialization
 	void Awake() {
@@ -35,20 +44,25 @@ public class LandImpactEffect : MonoBehaviour {
 		if(aIsWater) {
 			if (aWeight == WeightManager.Weight.heavy) {
 				var g = Instantiate(mLandImpactWaterHeavyPrefab, transform);
+				g.transform.localPosition = mWaterEffectOffset;
 			}
 			if (aWeight == WeightManager.Weight.light) {
 				var g = Instantiate(mLandImpactWaterLightPrefab, transform);
+				g.transform.localPosition = mWaterEffectOffset;
 			}
 		}
 		else {
 			if (aWeight == WeightManager.Weight.heavy) {
 				var g = Instantiate(mLandImpactGroundHeavyPrefab, transform);
+				g.transform.localPosition = mDownEffectOffset;
 			}
 			if (aWeight == WeightManager.Weight.light) {
 				var g =Instantiate(mLandImpactGroundLightPrefab, transform);
+				g.transform.localPosition = mDownEffectOffset;
 			}
 			if (aWeight == WeightManager.Weight.flying) {
 				var g = Instantiate(mLandImpactGroundFlyingPrefab, transform);
+				g.transform.localPosition = mUpEffectOffset;
 			}
 		}
 		
