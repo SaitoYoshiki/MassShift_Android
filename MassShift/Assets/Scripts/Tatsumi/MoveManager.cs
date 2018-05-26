@@ -361,7 +361,7 @@ public class MoveManager : MonoBehaviour {
 					/**/
 					nearHitinfo = hitInfo;
 					dis -= ColMargin;
-					dis = Mathf.Clamp(dis, 0, dis);
+					dis = Mathf.Max(dis, 0.0f);
 
 					// 押し出し判定
 					WeightManager moveWeightMng = _moveCol.GetComponent<WeightManager>();

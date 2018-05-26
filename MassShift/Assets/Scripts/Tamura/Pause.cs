@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// ブラーの処理も統合する
+// PauseObjectという親オブジェクトを作り、そこにPause.csをアタッチ　
+
+// βでの実装予定
+// ドアに入れるようになった段階でキャラ手前に上矢印などGUI or 光る感圧板などの3Dオブジェクト(常設)と、ドアに入る為のキー操作(チュートリアルのみ)を表示する
+
 public class Pause : MonoBehaviour {
     [SerializeField]
     GameObject pauseCanvas;
@@ -13,7 +19,7 @@ public class Pause : MonoBehaviour {
     Blur blur;
 
     // ゲームメイン側から受け取る、ポーズ可能かどうか
-    bool canPause;
+    public bool canPause = true;
 
     bool pauseFlg = false;
     bool optionFlg = false;
@@ -32,9 +38,8 @@ public class Pause : MonoBehaviour {
         //var deltaTime = Time.realtimeSinceStartup - prevTime;
 
         // Escキーでポーズ / ポーズ解除
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape) && canPause) {
             if (!optionFlg) {
-                pauseFlg = !pauseFlg;
                 PauseFunc();
             }
             else {
@@ -60,6 +65,8 @@ public class Pause : MonoBehaviour {
     }
 
     public void PauseFunc() {
+        pauseFlg = !pauseFlg;
+
         // ポーズ
         if (Time.timeScale != 0.0f) {
             Time.timeScale = 0.0f;

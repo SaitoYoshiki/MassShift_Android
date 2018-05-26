@@ -9,12 +9,12 @@ public class MonoColorFade : MyFade {
     public float fadeTime;
     public Color fadeColor;
 
-    bool isFading;
+    bool isFading = true;
     bool isFadeEnd;
 
     // 初期化
     void Start() {
-        isFading = false;
+        isFading = true;
         isFadeEnd = false;
 
         fadeColor.a = 0.0f;
@@ -34,13 +34,14 @@ public class MonoColorFade : MyFade {
     // フェード開始
     public override void FadeStart() {
         // エラー防止
-        if (isFading) {
+        if (isFading || !isFadeEnd) {
             return;
         }
 
         Debug.Log("Fade Start",this);
 
         isFading = true;
+        Debug.Log("文字フェード開始");
     }
 
     // フェードイン/アウト
@@ -72,7 +73,7 @@ public class MonoColorFade : MyFade {
         }
     }
 
-    public bool IsFadeEnd() {
+    public bool IsFading() {
         return isFading;
     }
 }

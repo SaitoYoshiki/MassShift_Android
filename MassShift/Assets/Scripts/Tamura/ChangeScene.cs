@@ -16,14 +16,10 @@ public class ChangeScene : MonoBehaviour {
         SELECTSCENE
     }
 
-    [SerializeField]
-    private Scene nowScene;
+    Scene nowScene;
 
     public SceneObject titleScene;
     public SceneObject stageSelectScene;
-
-    [SerializeField]
-    private StageInfo nowStageInfo;
 
     private bool changeSceneFlg;
     private CHANGE_SCENE_MODE changeSceneMode;
@@ -61,6 +57,7 @@ public class ChangeScene : MonoBehaviour {
                 // 次のステージへ
                 case CHANGE_SCENE_MODE.NEXT: 
                     {
+                        // 後でArea.cs対応に書き直し
                         int area, stage;
                         area = Area.GetAreaNumber();
                         stage = Area.GetStageNumber();
@@ -108,9 +105,10 @@ public class ChangeScene : MonoBehaviour {
                 case CHANGE_SCENE_MODE.SELECTSCENE:
                     // 選択されたステージを読み込み
                     {
+                        // このへんステセレのシーン選択仕様決定後に書き直し
                         int area, stage;
-                        area = getAreaInfo();
-                        stage = getStageInfo();
+                        area = Area.GetAreaNumber();
+                        stage = Area.GetAreaNumber();
                         string loadSceneName = "Stage" + area.ToString() + "-" + stage.ToString();
 
                         SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
@@ -121,14 +119,6 @@ public class ChangeScene : MonoBehaviour {
                     break;
             }
         }
-    }
-
-    int getAreaInfo() {
-        return (int)nowStageInfo.nowArea;
-    }
-
-    int getStageInfo() {
-        return (int)nowStageInfo.nowStage;
     }
 
     public void OnNextButtonDown() {

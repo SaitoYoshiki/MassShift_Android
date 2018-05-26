@@ -257,7 +257,7 @@ public class Player : MonoBehaviour {
 
 	void Walk() {
 		// 歩行アニメーション
-		if (walkStandbyVec != 0.0f) {
+		if ((walkStandbyVec != 0.0f) && CanWalk) {
 			if (!Lift.IsLifting) {
 				PlAnim.StartWalk();
 			} else {
@@ -298,19 +298,18 @@ public class Player : MonoBehaviour {
 		// ジャンプ可能でなければ
 		if (!canJump) return false;
 
-		// ステージ又は水面に接地していなければ
+		// ステージに接地、又は水面で安定していなければ
 		Debug.LogWarning("IsLanding:" + Land.IsLanding);
-		//		if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
+		//if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
 		if (!(Land.IsLanding || WaterStt.IsWaterSurface)) {
 			PileWeight pile = GetComponent<PileWeight>();
-			// 接地しているオブジェクトにも接地していなければ
+			// 接地、又は安定しているオブジェクトにも接地していなければ
 			List<Transform> pileObjs = pile.GetPileBoxList(new Vector3(0.0f, MoveMng.GravityForce, 0.0f));
 			bool stagePile = false;
 			foreach (var pileObj in pileObjs) {
 				Landing pileLand = pileObj.GetComponent<Landing>();
 				WaterState pileWaterStt = pileObj.GetComponent<WaterState>();
-				if ((pileLand && (pileLand.IsLanding || pileLand.IsExtrusionLanding)) ||
-					(pileWaterStt && (pileWaterStt.IsWaterSurface))) {
+				if ((pileLand && (pileLand.IsLanding || pileLand.IsExtrusionLanding)) || (pileWaterStt && (pileWaterStt.IsWaterSurface))) {
 					stagePile = true;
 				}
 			}
@@ -368,8 +367,11 @@ public class Player : MonoBehaviour {
 		return true;
 	}
 	void WalkDown() {
-		// 接地中でなければ
-		if (!Land.IsLanding) return;
+		// 接地中でなく、水上で安定状態もなければ
+		if (!Land.IsLanding && !WaterStt.IsWaterSurface) {
+
+			return;
+		}
 
 		// 進行方向側への左右入力があれば
 		if ((walkStandbyVec != 0.0f) && (Mathf.Sign(MoveMng.PrevMove.x) == Mathf.Sign(walkStandbyVec))) return;
@@ -385,22 +387,25 @@ public class Player : MonoBehaviour {
 		//		// 持ち上げモーション中は処理しない
 		//		if ((Lift.St == Lifting.LiftState.invalid) ||
 		//			(Lift.St == Lifting.LiftState.standby)) {
-		// 接地中かつ左右入力中なら
-		if ((Land.IsLanding || WaterStt.IsWaterSurface) && (walkStandbyVec != 0.0f)) {
-			// 一定の移動がある方向に向きを設定
-			if (MoveMng.PrevMove.x > turnRotBorderSpd) {
-				rotVec.x = 1.0f;
-			} else if (MoveMng.PrevMove.x < -turnRotBorderSpd) {
-				rotVec.x = -1.0f;
-			} else {
-				// 移動量が一定以下なら入力方向に向く
-				if(walkStandbyVec > 0.0f) {
+//		// 接地中なら
+//		if (Land.IsLanding || WaterStt.IsWaterSurface) {
+			// 左右入力中なら
+			if (walkStandbyVec != 0.0f) {
+				// 一定の移動がある方向に向きを設定
+				if (MoveMng.PrevMove.x > turnRotBorderSpd) {
 					rotVec.x = 1.0f;
-				}else if(walkStandbyVec < 0.0f) {
+				} else if (MoveMng.PrevMove.x < -turnRotBorderSpd) {
 					rotVec.x = -1.0f;
+				} else {
+					// 移動量が一定以下なら入力方向に向く
+					if (walkStandbyVec > 0.0f) {
+						rotVec.x = 1.0f;
+					} else if (walkStandbyVec < 0.0f) {
+						rotVec.x = -1.0f;
+					}
 				}
 			}
-		}
+//		}
 
 		// 接地方向によって向きを設定
 		if (WeightMng.WeightLv == WeightManager.Weight.flying) {
