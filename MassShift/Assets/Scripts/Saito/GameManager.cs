@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour {
 		mPlayer = FindObjectOfType<Player>();
 		mGoal = FindObjectOfType<Goal>();
 
+		Time.timeScale = 1.0f;
+		mPause.pauseEvent.Invoke();
+
 		//ゲーム進行のコルーチンを開始
 		StartCoroutine(GameMain());
 	}
@@ -69,11 +72,11 @@ public class GameManager : MonoBehaviour {
 
 			//ポーズ中なら
 			if(mPause.pauseFlg) {
-				mMassShift.CanShift = false;
+				//mMassShift.CanShift = false;
 				Cursor.visible = true;
 			}
 			else {
-				mMassShift.CanShift = true;
+				//mMassShift.CanShift = true;
 				Cursor.visible = false;
 			}
 
@@ -93,12 +96,13 @@ public class GameManager : MonoBehaviour {
 		//Playerを操作不可にする
 		OnCantOperation();
 
+		Cursor.visible = true;
 		mResult.canGoal = true;
 	}
 
 	bool CanGoal() {
 		//全てのボタンがオンでないなら
-		if (mGoal.IsAllButtonOn) {
+		if (!mGoal.IsAllButtonOn) {
 			return false;
 		}
 
@@ -109,7 +113,7 @@ public class GameManager : MonoBehaviour {
 
 		//重さを移した後1秒以内なら
 		if(mMassShift) {
-			return false;
+			//return false;
 		}
 
 		return true;	//ゴール可能

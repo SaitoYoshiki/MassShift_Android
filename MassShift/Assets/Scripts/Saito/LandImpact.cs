@@ -52,6 +52,7 @@ public class LandImpact : MonoBehaviour {
 			//一定距離以上落ちていたら
 			if (mHighestPosition.y - transform.position.y >= mImpactDistance) {
 				OnLand(mWeightManager.WeightLv);    //インパクトのイベントを呼び出す
+				mHighestPosition = transform.position;	//最高地点を更新
 			}
 		}
 		mBeforeLanding = lLanding;

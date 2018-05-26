@@ -1053,10 +1053,14 @@ public class MassShift : MonoBehaviour
 		}
 
 		if (aIsShow == false) {
-			lFrame.gameObject.SetActive(false);
+			for(int i = 0; i < lFrame.childCount; i++) {
+				lFrame.GetChild(i).gameObject.SetActive(false);
+			}
 		}
 		else {
-			lFrame.gameObject.SetActive(true);
+			for (int i = 0; i < lFrame.childCount; i++) {
+				lFrame.GetChild(i).gameObject.SetActive(true);
+			}
 			Utility.ChangeMaterialColor(lFrame.gameObject, null, "_Color", aColor);
 		}
 	}

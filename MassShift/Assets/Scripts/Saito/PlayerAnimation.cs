@@ -6,7 +6,7 @@ using System.Linq;
 public class PlayerAnimation : MonoBehaviour {
 
 	[SerializeField]
-	GameObject mAnimationModel;
+	List<GameObject> mAnimationModel;
 
 	[SerializeField]
 	Transform mHandTransform;
@@ -94,10 +94,14 @@ public class PlayerAnimation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		mAnimator = mAnimationModel.GetComponent<Animator>();
 		mStateTime = 0.0f;
+		mAnimator = GetAnimator(mAnimationModel[0]);
 	}
-	
+
+	Animator GetAnimator(GameObject aAnimationModel) {
+		return aAnimationModel.GetComponent<Animator>();
+	}
+
 
 	#region UpdateState
 
@@ -164,7 +168,9 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 	
 	void InitStandBy() {
-		mAnimator.CrossFadeInFixedTime("StandBy", 0.2f);
+		foreach(var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("StandBy", 0.2f);
+		}
 	}
 
 	void UpdateStandBy() {
@@ -176,7 +182,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	void InitWalk() {
-		mAnimator.CrossFadeInFixedTime("Walk", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("Walk", 0.2f);
+		}
 	}
 
 	void UpdateWalk() {
@@ -185,12 +193,16 @@ public class PlayerAnimation : MonoBehaviour {
 			mIsInit = false;
 		}
 
-		mAnimator.SetFloat("Speed", mSpeed);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).SetFloat("Speed", mSpeed);
+		}
 	}
 
 
 	void InitJumpStart() {
-		mAnimator.CrossFadeInFixedTime("JumpStart", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("JumpStart", 0.2f);
+		}
 	}
 
 	void UpdateJumpStart() {
@@ -206,7 +218,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	void InitJumpMid() {
-		mAnimator.CrossFadeInFixedTime("JumpMid", 0.0f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("JumpMid", 0.0f);
+		}
 		mBeforePosition = transform.position;
 	}
 
@@ -239,7 +253,9 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	void InitJumpFall() {
-		mAnimator.CrossFadeInFixedTime("JumpFall", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("JumpFall", 0.2f);
+		}
 	}
 
 	void UpdateJumpFall() {
@@ -251,7 +267,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	void InitJumpLand() {
-		mAnimator.CrossFadeInFixedTime("JumpLand", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("JumpLand", 0.2f);
+		}
 	}
 
 	void UpdateJumpLand() {
@@ -266,8 +284,12 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	void InitCatch() {
-		mAnimator.CrossFadeInFixedTime("Catch", 0.2f);
-		mAnimator.SetFloat("CatchSpeed", 1.0f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("Catch", 0.2f);
+		}
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).SetFloat("CatchSpeed", 1.0f);
+		}
 	}
 
 	void UpdateCatch() {
@@ -282,7 +304,9 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	void InitCatchFailed() {
-		mAnimator.SetFloat("CatchSpeed", -1.0f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).SetFloat("CatchSpeed", -1.0f);
+		}
 	}
 
 	bool EndCatchFailed() {
@@ -308,7 +332,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	void InitHoldStandBy() {
-		mAnimator.CrossFadeInFixedTime("HoldStandBy", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("HoldStandBy", 0.2f);
+		}
 	}
 
 	void UpdateHoldStandBy() {
@@ -320,7 +346,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	void InitHoldWalk() {
-		mAnimator.CrossFadeInFixedTime("HoldWalk", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("HoldWalk", 0.2f);
+		}
 	}
 
 	void UpdateHoldWalk() {
@@ -329,12 +357,16 @@ public class PlayerAnimation : MonoBehaviour {
 			mIsInit = false;
 		}
 
-		mAnimator.SetFloat("Speed", mSpeed);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).SetFloat("Speed", mSpeed);
+		}
 	}
 
 
 	void InitHoldJumpStart() {
-		mAnimator.CrossFadeInFixedTime("HoldJumpStart", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("HoldJumpStart", 0.2f);
+		}
 	}
 
 	void UpdateHoldJumpStart() {
@@ -350,7 +382,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	void InitHoldJumpMid() {
-		mAnimator.CrossFadeInFixedTime("HoldJumpMid", 0.0f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("HoldJumpMid", 0.0f);
+		}
 		mBeforePosition = transform.position;
 	}
 
@@ -370,7 +404,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	void InitHoldJumpFall() {
-		mAnimator.CrossFadeInFixedTime("HoldJumpFall", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("HoldJumpFall", 0.2f);
+		}
 	}
 
 	void UpdateHoldJumpFall() {
@@ -382,7 +418,9 @@ public class PlayerAnimation : MonoBehaviour {
 
 
 	void InitHoldJumpLand() {
-		mAnimator.CrossFadeInFixedTime("HoldJumpLand", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("HoldJumpLand", 0.2f);
+		}
 	}
 
 	void UpdateHoldJumpLand() {
@@ -397,7 +435,9 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	void InitRelease() {
-		mAnimator.CrossFadeInFixedTime("Release", 0.2f);
+		foreach (var a in mAnimationModel) {
+			GetAnimator(a).CrossFadeInFixedTime("Release", 0.2f);
+		}
 	}
 
 	void UpdateRelease() {
@@ -509,6 +549,7 @@ public class PlayerAnimation : MonoBehaviour {
 
 	bool StartLandCheck() {
 		if (mState == CState.cJumpLand) return false;
+		if (mState == CState.cJumpStart) return true;
 		if (mState == CState.cJumpMid) return true;
 		if (mState == CState.cJumpFall) return true;
 		return false;
@@ -553,6 +594,7 @@ public class PlayerAnimation : MonoBehaviour {
 
 	bool StartHoldLandCheck() {
 		if (mState == CState.cHoldJumpLand) return false;
+		if (mState == CState.cHoldJumpStart) return true;
 		if (mState == CState.cHoldJumpMid) return true;
 		if (mState == CState.cHoldJumpFall) return true;
 		return false;
