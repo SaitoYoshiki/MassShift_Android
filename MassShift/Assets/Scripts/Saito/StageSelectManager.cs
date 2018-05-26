@@ -40,7 +40,10 @@ public class StageSelectManager : MonoBehaviour {
 
 	IEnumerator StageSelectMain() {
 
+		//プレートの色を変える
 		SetEnterColor(-1);
+
+		LimitPlayDoorSE();
 
 		//ステージ開始時の演出
 		mTransition.OpenDoorParent();
@@ -114,5 +117,12 @@ public class StageSelectManager : MonoBehaviour {
 		}
 		if (aIndex == -1) return;
 		mText[aIndex].color = mStagePlateOnColor;
+	}
+
+	//ドアが開く音を1つに制限する
+	void LimitPlayDoorSE() {
+		for(int i = 1; i < mGoal.Count; i++) {
+			mGoal[i].mPlayOpenSE = false;
+		}
 	}
 }

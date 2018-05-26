@@ -66,7 +66,9 @@ public class Goal : MonoBehaviour {
 		if(mBeforeAllButtonOn == false) {
 			if(IsAllButtonOn == true) {
 				SetAnimation(true);
-				SoundManager.SPlay(mOpenSE);	//音を鳴らす
+				if(mPlayOpenSE) {
+					SoundManager.SPlay(mOpenSE);    //音を鳴らす
+				}
 			}
 		}
 
@@ -277,7 +279,10 @@ public class Goal : MonoBehaviour {
 	bool mBeforeAllButtonOn = false;
 	int mBeforeButtonOnCount = 0;
 
-	float mOpenRate = 0.0f;	//扉が開いている割合
+	float mOpenRate = 0.0f; //扉が開いている割合
+
+	[HideInInspector]
+	public bool mPlayOpenSE = true;
 
 	[SerializeField, Tooltip("扉が開くのに何秒かかるか"), EditOnPrefab]
 	float mOpenTakeTime = 1.0f;
