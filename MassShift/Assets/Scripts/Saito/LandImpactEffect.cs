@@ -34,26 +34,21 @@ public class LandImpactEffect : MonoBehaviour {
 	void OnLand(WeightManager.Weight aWeight, bool aIsWater) {
 		if(aIsWater) {
 			if (aWeight == WeightManager.Weight.heavy) {
-				var g = Instantiate(mLandImpactWaterHeavyPrefab);
-				g.transform.position = transform.position;
+				var g = Instantiate(mLandImpactWaterHeavyPrefab, transform);
 			}
 			if (aWeight == WeightManager.Weight.light) {
-				var g = Instantiate(mLandImpactWaterLightPrefab);
-				g.transform.position = transform.position;
+				var g = Instantiate(mLandImpactWaterLightPrefab, transform);
 			}
 		}
 		else {
 			if (aWeight == WeightManager.Weight.heavy) {
-				var g = Instantiate(mLandImpactGroundHeavyPrefab);
-				g.transform.position = transform.position;
+				var g = Instantiate(mLandImpactGroundHeavyPrefab, transform);
 			}
 			if (aWeight == WeightManager.Weight.light) {
-				var g =Instantiate(mLandImpactGroundLightPrefab);
-				g.transform.position = transform.position;
+				var g =Instantiate(mLandImpactGroundLightPrefab, transform);
 			}
 			if (aWeight == WeightManager.Weight.flying) {
-				var g = Instantiate(mLandImpactGroundFlyingPrefab);
-				g.transform.position = transform.position;
+				var g = Instantiate(mLandImpactGroundFlyingPrefab, transform);
 			}
 		}
 		
