@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c46c6b63156d30a40a658e70ce9339d1
-timeCreated: 1527299278
+guid: 4cd1add5336c29640b727c6d994004f6
+timeCreated: 1527294316
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: rail_middle
+    4300000: rail_edge
     9500000: //RootNode
   materials:
     importMaterials: 1
