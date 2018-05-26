@@ -288,8 +288,8 @@ public class StageChangeScenematic : MonoBehaviour {
 
         // ドア開きアニメーション一段階目
         if (timePer <= doorAnimPer) {
-            this.transform.localPosition = Vector3.Lerp(closePos, stopPos, timePer / doorAnimPer);
-
+            //this.transform.localPosition = Vector3.Lerp(closePos, stopPos, timePer / doorAnimPer);
+            this.transform.localPosition = Vector3.Lerp(closePos, openPos, timePer / doorAnimPer);
         }
         // ドア開きアニメーション二段階目
         else if (timePer > doorAnimPer && timePer <= (doorAnimPer + doorStopPer)) {
@@ -317,8 +317,8 @@ public class StageChangeScenematic : MonoBehaviour {
 
         // アニメーション一段階目
         if (timePer <= doorAnimPer) {
-            this.transform.localPosition = Vector3.Lerp(openPos, stopPos, timePer / doorAnimPer);
-
+            //this.transform.localPosition = Vector3.Lerp(openPos, stopPos, timePer / doorAnimPer);
+            this.transform.localPosition = Vector3.Lerp(openPos, closePos, timePer / doorAnimPer);
         }
         // アニメーション二段階目
         else if (timePer > doorAnimPer && timePer <= (doorAnimPer + doorStopPer)) {
