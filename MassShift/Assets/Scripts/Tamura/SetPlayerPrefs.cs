@@ -41,57 +41,12 @@ public class SetPlayerPrefs : MonoBehaviour {
             bgmVolumeData = 1.0f;
             seVolumeData = 1.0f;
             windowSizeData = 0;
-
-            ResolutionSetting();
         }
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Keypad0)) {
-            windowSizeData = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad1)) {
-            windowSizeData = 1;
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad2)) {
-            windowSizeData = 2;
-        }
-
-        // オプションでボタンが押された時に適応されるように
-        ResolutionSetting();
         // オプションから抜けた時に設定が保存されるように
         SaveOptionSetting();
-    }
-
-    void ResolutionSetting() {
-        int windowWidth = 0;
-        int windowHeight = 0;
-
-        switch (windowSizeData) {
-            // 解像度1920x1080
-            case 0:
-                windowWidth = widthLarge;
-                windowHeight = heightLarge;
-                break;
-
-            // 解像度1600x900
-            case 1:
-                windowWidth = widthMedium;
-                windowHeight = heightMedium;
-                break;
-
-            // 解像度1280x720
-            case 2:
-                windowWidth = widthSmall;
-                windowHeight = heightSmall;
-                break;
-            default:
-                break;
-        }
-        Screen.SetResolution(windowWidth, windowHeight, fullScreenFlg, refreshRate);
-
-        // fastest = 0
-        QualitySettings.SetQualityLevel(0);
     }
 
     // オプション画面を閉じる時に呼び出す
@@ -142,5 +97,26 @@ public class SetPlayerPrefs : MonoBehaviour {
         }
 
         return true;
+    }
+
+    // 1920x1080の解像度に変更
+    public void SetResolutionLarge() {
+        Screen.SetResolution(widthLarge, heightLarge, fullScreenFlg, refreshRate);
+    }
+
+    // 1600x900の解像度に変更
+    public void SetResolutionMedium() {
+        Screen.SetResolution(widthMedium, heightMedium, fullScreenFlg, refreshRate);
+    }
+
+    // 1280x720の解像度に変更
+    public void SetResolutionSmall() {
+        Screen.SetResolution(widthSmall, heightSmall, fullScreenFlg, refreshRate);
+    }
+
+    // 描画品質をセット
+    public void SetQualitySetting() {
+        // fastest = 0
+        QualitySettings.SetQualityLevel(0);
     }
 }

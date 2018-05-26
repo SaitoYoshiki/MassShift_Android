@@ -16,15 +16,6 @@ public class StageTransition : MonoBehaviour {
         ActivateDoor();
     }
 
-    /*void Update() {
-        if (Input.GetKeyDown(KeyCode.A)) {
-            OpenDoorParent();
-        }
-        if (Input.GetKeyDown(KeyCode.D)) {
-            CloseDoorParent();
-        }
-    }*/
-
     // シーン開始時にエリアに対応したドアキャンバスをActivateする
     public void ActivateDoor() {
         // 対応したエリアが存在するなら

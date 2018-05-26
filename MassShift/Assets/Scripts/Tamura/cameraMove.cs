@@ -11,13 +11,28 @@ public class cameraMove : MonoBehaviour {
     public float zoomInTime;
     public float zoomOutTime;
 
+    [SerializeField]
+    GameObject title;
+    [SerializeField]
+    GameObject text;
+    [SerializeField]
+    GameObject tutorial;
+    [SerializeField]
+    GameObject stageselect;
+
     float startZoomTime;
     float nowZoomTime;
 
+    bool firstZoom = false;
+
     bool zoomInFlg = false;
+    bool oldZoomInFlg;
     bool zoomOutFlg = false;
+    bool oldZoomOutFlg;
 
     GameObject a;
+
+    // ズームアウト終わった判定が必要
 
 	void Start () {
         this.transform.position = cameraStartPoint;
@@ -25,28 +40,55 @@ public class cameraMove : MonoBehaviour {
 	
 	void Update () {
         if (zoomInFlg) {
-            Zoom(zoomInTime, zoomInFlg, cameraStartPoint, cameraZoomPoint);
+            oldZoomInFlg = zoomInFlg;
+            Zoom(zoomInTime, ref zoomInFlg, cameraStartPoint, cameraZoomPoint);
+        }
+        else {
+            if (oldZoomInFlg != zoomInFlg) {
+                oldZoomInFlg = zoomInFlg;
+                tutorial.SetActive(true);
+                stageselect.SetActive(true);
+            }
         }
 
         if (zoomOutFlg) {
-            Zoom(zoomOutTime, zoomOutFlg, cameraZoomPoint, cameraEndPoint);
+            oldZoomOutFlg = zoomOutFlg;
+            GameObject.Find("StageChangeCanvas").GetComponent<StageTransition>().CloseDoorParent();
+            Zoom(zoomOutTime, ref zoomOutFlg, cameraZoomPoint, cameraEndPoint);
+        }
+        else {
+            if (oldZoomOutFlg != zoomOutFlg) {
+                oldZoomOutFlg = zoomOutFlg;
+            }
         }
 
-        // PushAnyKeyなどのTextが表示されている間のみ有効化するようにしないといけない
-        if (Input.GetKeyDown(KeyCode.W)) {
-            zoomInFlg = true;
-            startZoomTime = Time.realtimeSinceStartup;
+        if (GameObject.Find("StageChangeCanvas").GetComponent<StageTransition>().GetCloseEnd()) {
+            GameObject.Find("UIObject").GetComponent<ChangeScene>().OnStageSelectButtonDown();
+        }
+
+        // ズームされていない初期状態なら
+        if(!firstZoom){
+            if (Input.anyKeyDown) {
+                text.SetActive(false);
+                firstZoom = true;
+                zoomInFlg = true;
+                startZoomTime = Time.realtimeSinceStartup;
+            }
         }
 	}
 
     // タイトルでボタンが押されたらズームアウト
     public void OnButtonDown() {
+        Debug.Log("ズームアウト開始");
         zoomOutFlg = true;
         startZoomTime = Time.realtimeSinceStartup;
+        title.SetActive(false);
+        tutorial.SetActive(false);
+        stageselect.SetActive(false);
     }
 
     // ズームイン/アウト
-    void Zoom(float _zoomTime, bool _zoomFlg, Vector3 _startPos, Vector3 _endPos) {
+    void Zoom(float _zoomTime, ref bool _zoomFlg, Vector3 _startPos, Vector3 _endPos) {
         float zoomPer = 1.0f;
         nowZoomTime = Time.realtimeSinceStartup - startZoomTime;
 
@@ -54,6 +96,7 @@ public class cameraMove : MonoBehaviour {
             zoomPer = nowZoomTime / zoomInTime;
         }
         else {
+            Debug.Log("ズーム終了");
             _zoomFlg = false;
         }
         this.transform.position = Vector3.Lerp(_startPos, _endPos, zoomPer);
