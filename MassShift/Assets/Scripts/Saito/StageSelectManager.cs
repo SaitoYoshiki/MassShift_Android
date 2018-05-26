@@ -22,7 +22,7 @@ public class StageSelectManager : MonoBehaviour {
 	Color mStagePlateOffColor;
 
 	[SerializeField]
-	StageTransition mStageTransition;
+	StageTransition mTransition;
 
 	// Use this for initialization
 	void Start() {
@@ -40,16 +40,17 @@ public class StageSelectManager : MonoBehaviour {
 
 	IEnumerator StageSelectMain() {
 
-		//ステージ開始時の演出
-		//mStageTransition.ActivateDoor();
-		//mStageTransition.OpenDoorParent();
+		SetEnterColor(-1);
 
-		//フェードが終わるのを待つ
-		while(true) {
-			//if(mStageTransition.GetOpenEnd()) break;
-			break;
+		//ステージ開始時の演出
+		mTransition.OpenDoorParent();
+
+		//演出が終了するまで待機
+		while (true) {
+			if (mTransition.GetOpenEnd()) break;
 			yield return null;
 		}
+
 
 		//BGMを流し始める
 		SoundManager.SPlay(mStageSelectBGMPrefab);
@@ -88,12 +89,11 @@ public class StageSelectManager : MonoBehaviour {
 		}
 
 		//ステージ終了時の演出
-		//mStageTransition.CloseDoorParent();
+		mTransition.CloseDoorParent();
 
-		//フェードが終わるのを待つ
+		//演出が終了するまで待機
 		while (true) {
-			//if (mStageTransition.GetCloseEnd()) break;
-			break;
+			if (mTransition.GetCloseEnd()) break;
 			yield return null;
 		}
 
