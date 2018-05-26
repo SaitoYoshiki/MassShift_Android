@@ -18,7 +18,6 @@ public class DoorAnimManager : MonoBehaviour {
 	}
 
     void Update() {
-        Debug.Log(doorList.Count);
         if (openDoorCount >= doorList.Count) {
             // ドア開くアニメーションが全て終了したらステージ名フェード開始
             StageName.SetActive(true);
