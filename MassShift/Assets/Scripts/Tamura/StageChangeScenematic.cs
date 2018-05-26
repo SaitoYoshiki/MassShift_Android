@@ -303,6 +303,7 @@ public class StageChangeScenematic : MonoBehaviour {
         }
         // ドア開きアニメーション終了
         else {
+            Debug.Log("DoorOpened");
             this.transform.localPosition = openPos;
             isOpening = false;
             daManager.OpenCountPlus();
@@ -331,6 +332,7 @@ public class StageChangeScenematic : MonoBehaviour {
         }
         // アニメーション終了
         else {
+            Debug.Log("DoorClosed");
             this.transform.localPosition = closePos;
             isClosing = false;
             daManager.CloseCountPlus();
