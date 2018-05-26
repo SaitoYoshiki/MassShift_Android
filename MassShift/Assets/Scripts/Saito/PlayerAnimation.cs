@@ -203,6 +203,7 @@ public class PlayerAnimation : MonoBehaviour {
 		foreach (var a in mAnimationModel) {
 			GetAnimator(a).CrossFadeInFixedTime("JumpStart", 0.2f);
 		}
+		mBeforePosition = transform.position;
 	}
 
 	void UpdateJumpStart() {
@@ -212,8 +213,15 @@ public class PlayerAnimation : MonoBehaviour {
 		}
 
 		if (IsAnimationEnd("JumpStart")) {
-			ChangeState(CState.cJumpMid);
+			//ChangeState(CState.cJumpMid);
 		}
+
+		//落下しているなら
+		if (IsFall()) {
+			ChangeState(CState.cJumpFall);
+		}
+
+		mBeforePosition = transform.position;
 	}
 
 
@@ -239,7 +247,7 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	bool IsFall() {
-		if(mIsHover == false) {
+		if(IsHover() == false) {
 			if (mBeforePosition.y > transform.position.y) {
 				return true;
 			}
@@ -250,6 +258,10 @@ public class PlayerAnimation : MonoBehaviour {
 			}
 		}
 		return false;
+	}
+
+	bool IsHover() {
+		return GetComponent<MoveManager>().GravityForce > 0.0f;
 	}
 
 	void InitJumpFall() {
@@ -367,6 +379,7 @@ public class PlayerAnimation : MonoBehaviour {
 		foreach (var a in mAnimationModel) {
 			GetAnimator(a).CrossFadeInFixedTime("HoldJumpStart", 0.2f);
 		}
+		mBeforePosition = transform.position;
 	}
 
 	void UpdateHoldJumpStart() {
@@ -376,8 +389,15 @@ public class PlayerAnimation : MonoBehaviour {
 		}
 
 		if (IsAnimationEnd("HoldJumpStart")) {
-			ChangeState(CState.cHoldJumpMid);
+			//ChangeState(CState.cHoldJumpMid);
 		}
+
+		//落下しているなら
+		if (IsFall()) {
+			ChangeState(CState.cHoldJumpFall);
+		}
+
+		mBeforePosition = transform.position;
 	}
 
 
@@ -527,7 +547,7 @@ public class PlayerAnimation : MonoBehaviour {
 	#endregion
 
 	public void SetSpeed(float aSpeed) {
-		mSpeed = aSpeed;
+		mSpeed = aSpeed * 1.5f;
 	}
 
 	public void StartStandBy() {
@@ -535,7 +555,7 @@ public class PlayerAnimation : MonoBehaviour {
 		ChangeState(CState.cStandBy);
 	}
 	public void StartWalk() {
-		if (mState != CState.cStandBy) return; //立ち止まり状態からしか外からは呼び出せない
+		if (mState != CState.cStandBy && mState != CState.cJumpLand) return; //立ち止まり状態からしか外からは呼び出せない
 		ChangeState(CState.cWalk);
 	}
 
@@ -580,7 +600,7 @@ public class PlayerAnimation : MonoBehaviour {
 		ChangeState(CState.cHoldStandBy);
 	}
 	public void StartHoldWalk() {
-		if (mState != CState.cHoldStandBy) return; //立ち止まり状態からしか外からは呼び出せない
+		if (mState != CState.cHoldStandBy && mState != CState.cHoldJumpLand) return; //立ち止まり状態からしか外からは呼び出せない
 		ChangeState(CState.cHoldWalk);
 	}
 
