@@ -1047,7 +1047,10 @@ public class MassShift : MonoBehaviour
 		if (aModel == null) return;
 
 		Transform lFrame = aModel.transform.Find("Model/Hilight");
-		if (lFrame == null) return;
+		if (lFrame == null) {
+			lFrame = aModel.transform.Find("Rotation/Model/Hilight");   //プレイヤー用
+			if (lFrame == null) return;
+		}
 
 		if (aIsShow == false) {
 			lFrame.gameObject.SetActive(false);

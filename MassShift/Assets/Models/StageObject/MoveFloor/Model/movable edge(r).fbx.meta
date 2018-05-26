@@ -1,15 +1,22 @@
 fileFormatVersion: 2
-guid: 8a3287109ce35a344815b0ca7d43eb8f
-timeCreated: 1527299278
+guid: 086b9308a56713a4e92caa89f1f84369
+timeCreated: 1527300279
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: rail_edge
+    100000: left_side
+    100002: middle
+    100004: //RootNode
+    400000: left_side
+    400002: middle
+    400004: //RootNode
+    2300000: left_side
+    2300002: middle
+    3300000: left_side
+    3300002: middle
+    4300000: left_side
+    4300002: middle
     9500000: //RootNode
   materials:
     importMaterials: 1

@@ -15,10 +15,11 @@ public class GameManager : MonoBehaviour {
 	StageTransition mTransition;
 
 	[SerializeField]
-	GameObject mResult;
+	Result mResult;
 
 	[SerializeField]
-	GameObject mPause;
+	Pause mPause;
+
 
 	// Use this for initialization
 	void Start() {
@@ -26,15 +27,12 @@ public class GameManager : MonoBehaviour {
 		mPlayer = FindObjectOfType<Player>();
 		mGoal = FindObjectOfType<Goal>();
 
-		mTransition = FindObjectOfType<StageTransition>();
-
 		//ゲーム進行のコルーチンを開始
 		StartCoroutine(GameMain());
 	}
 
 	// Update is called once per frame
-	void Update()
-	{
+	void Update() {
 
 	}
 
@@ -48,13 +46,11 @@ public class GameManager : MonoBehaviour {
 		//プレイヤーを操作不可に
 		OnCantOperation();
 
-		//mTransition.ActivateDoor();
-		//mTransition.OpenDoorParent();
+		mTransition.OpenDoorParent();
 
 		//演出が終了するまで待機
 		while (true) {
-			//if (mTransition.GetOpenEnd()) break;
-			break;
+			if (mTransition.GetOpenEnd()) break;
 			yield return null;
 		}
 
@@ -71,8 +67,14 @@ public class GameManager : MonoBehaviour {
 		//ゲームメインのループ
 		while (true) {
 
-			if (Input.GetKeyDown(KeyCode.Escape)) {
-				//mPause.SetActive(!mPause.activeInHierarchy);
+			//ポーズ中なら
+			if(mPause.pauseFlg) {
+				mMassShift.CanShift = false;
+				Cursor.visible = true;
+			}
+			else {
+				mMassShift.CanShift = true;
+				Cursor.visible = false;
 			}
 
 			//ゴール判定
@@ -91,7 +93,7 @@ public class GameManager : MonoBehaviour {
 		//Playerを操作不可にする
 		OnCantOperation();
 
-		//mResult.SetActive(true);
+		mResult.canGoal = true;
 	}
 
 	bool CanGoal() {
@@ -110,10 +112,6 @@ public class GameManager : MonoBehaviour {
 			return false;
 		}
 
-		if (!mPause.activeInHierarchy) {
-			return false;
-		}
-
 		return true;	//ゴール可能
 	}
 
@@ -122,11 +120,13 @@ public class GameManager : MonoBehaviour {
 		mPlayer.CanWalk = false;
 		mPlayer.CanJump = false;
 		mPlayer.CanRotation = false;
+		mPause.canPause = false;
 	}
 	void OnCanOperation() {
 		mMassShift.CanShift = true;    //重さを移せる
 		mPlayer.CanWalk = true;
 		mPlayer.CanJump = true;
 		mPlayer.CanRotation = true;
+		mPause.canPause = true;
 	}
 }
