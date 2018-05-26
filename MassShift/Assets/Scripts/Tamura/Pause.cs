@@ -19,7 +19,7 @@ public class Pause : MonoBehaviour {
     Blur blur;
 
     // ゲームメイン側から受け取る、ポーズ可能かどうか
-    public bool canPause = true;
+    public bool canPause = false;
 
     bool pauseFlg = false;
     bool optionFlg = false;
@@ -34,6 +34,8 @@ public class Pause : MonoBehaviour {
     public UnityEvent pauseEvent = new UnityEvent();
 
     void Update() {
+        canPause = GetComponentInChildren<StageTransition>().GetOpenEnd();
+
         var deltaTime = Time.unscaledDeltaTime;
         //var deltaTime = Time.realtimeSinceStartup - prevTime;
 

@@ -76,7 +76,9 @@ public class ChangeScene : MonoBehaviour {
 
                         if (!endGameFlg) {
                             // 次のステージを読み込む
-                            SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
+                            //後で修正？
+                            //SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
+                            SceneManager.LoadScene(loadSceneName, LoadSceneMode.Single);
                         }
                         else {
                             // 最終ステージクリア後の処理
@@ -87,19 +89,22 @@ public class ChangeScene : MonoBehaviour {
                 // リトライ
                 case CHANGE_SCENE_MODE.RETRY:
                     // 現在のシーンを再読込
-                    SceneManager.LoadSceneAsync(nowScene.name, LoadSceneMode.Single);
+                    //SceneManager.LoadSceneAsync(nowScene.name, LoadSceneMode.Single);
+                    SceneManager.LoadScene(nowScene.name, LoadSceneMode.Single);
                     break;
 
                 // ステージセレクト
                 case CHANGE_SCENE_MODE.STAGESELECT:
                     // ステセレシーンを読み込み
-                    SceneManager.LoadSceneAsync(stageSelectScene, LoadSceneMode.Single);
+                    //SceneManager.LoadSceneAsync(stageSelectScene, LoadSceneMode.Single);
+                    SceneManager.LoadScene(stageSelectScene, LoadSceneMode.Single);
                     break;
 
                 // タイトル
                 case CHANGE_SCENE_MODE.TITLE:
                     // タイトルシーンを読み込み
-                    SceneManager.LoadSceneAsync(titleScene, LoadSceneMode.Single);
+                    //SceneManager.LoadSceneAsync(titleScene, LoadSceneMode.Single);
+                    SceneManager.LoadScene(titleScene, LoadSceneMode.Single);
                     break;
 
                 case CHANGE_SCENE_MODE.SELECTSCENE:
@@ -111,7 +116,8 @@ public class ChangeScene : MonoBehaviour {
                         stage = Area.GetAreaNumber();
                         string loadSceneName = "Stage" + area.ToString() + "-" + stage.ToString();
 
-                        SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
+                        //SceneManager.LoadSceneAsync(loadSceneName, LoadSceneMode.Single);
+                        SceneManager.LoadScene(loadSceneName, LoadSceneMode.Single);
                     }
                     break;
 

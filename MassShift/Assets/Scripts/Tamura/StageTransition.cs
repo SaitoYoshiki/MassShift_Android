@@ -51,11 +51,21 @@ public class StageTransition : MonoBehaviour {
 
     // ドア開き演出が終了したかどうか取得
     public bool GetOpenEnd() {
-        return door[area - 1].GetComponent<DoorAnimManager>().isOpenEnd();
+        if (area > 0) {
+            return door[area - 1].GetComponent<DoorAnimManager>().isOpenEnd();
+        }
+        else {
+            return door[0].GetComponent<DoorAnimManager>().isOpenEnd();
+        }
     }
 
     // ドア閉め演出が終了したかどうか取得
     public bool GetCloseEnd() {
-        return door[area - 1].GetComponent<DoorAnimManager>().isCloseEnd();
+        if (area > 0) {
+            return door[area - 1].GetComponent<DoorAnimManager>().isCloseEnd();
+        }
+        else {
+            return door[0].GetComponent<DoorAnimManager>().isCloseEnd();
+        }
     }
 }
