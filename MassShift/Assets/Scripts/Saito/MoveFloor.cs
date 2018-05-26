@@ -177,6 +177,7 @@ public class MoveFloor : MonoBehaviour {
 		//初期化
 		if (mNeedInitState == true) {
 			mNeedInitState = false;
+			SoundManager.SStop(mMoveFloorSEInstance);
 		}
 
 		//処理
@@ -223,7 +224,8 @@ public class MoveFloor : MonoBehaviour {
 	
 		//動けた場合
 		if(lMoveRes.magnitude != 0.0f){
-			RotateGear(lMoveRes);	//動けた分歯車を回転
+			RotateGear(lMoveRes);   //動けた分歯車を回転
+			SoundManager.SUnPause(mMoveFloorSEInstance);
 		}
 		//動けない場合、たまに振動する
 		else {
@@ -234,6 +236,7 @@ public class MoveFloor : MonoBehaviour {
 				//Debug.Log("Vibration:" + lVibration);
 				VibrationFloor(lVibration);
 			}
+			SoundManager.SPause(mMoveFloorSEInstance);
 		}
 		
 	}

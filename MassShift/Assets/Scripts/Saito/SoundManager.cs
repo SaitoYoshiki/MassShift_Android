@@ -20,6 +20,7 @@ public class SoundManager : MonoBehaviour {
 		if (aSoundPrefab == null) return null;
 		var lSoundInstance = Instantiate(aSoundPrefab, mSounds.transform);
 		lSoundInstance.GetComponent<AudioSource>().PlayDelayed(aDelay);
+		lSoundInstance.GetComponent<SoundSelfDestroy>().mIsPause = false;    //削除されないようにする
 		return lSoundInstance;
 	}
 	public GameObject Play(GameObject aSoundPrefab) {
@@ -32,21 +33,20 @@ public class SoundManager : MonoBehaviour {
 		Destroy(aSoundInstance);
 	}
 
-	public void Pause(GameObject aSoundInstance, bool aPause) {
+	public void Pause(GameObject aSoundInstance) {
 		if (aSoundInstance == null) return;
-		if (aPause) {
-			aSoundInstance.GetComponent<AudioSource>().Pause();
-		}
-		else {
-			aSoundInstance.GetComponent<AudioSource>().UnPause();
-		}
+		aSoundInstance.GetComponent<AudioSource>().Pause();
+		aSoundInstance.GetComponent<SoundSelfDestroy>().mIsPause = true;	//削除されないようにする
+	}
+	public void UnPause(GameObject aSoundInstance) {
+		if (aSoundInstance == null) return;
+		aSoundInstance.GetComponent<AudioSource>().UnPause();
+		aSoundInstance.GetComponent<SoundSelfDestroy>().mIsPause = false;    //削除されないようにする
 	}
 
-	public GameObject Volume(GameObject aSoundPrefab, float aVolume) {
-		if (aSoundPrefab == null) return null;
-		var lSoundInstance = Instantiate(aSoundPrefab, mSounds.transform);
-		lSoundInstance.GetComponent<AudioSource>().volume = aVolume;
-		return lSoundInstance;
+	public void Volume(GameObject aSoundInstance, float aVolume) {
+		if (aSoundInstance == null) return;
+		aSoundInstance.GetComponent<AudioSource>().volume = aVolume;
 	}
 
 
@@ -78,8 +78,17 @@ public class SoundManager : MonoBehaviour {
 		Instance.Stop(aSoundInstance);
 	}
 
-	public static void SPause(GameObject aSoundInstance, bool aPause) {
+	public static void SPause(GameObject aSoundInstance) {
 		if (Instance == null) return;
-		Instance.Pause(aSoundInstance, aPause);
+		Instance.Pause(aSoundInstance);
+	}
+	public static void SUnPause(GameObject aSoundInstance) {
+		if (Instance == null) return;
+		Instance.UnPause(aSoundInstance);
+	}
+
+	public static void SVolume(GameObject aSoundInstance, float aVolume) {
+		if (Instance == null) return;
+		Instance.Volume(aSoundInstance, aVolume);
 	}
 }

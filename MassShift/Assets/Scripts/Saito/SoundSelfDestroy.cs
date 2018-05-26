@@ -7,6 +7,9 @@ public class SoundSelfDestroy : MonoBehaviour {
 
 	AudioSource mAudioSource;
 
+	[HideInInspector]
+	public bool mIsPause = false;
+
 	// Use this for initialization
 	void Start() {
 		mAudioSource = GetComponent<AudioSource>();
@@ -14,8 +17,8 @@ public class SoundSelfDestroy : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (mAudioSource.isPlaying == false) {
-			Destroy(gameObject);
-		}
+		if (mAudioSource.isPlaying == true) return;
+		if (mIsPause == true) return;   //ポーズ中なら破棄しない
+		Destroy(gameObject);
 	}
 }
