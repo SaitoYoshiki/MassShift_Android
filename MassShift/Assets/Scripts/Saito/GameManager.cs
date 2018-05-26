@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour {
 		//Playerを操作不可にする
 		OnCantOperation();
 
+		Cursor.visible = true;
 		mResult.canGoal = true;
 	}
 
