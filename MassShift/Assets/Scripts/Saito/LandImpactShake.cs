@@ -20,8 +20,9 @@ public class LandImpactShake : MonoBehaviour {
 
 	void OnLand(WeightManager.Weight aWeight, bool aIsWater) {
 		if(aWeight == WeightManager.Weight.heavy) {
-			ShakeCamera.ShakeAll(mShakeTime);
+			if(aIsWater == false) {
+				ShakeCamera.ShakeAll(mShakeTime);
+			}
 		}
-		Debug.Log("OnLand!!");
 	}
 }
