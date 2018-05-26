@@ -118,7 +118,7 @@ public class MoveFloor : MonoBehaviour {
 		}
 
 		if (mStateTime >= mFromMovingTime) {
-			mFloor.transform.localPosition = lTargetLocalPosition;
+			MoveFloorByMoveManager(lTargetLocalPosition);
 			mState = CState.cStay;
 		}
 	}
@@ -209,20 +209,15 @@ public class MoveFloor : MonoBehaviour {
 
 	Vector3 MovePosition(Vector3 aFrom, Vector3 aTo, float aDistance) {
 		Vector3 lDir = aTo - aFrom;
-		if (lDir.magnitude < aDistance) return aTo;
+		if (lDir.magnitude < aDistance) {
+			return aTo;
+		}
 		return aFrom + lDir.normalized * aDistance;
 	}
 	void MoveMoveFloor(Vector3 aToLocalPosition) {
-		Vector3 lWorldPosition = transform.TransformPoint(aToLocalPosition);
-		Vector3 lWorldMoveDelta = lWorldPosition - mFloor.transform.position;
-
-		Vector3 lBeforeColliderPosition = mFloor.transform.position;
-
-		//行けるところを計算する
-		MoveManager.Move(lWorldMoveDelta, mFloor.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Box", "Stage", "Player"}), false, true);
-
+	
 		//コライダーの位置をもとに戻す
-		Vector3 lMoveRes = mFloor.transform.position - lBeforeColliderPosition;
+		Vector3 lMoveRes = MoveFloorByMoveManager(aToLocalPosition);
 	
 		//動けた場合
 		if(lMoveRes.magnitude != 0.0f){
@@ -240,15 +235,34 @@ public class MoveFloor : MonoBehaviour {
 		}
 		
 	}
+
 	void VibrationFloor(Vector3 aToLocalPosition) {
 		RotateGear(mFloorModel.transform.localPosition, aToLocalPosition);
 		mFloorModel.transform.localPosition = aToLocalPosition;
 	}
 
+	Vector3 MoveFloorByMoveManager(Vector3 aToLocalPosition) {
+
+		Vector3 lWorldPosition = transform.TransformPoint(aToLocalPosition);
+		Vector3 lWorldMoveDelta = lWorldPosition - mFloor.transform.position;
+
+		Vector3 lBeforeColliderPosition = mFloor.transform.position;
+
+		//行けるところを計算する
+		MoveManager.Move(lWorldMoveDelta, mFloor.GetComponent<BoxCollider>(), LayerMask.GetMask(new string[] { "Box", "Stage", "Player" }), false, true);
+
+		//コライダーの位置をもとに戻す
+		return mFloor.transform.position - lBeforeColliderPosition;
+	}
+	
 	Vector3 GetFloorPositionAnimation(float aNowTime, float aEndTime, int aHz, float aAmp) {
 		if (aNowTime >= aEndTime) return Vector3.zero;
 		float lRad = (aNowTime % (1.0f / aHz) ) * (aHz) * 2 * Mathf.PI;
 		return Vector3.up * Mathf.Sin(lRad) * aAmp;
+	}
+
+	Vector3 TransformWorldPosition(Vector3 aLocalPosition) {
+		return transform.TransformPoint(aLocalPosition);
 	}
 
 	void RotateGear(Vector3 aFrom, Vector3 aTo) {
