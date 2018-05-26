@@ -21,7 +21,7 @@ public class LandImpactSound : MonoBehaviour {
 
 	}
 
-	void OnLand(WeightManager.Weight aWeight) {
+	void OnLand(WeightManager.Weight aWeight, bool aIsWater) {
 		if (aWeight == WeightManager.Weight.heavy) {
 			SoundManager.SPlay(mLandImpactHeavySE);
 		}

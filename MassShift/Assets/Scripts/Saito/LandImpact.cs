@@ -5,8 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Landing)), RequireComponent(typeof(WeightManager))]
 public class LandImpact : MonoBehaviour {
 
-	public delegate void OnLandEvent(WeightManager.Weight aWeight);
-
+	public delegate void OnLandEvent(WeightManager.Weight aWeight, bool aIsWater);
 	public event OnLandEvent OnLand;
 
 	[SerializeField, Tooltip("この距離以上を落下すると、落下演出が起きる"), EditOnPrefab]
@@ -51,7 +50,7 @@ public class LandImpact : MonoBehaviour {
 
 			//一定距離以上落ちていたら
 			if (mHighestPosition.y - transform.position.y >= mImpactDistance) {
-				OnLand(mWeightManager.WeightLv);    //インパクトのイベントを呼び出す
+				OnLand(mWeightManager.WeightLv, false);    //インパクトのイベントを呼び出す
 				mHighestPosition = transform.position;	//最高地点を更新
 			}
 		}
