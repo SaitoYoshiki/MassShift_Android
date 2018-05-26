@@ -45,9 +45,6 @@ public class WeightManager : MonoBehaviour {
 		get {
 			if (moveMng == null) {
 				moveMng = GetComponent<MoveManager>();
-				if (moveMng == null) {
-					Debug.LogError("MoveManagerが見つかりませんでした。");
-				}
 			}
 			return moveMng;
 		}
