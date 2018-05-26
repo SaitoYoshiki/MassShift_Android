@@ -19,13 +19,18 @@ public class DoorAnimManager : MonoBehaviour {
 
     void Update() {
         if (openDoorCount >= doorList.Count) {
-            // ドア開くアニメーションが全て終了したらステージ名フェード開始
-            StageName.SetActive(true);
-            if (!StageName.GetComponent<MonoColorFade>().IsFading()) {
-                Debug.Log("文字フェード終了");
-                // ステージ名フェードアウトが終了した
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "StageSelect") {
+                // ドア開くアニメーションが全て終了したらステージ名フェード開始
+                StageName.SetActive(true);
+                if (!StageName.GetComponent<MonoColorFade>().IsFading()) {
+                    Debug.Log("文字フェード終了");
+                    // ステージ名フェードアウトが終了した
+                    isDoorOpenEnd = true;
+                    Debug.Log("開き演出終了" + isDoorOpenEnd);
+                }
+            }
+            else {
                 isDoorOpenEnd = true;
-                Debug.Log("開き演出終了" + isDoorOpenEnd);
             }
         }
 
