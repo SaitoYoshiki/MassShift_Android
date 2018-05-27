@@ -40,8 +40,10 @@ public class LandImpactEffect : MonoBehaviour {
 
 	}
 
-	void OnLand(WeightManager.Weight aWeight, bool aIsWater) {
-		if(aIsWater) {
+	void OnLand(WeightManager.Weight aWeight, LandImpact.CEnviroment aEnviroment) {
+
+		//水面に落下したなら
+		if(aEnviroment == LandImpact.CEnviroment.cWaterSurface) {
 			if (aWeight == WeightManager.Weight.heavy) {
 				var g = Instantiate(mLandImpactWaterHeavyPrefab, transform);
 				g.transform.localPosition = mWaterEffectOffset;
@@ -51,7 +53,9 @@ public class LandImpactEffect : MonoBehaviour {
 				g.transform.localPosition = mWaterEffectOffset;
 			}
 		}
-		else {
+
+		//地上に落下したなら
+		else if (aEnviroment == LandImpact.CEnviroment.cGround) {
 			if (aWeight == WeightManager.Weight.heavy) {
 				var g = Instantiate(mLandImpactGroundHeavyPrefab, transform);
 				g.transform.localPosition = mDownEffectOffset;

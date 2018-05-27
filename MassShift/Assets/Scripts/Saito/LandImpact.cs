@@ -5,7 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Landing)), RequireComponent(typeof(WeightManager))]
 public class LandImpact : MonoBehaviour {
 
-	public delegate void OnLandEvent(WeightManager.Weight aWeight, bool aIsWater);
+	//落ちた場所の環境
+	public enum CEnviroment {
+		cInvalid,	//無効な値
+		cGround,	//地上
+		cWaterSurface,	//水面
+		cWater,	//水中
+	}
+
+	public delegate void OnLandEvent(WeightManager.Weight aWeight, CEnviroment aEnviroment);
 	public event OnLandEvent OnLand;
 
 	[SerializeField, Tooltip("この距離以上を落下すると、落下演出が起きる"), EditOnPrefab]
@@ -39,6 +47,7 @@ public class LandImpact : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		//ポーズ中なら処理しない
 		if(Time.deltaTime == 0.0f) {
 			return;
 		}
@@ -46,14 +55,21 @@ public class LandImpact : MonoBehaviour {
 
 		//接地判定
 		//
-		bool lLanding = mLanding.IsLanding;
+		bool lLanding = IsLanding();
 
-		//このフレームに接地し始めていて
+		//接地し始めた瞬間で
 		if (mBeforeLanding == false && lLanding == true) {
 
 			//一定距離以上落ちていたら
 			if (Mathf.Abs(mHighestPosition.y - transform.position.y) >= mImpactDistance) {
-				OnLand(mWeightManager.WeightLv, false);    //インパクトのイベントを呼び出す
+
+				//水中なら
+				if (IsInWater()) {
+					OnLand(mWeightManager.WeightLv, CEnviroment.cWater);    //水中に落下
+				}
+				else {
+					OnLand(mWeightManager.WeightLv, CEnviroment.cGround);    //地上に落下
+				}
 				mHighestPosition = transform.position;	//最高地点を更新
 			}
 		}
@@ -62,14 +78,14 @@ public class LandImpact : MonoBehaviour {
 
 		//着水判定
 		//
-		bool lInWater = mWaterState.IsInWater;
+		bool lInWater = IsInWater();
 
-		//このフレームに水の中にいて
+		//水の中に入った瞬間で
 		if (mBeforeInWater == false && lInWater == true) {
 
 			//一定距離以上落ちていたら
 			if (Mathf.Abs(mHighestPosition.y - transform.position.y) >= mImpactDistance) {
-				OnLand(mWeightManager.WeightLv, true);    //インパクトのイベントを呼び出す
+				OnLand(mWeightManager.WeightLv, CEnviroment.cWaterSurface);    //インパクトのイベントを呼び出す
 				mHighestPosition = transform.position;  //最高地点を更新
 			}
 		}
@@ -95,6 +111,17 @@ public class LandImpact : MonoBehaviour {
 		}
 
 		
+		//前回位置を更新
 		mBeforePosition = transform.position;
+	}
+
+	//着地しているかどうかを取得する
+	bool IsLanding() {
+		return mLanding.IsLanding;
+	}
+
+	//水の中にいるかどうかを取得する
+	bool IsInWater() {
+		return mWaterState.IsInWater;
 	}
 }

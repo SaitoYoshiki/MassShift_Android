@@ -18,10 +18,13 @@ public class LandImpactShake : MonoBehaviour {
 		
 	}
 
-	void OnLand(WeightManager.Weight aWeight, bool aIsWater) {
+	void OnLand(WeightManager.Weight aWeight, LandImpact.CEnviroment aEnviroment) {
+
+		//重さが2で
 		if(aWeight == WeightManager.Weight.heavy) {
-			if(aIsWater == false) {
-				ShakeCamera.ShakeAll(mShakeTime);
+			//水中か、地上に着地したら
+			if(aEnviroment == LandImpact.CEnviroment.cWater || aEnviroment == LandImpact.CEnviroment.cGround) {
+				ShakeCamera.ShakeAll(mShakeTime);	//カメラを揺らす
 			}
 		}
 	}

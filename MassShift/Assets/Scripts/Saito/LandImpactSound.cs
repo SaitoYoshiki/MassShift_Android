@@ -27,21 +27,35 @@ public class LandImpactSound : MonoBehaviour {
 
 	}
 
-	void OnLand(WeightManager.Weight aWeight, bool aIsWater) {
+	void OnLand(WeightManager.Weight aWeight, LandImpact.CEnviroment aEnviroment) {
 
-		if(aIsWater) {
+		//水面に落ちたなら
+		if(aEnviroment == LandImpact.CEnviroment.cWaterSurface) {
+			//重さが2なら
 			if (aWeight == WeightManager.Weight.heavy) {
-				SoundManager.SPlay(mLandImpactWaterHeavySE);
+				SoundManager.SPlay(mLandImpactWaterHeavySE);	//音を鳴らす
 			}
-			if (aWeight == WeightManager.Weight.light) {
+			else if (aWeight == WeightManager.Weight.light) {
 				SoundManager.SPlay(mLandImpactWaterLightSE);
 			}
 		}
-		else {
+
+		//地上で落ちたなら
+		else if (aEnviroment == LandImpact.CEnviroment.cGround) {
 			if (aWeight == WeightManager.Weight.heavy) {
 				SoundManager.SPlay(mLandImpactHeavySE);
 			}
-			if (aWeight == WeightManager.Weight.light) {
+			else if (aWeight == WeightManager.Weight.light) {
+				SoundManager.SPlay(mLandImpactLightSE);
+			}
+		}
+
+		//水中で落ちたなら
+		else if (aEnviroment == LandImpact.CEnviroment.cWater) {
+			if (aWeight == WeightManager.Weight.heavy) {
+				SoundManager.SPlay(mLandImpactHeavySE);
+			}
+			else if (aWeight == WeightManager.Weight.light) {
 				SoundManager.SPlay(mLandImpactLightSE);
 			}
 		}
