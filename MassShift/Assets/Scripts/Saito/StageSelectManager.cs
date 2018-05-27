@@ -56,8 +56,8 @@ public class StageSelectManager : MonoBehaviour {
 
 
 		//BGMを流し始める
-		SoundManager.SPlay(mStageSelectBGMPrefab);
-
+		var t = SoundManager.SPlay(mStageSelectBGMPrefab);
+		SoundManager.SFade(t, 0.0f, 1.0f, 2.0f);
 
 		int lSelectStageNum = -1;
 
