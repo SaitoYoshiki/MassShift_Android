@@ -47,10 +47,12 @@ public class LandImpactEffect : MonoBehaviour {
 			if (aWeight == WeightManager.Weight.heavy) {
 				var g = Instantiate(mLandImpactWaterHeavyPrefab, transform);
 				g.transform.localPosition = mWaterEffectOffset;
+				g.transform.parent = null;	//オブジェクトに追従しない
 			}
 			if (aWeight == WeightManager.Weight.light) {
 				var g = Instantiate(mLandImpactWaterLightPrefab, transform);
 				g.transform.localPosition = mWaterEffectOffset;
+				g.transform.parent = null;  //オブジェクトに追従しない
 			}
 		}
 
