@@ -20,6 +20,9 @@ public class cameraMove : MonoBehaviour {
     [SerializeField]
     GameObject stageselect;
 
+    StageTransition st;
+    ChangeScene cs;
+
     float startZoomTime;
     float nowZoomTime;
 
@@ -36,10 +39,12 @@ public class cameraMove : MonoBehaviour {
 
 	void Start () {
         this.transform.position = cameraStartPoint;
+        st = GameObject.Find("StageChangeCanvas").GetComponent<StageTransition>();
+        cs = GameObject.Find("UIObject").GetComponent<ChangeScene>();
 	}
 	
 	void Update () {
-        if (zoomInFlg) {
+        /*if (zoomInFlg) {
             oldZoomInFlg = zoomInFlg;
             Zoom(zoomInTime, ref zoomInFlg, cameraStartPoint, cameraZoomPoint);
         }
@@ -49,26 +54,71 @@ public class cameraMove : MonoBehaviour {
                 tutorial.SetActive(true);
                 stageselect.SetActive(true);
             }
+        }*/
+
+        // ズームイン中でなくて
+        if (!zoomInFlg) {
+            // 前フレームでもズームインしていなければ何もしない
+            if (oldZoomInFlg == zoomInFlg) {
+                return;
+            }
+            // 前フレームでズームインが終わったなら
+            else {
+                // モード選択のボタンをActiveにする
+                oldZoomInFlg = zoomInFlg;
+                tutorial.SetActive(true);
+                stageselect.SetActive(true);
+            }
+        }
+        // ズームイン中なら
+        else {
+            oldZoomInFlg = zoomInFlg;
+            Zoom(zoomInTime, ref zoomInFlg, cameraStartPoint, cameraZoomPoint);
         }
 
-        if (zoomOutFlg) {
+        /*if (zoomOutFlg) {
             oldZoomOutFlg = zoomOutFlg;
-            GameObject.Find("StageChangeCanvas").GetComponent<StageTransition>().CloseDoorParent();
+            st.CloseDoorParent();
             Zoom(zoomOutTime, ref zoomOutFlg, cameraZoomPoint, cameraEndPoint);
         }
         else {
             if (oldZoomOutFlg != zoomOutFlg) {
                 oldZoomOutFlg = zoomOutFlg;
             }
+        }*/
+
+        // ズームアウト中でなくて
+        if (!zoomOutFlg) {
+            // 前フレームでもズームアウトしていなければ何もしない
+            if (oldZoomOutFlg == zoomOutFlg) {
+                return;
+            }
+            // 前フレームでズームアウトが終わったなら
+            else {
+                oldZoomOutFlg = zoomOutFlg;
+
+                // ドア閉めの演出が終わったら
+                if (st.GetCloseEnd()) {
+                    // ステージセレクトへ飛ぶ(仮)
+                    cs.OnStageSelectButtonDown();
+                }
+            }
+        }
+        // ズームアウト中なら
+        else {
+            oldZoomOutFlg = zoomOutFlg;
+            st.CloseDoorParent();
+            Zoom(zoomOutTime, ref zoomOutFlg, cameraZoomPoint, cameraEndPoint);
         }
 
-        if (GameObject.Find("StageChangeCanvas").GetComponent<StageTransition>().GetCloseEnd()) {
-            GameObject.Find("UIObject").GetComponent<ChangeScene>().OnStageSelectButtonDown();
+        // ズームインし終わっていたら何もしない
+        if(firstZoom){
+            return;
         }
-
         // ズームされていない初期状態なら
-        if(!firstZoom){
+        else {
             if (Input.anyKeyDown) {
+                // 「InputAnyKey」の表示を消す
                 text.SetActive(false);
                 firstZoom = true;
                 zoomInFlg = true;

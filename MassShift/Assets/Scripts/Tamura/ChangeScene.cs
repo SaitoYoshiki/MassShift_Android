@@ -41,7 +41,10 @@ public class ChangeScene : MonoBehaviour {
 
     void Update() {
         // 
-        if (changeSceneFlg) {
+        if (!changeSceneFlg) {
+            return;
+        }
+        else {
             switch (changeSceneMode) {
                 // 次のステージへ
                 case CHANGE_SCENE_MODE.NEXT: 
