@@ -112,6 +112,7 @@ public class MassShift : MonoBehaviour
 				UpdateFail();
 				break;
 			case CSelectState.cCantShift:
+				MoveCursor();
 				UpdateCantShift();
 				break;
 		}
