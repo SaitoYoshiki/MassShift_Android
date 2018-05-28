@@ -16,7 +16,7 @@ public class Button : MonoBehaviour {
 		UpdatePushRate();
 		MoveLedge();
 
-		UpdateLight();
+		UpdateEffect();
 	}
 
 	private void FixedUpdate() {
@@ -43,11 +43,13 @@ public class Button : MonoBehaviour {
 	}
 
 	//ライトを点灯させる
-	void UpdateLight() {
+	void UpdateEffect() {
 
 		//点灯した瞬間
 		if(mBeforeButtonOn == false && IsButtonOn == true) {
 			ChangeLightColor(mButtonOnColor * mButtonOnColorPower);
+			SoundManager.SPlay(mPushSE);
+
 		}
 
 		//消えた瞬間
@@ -105,6 +107,9 @@ public class Button : MonoBehaviour {
 
 	[SerializeField, Tooltip("スイッチがオフになる、押される割合"), EditOnPrefab]
 	float mPushRateOff = 1.0f;
+
+	[SerializeField, Tooltip("スイッチがオンになる時の音"), EditOnPrefab]
+	GameObject mPushSE;
 
 
 	float mPushRate;    //現在押されている割合

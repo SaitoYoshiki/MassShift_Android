@@ -19,7 +19,9 @@ public class Fan : MonoBehaviour {
 
 	//モデルの回転処理
 	void UpdateRotate() {
-		mFanModel.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, Time.deltaTime * 360.0f / 1.0f);
+		float lRotateDegree = Time.deltaTime * 360.0f * mRotateSpeed;
+		//mRotateFanModel.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, lRotateDegree);
+		mRotateFanModel.transform.localRotation *= Quaternion.Euler(lRotateDegree, 0.0f, 0.0f);
 	}
 
 	//風に当たっているオブジェクトのリストを取得
@@ -118,7 +120,7 @@ public class Fan : MonoBehaviour {
 			return;
 		}
 
-		mFanModel.transform.rotation = Quaternion.Euler(0.0f, GetDirectionVector(mDirection).x * -30.0f, 0.0f);
+		mFanModel.transform.rotation = Quaternion.Euler(0.0f, GetDirectionVector(mDirection).x * -mModelRotate, 0.0f);
 
 		foreach(var c in mHitColliderList) {
 			Vector3 lNewPos = c.gameObject.transform.localPosition;
@@ -147,8 +149,17 @@ public class Fan : MonoBehaviour {
 	[SerializeField, Tooltip("風が吹く方向")]
 	CDirection mDirection;
 
-	[SerializeField, EditOnPrefab, Tooltip("回転するファンのモデル")]
+	[SerializeField, EditOnPrefab, Tooltip("ファンの回転する速度")]
+	float mRotateSpeed;
+
+	[SerializeField, EditOnPrefab, Tooltip("モデル")]
 	GameObject mFanModel;
+
+	[SerializeField, EditOnPrefab, Tooltip("回転するファンのモデル")]
+	GameObject mRotateFanModel;
+
+	[SerializeField, EditOnPrefab, Tooltip("モデルを回転させる角度")]
+	float mModelRotate = 10.0f;
 
 	[SerializeField, EditOnPrefab, Tooltip("風の当たり判定のコライダー")]
 	List<GameObject> mHitColliderList;

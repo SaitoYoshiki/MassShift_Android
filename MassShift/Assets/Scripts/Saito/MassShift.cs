@@ -368,7 +368,7 @@ public class MassShift : MonoBehaviour
 		//全ての光の弾が他の共有ボックスへ到達するまで、光の弾の更新を続ける
 		//
 
-		var lShareList = mSource.GetComponent<ShareWeightBox>().GetShareAllListExceptOwn();
+		var lShareList = mDest.GetComponent<ShareWeightBox>().GetShareAllListExceptOwn();
 
 		bool lAllReach = true;
 		for (int i = 0; i < mLightBallShare.Count; i++) {

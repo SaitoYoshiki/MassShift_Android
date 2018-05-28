@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Goal : MonoBehaviour {
 
@@ -8,9 +9,12 @@ public class Goal : MonoBehaviour {
 	void Awake() {
 
 		mLampList = new List<GameObject>();
-		for (int i = 0; i < mButtonList.Count; i++) {
-			mLampList.Add(mLampModel.transform.GetChild(i).gameObject);
+		for(int i = 0; i < mLampModel.transform.childCount; i++) {
+			if(mLampModel.transform.GetChild(i).name == mLampPrefab.name) {
+				mLampList.Add(mLampModel.transform.GetChild(i).gameObject);
+			}
 		}
+		mLampList = mLampList.OrderByDescending(x => x.transform.localPosition.y).ToList();
 
 		TurnLamp();
 
@@ -62,6 +66,9 @@ public class Goal : MonoBehaviour {
 		if(mBeforeAllButtonOn == false) {
 			if(IsAllButtonOn == true) {
 				SetAnimation(true);
+				if(mPlayOpenSE) {
+					SoundManager.SPlay(mOpenSE);    //音を鳴らす
+				}
 			}
 		}
 
@@ -230,6 +237,7 @@ public class Goal : MonoBehaviour {
 
 		//モデルの配置
 
+
 		//ランプ
 		for (int i = 0; i < mButtonList.Count; i++) {
 			GameObject lLamp = EditorUtility.InstantiatePrefab(mLampPrefab, mLampModel);
@@ -271,13 +279,19 @@ public class Goal : MonoBehaviour {
 	bool mBeforeAllButtonOn = false;
 	int mBeforeButtonOnCount = 0;
 
-	float mOpenRate = 0.0f;	//扉が開いている割合
+	float mOpenRate = 0.0f; //扉が開いている割合
 
-	[SerializeField, Tooltip("扉が開くのに何秒かかるか")]
+	[HideInInspector]
+	public bool mPlayOpenSE = true;
+
+	[SerializeField, Tooltip("扉が開くのに何秒かかるか"), EditOnPrefab]
 	float mOpenTakeTime = 1.0f;
 
-	[SerializeField, Tooltip("扉が閉まるのに何秒かかるか")]
+	[SerializeField, Tooltip("扉が閉まるのに何秒かかるか"), EditOnPrefab]
 	float mCloseTakeTime = 1.0f;
+
+	[SerializeField, Tooltip("扉が開くときに鳴るSE"), EditOnPrefab]
+	GameObject mOpenSE;
 
 	[SerializeField, Disable]
 	List<Player> mInPlayerList = new List<Player>();
@@ -310,7 +324,6 @@ public class Goal : MonoBehaviour {
 	float mLampInterval = 1.0f;
 
 	List<GameObject> mLampList;	//ランプのインスタンス。０から順に、上から
-
 
 	[SerializeField, EditOnPrefab, Tooltip("ゴールのモデル")]
 	GameObject mModel;

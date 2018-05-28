@@ -103,17 +103,22 @@ public class GameManager : MonoBehaviour {
 	bool CanGoal() {
 		//全てのボタンがオンでないなら
 		if (!mGoal.IsAllButtonOn) {
-			return false;
+			return false;   //ゴールできない
 		}
 
 		//プレイヤーがゴール枠に完全に入っていないなら
 		if (!mGoal.IsInPlayer(mPlayer)) {
-			return false;
+			return false;   //ゴールできない
+		}
+
+		//プレイヤーが接地していないなら
+		if(mPlayer.GetComponent<Landing>().IsLanding == false) {
+			return false;	//ゴールできない
 		}
 
 		//重さを移した後1秒以内なら
 		if(mMassShift) {
-			//return false;
+			//return false;	//ゴールできない
 		}
 
 		return true;	//ゴール可能
