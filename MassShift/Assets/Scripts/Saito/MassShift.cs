@@ -858,6 +858,9 @@ public class MassShift : MonoBehaviour
 		if (Utility.IsJoystickConnect()) {
 			return Input.GetAxis("JoyShift") >= mShiftOnValue;
 		}
+		if(Input.touchCount > 0) {
+			return true;
+		}
 		return Input.GetKey(KeyCode.Mouse0);
 	}
 	bool GetDoubleShiftButton() {

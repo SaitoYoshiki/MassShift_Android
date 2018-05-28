@@ -17,15 +17,16 @@ public class DoorAnimManager : MonoBehaviour {
     bool isDoorOpenEnd;     // ドアの開き演出が終わったかどうか
     bool isDoorCloseEnd;    // ドアの閉まり演出が終わったかどうか
 
-	void Start () {
-        openDoorCount = 0;
-        closeDoorCount = 0;
+	private void Awake() {
+		openDoorCount = 0;
+		closeDoorCount = 0;
 
-        monoFade = StageName.GetComponent<MonoColorFade>();
-        sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+		monoFade = StageName.GetComponent<MonoColorFade>();
+		sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
-        isDoorAnimating = false;
+		isDoorAnimating = false;
 	}
+
 
     void Update() {
         if (!isDoorAnimating) {
@@ -75,14 +76,14 @@ public class DoorAnimManager : MonoBehaviour {
                 }
             }
 
-            if (openDoorCount < doorList.Count) {
-                return;
-            }
-            else {
-                // ドア閉まるアニメーションが全て終了した
-                isDoorCloseEnd = true;
-                isDoorAnimating = false;
-            }
+            //if (openDoorCount < doorList.Count) {
+            //    return;
+            //}
+            //else {
+            //    // ドア閉まるアニメーションが全て終了した
+            //    isDoorCloseEnd = true;
+            //    isDoorAnimating = false;
+            //}
         }
     }
 

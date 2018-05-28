@@ -202,17 +202,17 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		// 左右移動入力
-		walkStandbyVec = Input.GetAxis("Horizontal");
+		walkStandbyVec = GetWalkInput();
 
 		// ジャンプ入力
-		jumpStandbyFlg |= (Input.GetAxis("Jump") != 0.0f);
+		jumpStandbyFlg |= GetJumpInput();
 
 		// ジャンプ滞空時間
 		remainJumpTime = (!Land.IsLanding ? remainJumpTime + Time.deltaTime : 0.0f);
 
 		// 持ち上げ/下げ
 		if ((Land.IsLanding || WaterStt.IsWaterSurface) && !IsRotation) {
-			if ((Input.GetAxis("Lift") != 0.0f)) {
+			if (GetLiftInput()) {
 				if (!liftTrg) {
 					Lift.Lift();
 				}
@@ -444,4 +444,31 @@ public class Player : MonoBehaviour {
 		}
 	}
 	//	}
+
+	float GetWalkInput() {
+		if (Input.touchCount > 0) {
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Plane plane = new Plane(new Vector3(0.0f, 0.0f, -1.0f), 0.0f);
+
+			float enter = 0.0f;
+			if (plane.Raycast(ray, out enter)) {
+				float lDistance = ray.GetPoint(enter).x - transform.position.x;
+				return Mathf.Sign(lDistance);
+			}
+		}
+		return Input.GetAxis("Horizontal");
+	}
+
+	bool GetJumpInput() {
+		if(Input.touchCount > 0) {
+			if(Input.touches[0].tapCount == 2) {
+				return true;
+			}
+		}
+		return Input.GetAxis("Jump") != 0.0f;
+	}
+
+	bool GetLiftInput() {
+		return Input.GetAxis("Lift") != 0.0f;
+	}
 }
