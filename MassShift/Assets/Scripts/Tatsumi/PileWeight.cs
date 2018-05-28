@@ -59,6 +59,14 @@ public class PileWeight : MonoBehaviour {
 		// 自身を排除
 		hitObjList.Remove(transform);
 
+		//パイルを持っていないオブジェクトは排除
+		for(int i = hitObjList.Count - 1; i >= 0; i--) {
+			if(hitObjList[i].GetComponent<PileWeight>() == null) {
+				hitObjList.RemoveAt(i);
+			}
+		}
+
+
 		// 指定方向の反対側の四辺コライダーに接触している対象オブジェクトのコライダーをリスト化	
 		List<Collider> outColList = new List<Collider>();
 		for (int idx = 0; idx < back.Count; idx++) {
@@ -116,7 +124,7 @@ public class PileWeight : MonoBehaviour {
 		// 全ての四辺コライダーについて指定の方向に存在するか判定して振り分ける
 		foreach (var sideCol in FourSideCol.colList) {
 			Vector3 vec = sideCol.transform.position - transform.position;
-			if (Vector3.Dot(vec, _vec) > 0.0f) {
+			if (Vector3.Dot(vec, _vec) > 0.75f) {
 				_forward.Add(sideCol);
 			} else {
 				_back.Add(sideCol);

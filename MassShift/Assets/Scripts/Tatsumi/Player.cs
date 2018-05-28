@@ -205,8 +205,7 @@ public class Player : MonoBehaviour {
 		walkStandbyVec = Input.GetAxis("Horizontal");
 
 		// ジャンプ入力
-		prevJumpStandbyFlg = jumpStandbyFlg;
-		jumpStandbyFlg = (Input.GetAxis("Jump") != 0.0f);
+		jumpStandbyFlg |= (Input.GetAxis("Jump") != 0.0f);
 
 		// ジャンプ滞空時間
 		remainJumpTime = (!Land.IsLanding ? remainJumpTime + Time.deltaTime : 0.0f);
@@ -233,6 +232,8 @@ public class Player : MonoBehaviour {
 
 		// ジャンプ
 		bool isJump = Jump();
+		prevJumpStandbyFlg = jumpStandbyFlg;
+		jumpStandbyFlg = false;
 
 		// 立ち止まり
 		WalkDown();
@@ -243,14 +244,25 @@ public class Player : MonoBehaviour {
 		// 着地アニメーション
 		if (Land.IsLanding && Land.IsLandingChange) {
 			Land.IsLandingChange = false;
-			PlAnim.StartLand();
+
+			if (!Lift.IsLifting) {
+				PlAnim.StartLand();
+			}
+			else {
+				PlAnim.StartHoldLand();
+			}
 		}
 
 		// 落下アニメーション
 		if (!Land.IsLanding && Land.IsLandingChange) {
 			Land.IsLandingChange = false;
 			if (!isJump) {
-				//PlAnim.StartFall();
+				if (!Lift.IsLifting) {
+					PlAnim.StartFall();
+				}
+				else {
+					PlAnim.StartHoldFall();
+				}
 			}
 		}
 	}

@@ -112,6 +112,7 @@ public class MassShift : MonoBehaviour
 				UpdateFail();
 				break;
 			case CSelectState.cCantShift:
+				MoveCursor();
 				UpdateCantShift();
 				break;
 		}
@@ -140,8 +141,7 @@ public class MassShift : MonoBehaviour
 			ShowModelHilight(mDest, false, Color.white);
 
 			//通常時のカーソルを表示
-			mCursor.SetActive(true);
-			ChangeCursor(true);
+			ChangeCursorState(CCursorState.cNormal);
 
 			mSource = null;
 			mDest = null;
@@ -186,7 +186,7 @@ public class MassShift : MonoBehaviour
 			ShowModelHilight(mSource, true, mSourceColor * mSourceColorPower);
 
 			//通常時ではないカーソルを表示
-			ChangeCursor(false);
+			ChangeCursorState(CCursorState.cShotLineThrough);
 		}
 
 		//選択されているオブジェクトを更新
@@ -249,6 +249,9 @@ public class MassShift : MonoBehaviour
 		if (mInitState == true) {
 
 			mInitState = false;
+
+			//カーソルを移せない表示に
+			ChangeCursorState(CCursorState.cCanNotShift);
 
 			//移す線を非表示に
 			mMassShiftLine.SetActive(false);
@@ -405,6 +408,9 @@ public class MassShift : MonoBehaviour
 		if (mInitState == true) {
 
 			mInitState = false;
+
+			//カーソルを移せない表示に
+			ChangeCursorState(CCursorState.cCanNotShift);
 
 			//移すのに表示する線を消す
 			mMassShiftLine.SetActive(false);
@@ -646,7 +652,7 @@ public class MassShift : MonoBehaviour
 			//移す表示の線を消す
 			mMassShiftLine.SetActive(false);
 
-
+			ChangeCursorState(CCursorState.cCanNotShift);
 		}
 
 		//重さを移すボタンが押されていないなら
@@ -673,7 +679,7 @@ public class MassShift : MonoBehaviour
 			mMassShiftLine.SetActive(false);
 
 			//カーソルも消す
-			mCursor.SetActive(false);
+			ChangeCursorState(CCursorState.cCanNotShift);
 		}
 
 		//外部からCanShiftにtrueを入れられないと、この状態からは変化しない
@@ -713,31 +719,6 @@ public class MassShift : MonoBehaviour
 	}
 
 
-	//カーソルを、通常時かドラッグ時かで表示を変える
-	//
-	void ChangeCursor(bool mIsNormal) {
-
-		GameObject lNormal = mCursor.transform.Find("Model/Normal").gameObject;
-		GameObject lSelect = mCursor.transform.Find("Model/Select").gameObject;
-
-		if (mIsNormal) {
-			lNormal.SetActive(true);
-			lSelect.SetActive(false);
-		}
-		else {
-			lNormal.SetActive(false);
-			lSelect.SetActive(true);
-		}
-	}
-
-
-	//カーソルの色を変える
-	//
-	void ChangeCursorColor(Color aColor) {
-		mCursor.transform.Find("Model/Select").GetComponentInChildren<Renderer>().material.SetColor("_Color", aColor);
-	}
-
-
 	//重さを移す状態遷移
 	//
 	enum CSelectState {
@@ -759,6 +740,7 @@ public class MassShift : MonoBehaviour
 
 	CSelectState mBeforeState;	//以前の状態
 	bool mInitState = true;	//その状態に来て初めてのフレームか
+	
 
 	GameObject mSource; //うつし元
 	GameObject mDest;   //うつし先
@@ -768,6 +750,15 @@ public class MassShift : MonoBehaviour
 
 	bool mShiftDouble;	//重さを2つ移すモードか
 
+
+	//
+	//カーソルの状態
+	enum CCursorState {
+		cCanNotShift,	//物を持っているときなど、移せない時
+		cNormal,	//移せる。何も操作していない時
+		cShotLineThrough,	//選択時、射線が通っている
+		cShotLineNotThrough,	//選択時、射線が通っていない
+	}
 
 	[SerializeField, PrefabOnly]
 	GameObject mMassShiftLinePrefab;
@@ -829,7 +820,7 @@ public class MassShift : MonoBehaviour
 			ShowModelHilight(mSource, true, mSourceColor * mSourceColorPower);
 
 			//カーソルの種類を変更
-			ChangeCursor(false);
+			ChangeCursorState(CCursorState.cShotLineThrough);
 
 			mBeforeSelect = null;
 			mSelect = null;
@@ -996,15 +987,43 @@ public class MassShift : MonoBehaviour
 		if (mLightBallTemplate.GetComponent<LightBall>().ThroughShotLine(lFromPosition, lToPosition, new GameObject[] { mSource, mDest, mSelect }.ToList())) {
 			//線とカーソルを、射線が通っているときの色にする
 			lMassShiftLine.ChangeColor(mCanSelectColor * mCanSelectColorPower);
-			ChangeCursorColor(mCanSelectColor * mCanSelectColorPower);
+			ChangeCursorState(CCursorState.cShotLineThrough);
 			lMassShiftLine.UpdatePosition();	//線を移動させる
 		}
 		else {
 			//通っていない色にする
 			lMassShiftLine.ChangeColor(mCanNotSelectColor * mCanNotSelectColorPower);
-			ChangeCursorColor(mCanNotSelectColor * mCanNotSelectColorPower);
+			ChangeCursorState(CCursorState.cShotLineNotThrough);
 		}
 	}
+
+
+	void ChangeCursorState(CCursorState aCursorState) {
+
+		GameObject lNormal = mCursor.transform.Find("Model/Normal").gameObject;
+		GameObject lSelect = mCursor.transform.Find("Model/Select").gameObject;
+
+		if (aCursorState == CCursorState.cNormal) {
+			lNormal.SetActive(true);
+			lSelect.SetActive(false);
+		}
+		else if(aCursorState == CCursorState.cCanNotShift) {
+			lNormal.SetActive(false);
+			lSelect.SetActive(true);
+			lSelect.GetComponentInChildren<Renderer>().material.SetColor("_Color", Color.gray);
+		}
+		else if (aCursorState == CCursorState.cShotLineThrough) {
+			lNormal.SetActive(false);
+			lSelect.SetActive(true);
+			lSelect.GetComponentInChildren<Renderer>().material.SetColor("_Color", mCanSelectColor * mCanSelectColorPower);
+		}
+		else if (aCursorState == CCursorState.cShotLineNotThrough) {
+			lNormal.SetActive(false);
+			lSelect.SetActive(true);
+			lSelect.GetComponentInChildren<Renderer>().material.SetColor("_Color", mCanNotSelectColor * mCanNotSelectColorPower);
+		}
+	}
+
 
 
 	//モデルのハイライトの更新
