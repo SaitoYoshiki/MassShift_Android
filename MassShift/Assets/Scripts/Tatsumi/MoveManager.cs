@@ -397,8 +397,11 @@ public class MoveManager : MonoBehaviour {
 							hitMoveMng.AddMove(new Vector3(0.0f, moveMng.PrevMove.y * 1.1f, 0.0f));
 						}
 
+						float otherMoveDistance = Mathf.Clamp(Mathf.Abs(_move.y) - dis, 0.0f, float.MaxValue);
+
 						// 押し出しを行い、押し出し切れた場合
-						if (Move(new Vector3(0.0f, (_move.y - dis), 0.0f), (BoxCollider)nearHitinfo.collider, _mask,
+						//if (Move(new Vector3(0.0f, (_move.y - dis), 0.0f), (BoxCollider)nearHitinfo.collider, _mask,
+						if (Move(new Vector3(0.0f, moveVec.y * otherMoveDistance, 0.0f), (BoxCollider)nearHitinfo.collider, _mask,
 							false, (moveMng.extrusionForcible || _extrusionForcible), _ignoreColList)) {	// 押し出し優先情報を使用
 							// 自身は指定通り移動
 							Move(new Vector3(0.0f, _move.y, 0.0f), _moveCol, _mask, true, false, _ignoreColList);  // 押し出し不可移動
@@ -406,7 +409,7 @@ public class MoveManager : MonoBehaviour {
 						// 押し出しきれない場合
 						else {
 							// 自身も直前まで移動
-							Move(new Vector3(0.0f, (_move.y - dis), 0.0f), _moveCol, _mask, true, false, _ignoreColList);  // 押し出し不可移動
+							Move(new Vector3(0.0f, dis, 0.0f), _moveCol, _mask, true, false, _ignoreColList);  // 押し出し不可移動
 
 							// 指定位置まで移動できない
 							ret = false;
@@ -521,21 +524,21 @@ public class MoveManager : MonoBehaviour {
 
 				// x軸で最もめり込んでいる衝突を取得
 //				RaycastHit nearHitinfo = new RaycastHit();
-				float dis = float.MinValue;
+				float dis = float.MaxValue;
 				foreach (var hitInfo in hitInfos) {
-					float cmpDis = (Mathf.Abs(_moveCol.bounds.center.x - hitInfo.collider.bounds.center.x) - (_moveCol.bounds.size.x + hitInfo.collider.bounds.size.x) * 0.5f) * -1;
-					if (cmpDis > dis) {
+					float cmpDis = (Mathf.Abs(_moveCol.bounds.center.x - hitInfo.collider.bounds.center.x) - (_moveCol.bounds.size.x + hitInfo.collider.bounds.size.x) * 0.5f);
+					if (cmpDis < dis) {
 						dis = cmpDis;
 //						nearHitinfo = hitInfo;
 					}
 				}
-				dis += ColMargin;
+				dis -= ColMargin;
 				///Debug.LogError("dis:" + dis);
 
 				// x軸は押し出しを行わない
 
 				// 直前まで移動
-				_moveCol.transform.position += new Vector3(-moveVec.x * dis, 0.0f, 0.0f);
+				_moveCol.transform.position += new Vector3(moveVec.x * dis, 0.0f, 0.0f);
 				
 				// 指定位置まで移動できない
 				ret = false;

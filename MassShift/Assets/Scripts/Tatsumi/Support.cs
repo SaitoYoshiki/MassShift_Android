@@ -16,26 +16,32 @@ public class Support {
 		}
 
 		// 移動量に0があると判定されないので小単位で増加
-		_move = new Vector3(
-			Mathf.Max(Mathf.Abs(_move.x), FloatMin) * Mathf.Sign(_move.x),
-			Mathf.Max(Mathf.Abs(_move.y), FloatMin) * Mathf.Sign(_move.y),
-			Mathf.Max(Mathf.Abs(_move.z), FloatMin) * Mathf.Sign(_move.z));
+		//_move = new Vector3(
+		//	Mathf.Max(Mathf.Abs(_move.x), FloatMin) * Mathf.Sign(_move.x),
+		//	Mathf.Max(Mathf.Abs(_move.y), FloatMin) * Mathf.Sign(_move.y),
+		//	Mathf.Max(Mathf.Abs(_move.z), FloatMin) * Mathf.Sign(_move.z));
+
+		//もし移動方向が0なら、BoxCastAllで判定されないので適当な値を入れる
+		Vector3 moveDir = _move;
+		if(moveDir.magnitude == 0.0f) {
+			moveDir = Vector3.up;
+		}
 
 		// コライダーを特定し衝突を検知
 		System.Type colType = _col.GetType();
 		if (colType == typeof(BoxCollider)) {
 			BoxCollider boxCol = (BoxCollider)_col;
-			hitInfoList.AddRange(Physics.BoxCastAll(boxCol.bounds.center, boxCol.bounds.size * 0.5f, _move.normalized, boxCol.transform.rotation, _move.magnitude, _mask));
+			hitInfoList.AddRange(Physics.BoxCastAll(boxCol.bounds.center, boxCol.bounds.size * 0.5f, moveDir, boxCol.transform.rotation, _move.magnitude, _mask));
 //			Debug.LogError("sap _move:" + _move);
 		} else if (colType == typeof(SphereCollider)) {
 			SphereCollider sphereCol = (SphereCollider)_col;
-			hitInfoList.AddRange(Physics.SphereCastAll(sphereCol.bounds.center, sphereCol.radius, _move.normalized, _move.magnitude, _mask));
+			hitInfoList.AddRange(Physics.SphereCastAll(sphereCol.bounds.center, sphereCol.radius, moveDir, _move.magnitude, _mask));
 		} else if (colType == typeof(CapsuleCollider)) {
 			CapsuleCollider capsuleCol = (CapsuleCollider)_col;
 			hitInfoList.AddRange(Physics.CapsuleCastAll(
 				(capsuleCol.bounds.center) + capsuleCol.transform.up * (capsuleCol.height - capsuleCol.radius) * 0.5f,
 				(capsuleCol.bounds.center) - capsuleCol.transform.up * (capsuleCol.height - capsuleCol.radius) * 0.5f,
-				capsuleCol.radius, _move.normalized, _move.magnitude, _mask));
+				capsuleCol.radius, moveDir, _move.magnitude, _mask));
 		} else if (colType == typeof(MeshCollider)) {
 			Debug.LogWarning("コライダーがMeshColliderでした。衝突が検知されません。" + Support.ObjectInfoToString(_col.gameObject));
 		} else {
