@@ -260,13 +260,13 @@ public class StageChangeScenematic : MonoBehaviour {
 
     void Update() {
         if (isOpening) {
-            //AnimDoor(closePos, stopPos, openPos, isOpening, true);
-            OpenDoor();
+            AnimDoor(closePos, openPos, ref isOpening, true);
+            //OpenDoor();
         }
 
         if (isClosing) {
-            //AnimDoor(openPos, stopPos, closePos, isClosing, false);
-            CloseDoor();
+            AnimDoor(openPos, closePos, ref isClosing, false);
+            //CloseDoor();
         }
     }
 
@@ -281,7 +281,7 @@ public class StageChangeScenematic : MonoBehaviour {
     }
 
     // ドア開く演出
-    void OpenDoor() {
+    /*void OpenDoor() {
         float nowTime = Time.realtimeSinceStartup - startTime;
 
         float timePer = nowTime / doorAnimTime;
@@ -337,38 +337,28 @@ public class StageChangeScenematic : MonoBehaviour {
             isClosing = false;
             daManager.CloseCountPlus();
         }
-    }
+    }*/
 
     // ドア開閉演出
-    /*void AnimDoor(Vector3 _startPos, Vector3 _stopPos, Vector3 _endPos, bool _flg, bool openFlg) {
+    void AnimDoor(Vector3 _startPos, Vector3 _endPos, ref bool _flg, bool openFlg) {
         float nowTime = Time.realtimeSinceStartup - startTime;
 
         float timePer = nowTime / doorAnimTime;
 
         // アニメーション一段階目
         if (timePer <= doorAnimPer) {
-            this.transform.localPosition = Vector3.Lerp(_startPos, _stopPos, timePer / doorAnimPer);
-
-        }
-        // アニメーション二段階目
-        else if (timePer > doorAnimPer && timePer <= (doorAnimPer + doorStopPer)) {
-            stopTime = nowTime;
-        }
-        // アニメーション三段階目
-        else if (timePer > (doorAnimPer + doorStopPer) && timePer <= 1.0f) {
-            timePer = (nowTime - stopTime) / (doorAnimTime - stopTime);
-            this.transform.localPosition = new Vector3(_stopPos.x + (_endPos.x - _stopPos.x) * timePer, _stopPos.y + (_endPos.y - _endPos.y) * timePer, 0.0f);
+            this.transform.localPosition = Vector3.Lerp(_startPos, _endPos, timePer / doorAnimPer);
         }
         // アニメーション終了
         else {
             this.transform.localPosition = _endPos;
             _flg = false;
             if (openFlg) {
-                daManager.openCountPlus();
+                daManager.OpenCountPlus();
             }
             else {
-                daManager.closeCountPlus();
+                daManager.CloseCountPlus();
             }
         }
-    }*/
+    }
 }

@@ -13,6 +13,7 @@ public class StageTransition : MonoBehaviour {
         area = Area.GetAreaNumber();
         stage = Area.GetStageNumber();
 
+        // 現在のエリアに対応したドアをActiveに変更
         ActivateDoor();
     }
 

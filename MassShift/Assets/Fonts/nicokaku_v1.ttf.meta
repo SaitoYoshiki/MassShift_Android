@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: ab71f9fcccb36734385c2e6e108c733f
+timeCreated: 1527321599
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: NicoKaku
+  fontNames:
+  - NicoKaku
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

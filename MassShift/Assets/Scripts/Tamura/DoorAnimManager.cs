@@ -5,31 +5,41 @@ using UnityEngine;
 public class DoorAnimManager : MonoBehaviour {
     public List<GameObject> doorList = new List<GameObject>();
     public GameObject StageName;
+    MonoColorFade monoFade;
 
-    int openDoorCount;
-    int closeDoorCount;
+    string sceneName;       // 現在のシーン名
 
-    bool isDoorOpenEnd;
-    bool isDoorCloseEnd;
+    int openDoorCount;      // 開き終わったドアの数
+    int closeDoorCount;     // 閉まり終わったドアの数
+
+    bool isDoorOpenEnd;     // ドアの開き演出が終わったかどうか
+    bool isDoorCloseEnd;    // ドアの閉まり演出が終わったかどうか
 
 	void Start () {
         openDoorCount = 0;
         closeDoorCount = 0;
+
+        monoFade = StageName.GetComponent<MonoColorFade>();
+        sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 	}
 
     void Update() {
+        // ドアが全て開き終わったら
         if (openDoorCount >= doorList.Count) {
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "StageSelect") {
-                // ドア開くアニメーションが全て終了したらステージ名フェード開始
+            // ステージセレクトシーン以外では
+            if (sceneName != "StageSelect") {
+                // ステージ名フェードイン開始
                 StageName.SetActive(true);
-                if (!StageName.GetComponent<MonoColorFade>().IsFading()) {
+                if (!monoFade.IsFading()) {
                     Debug.Log("文字フェード終了");
                     // ステージ名フェードアウトが終了した
                     isDoorOpenEnd = true;
                     Debug.Log("開き演出終了" + isDoorOpenEnd);
                 }
             }
+            // ステージセレクトシーンでは
             else {
+                // ステージ名を出さず開き演出終了
                 isDoorOpenEnd = true;
             }
         }

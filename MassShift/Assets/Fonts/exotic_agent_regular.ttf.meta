@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 4d47dd3cf8642df49a032c0977b844e4
+timeCreated: 1527322805
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: exotic agent
+  fontNames:
+  - exotic agent
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
